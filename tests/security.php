@@ -4,7 +4,7 @@
  * Usage: php tests/security.php
  */
 
-require_once __DIR__ . '/../p_dbInfo.php';
+require_once __DIR__ . '/../lib/dbInfo.php';
 require_once __DIR__ . '/../lib/helpers.php';
 require_once __DIR__ . '/../lib/autoload.php';
 

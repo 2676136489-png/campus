@@ -31,7 +31,7 @@
         "test:cs": "php-cs-fixer fix --dry-run --diff",
         "migrate": "php bin/migrate.php",
         "seed": "php bin/seed.php",
-        "serve": "php -S 127.0.0.1:8765 -t .",
+        "serve": "php -S 127.0.0.1:8765 -t . index.php",
         "health": "php bin/health.php",
         "e2e": "npm run test:e2e"
     },

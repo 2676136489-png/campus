@@ -8,7 +8,7 @@
  */
 function migrationFiles()
 {
-    $dir = __DIR__ . '/../migrations';
+    $dir = __DIR__ . '/../database/migrations';
     $files = glob($dir . '/*.sql');
     if ($files === false) {
         return [];

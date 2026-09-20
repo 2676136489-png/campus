@@ -3,7 +3,7 @@
  * 为尚未设置标签的学生账号随机生成 3 个兴趣标签。
  * 已有标签的账号不会修改。
  */
-require_once __DIR__ . '/../p_manageDB.php';
+require_once __DIR__ . '/../lib/manageDB.php';
 
 $pool = [
     '摄影', '篮球', '音乐', '阅读', '编程', '跑步', '绘画', '电影',

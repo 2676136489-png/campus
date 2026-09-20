@@ -1,9 +1,27 @@
+# Campus Circle — Apache 配置
+#
+# 重构后页面入口统一放在 pages/、接口放在 api/，
+# 这里把根目录的历史 URL 回退到 index.php 由路由转发，保证旧链接继续可用。
+
+Options -Indexes -MultiViews
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 内部目录不直接对外暴露（页面一律通过根 index.php 路由访问）
+    RewriteRule ^(pages|api|lib|config|database|bin|scripts|tests|deploy|var|benchmark)/ - [F,L]
+
+    # 根目录不存在的 .php 请求回退到统一入口
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([A-Za-z0-9_-]+\.php)$ index.php [L,QSA]
+</IfModule>
+
 # 禁止直接访问敏感文件
-<FilesMatch "^(\.env|composer\.phar|db_error\.log)">
+<FilesMatch "^(\.env|\.env\..*|composer\.phar|db_error\.log|\.user\.ini)">
     Require all denied
 </FilesMatch>
 
-Options -Indexes
 # Traffic optimization: gzip and long-lived static asset cache
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml

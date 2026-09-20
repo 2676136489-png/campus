@@ -2,26 +2,32 @@
 
 ## 分层
 
-- 页面层：`p_*.php` 负责接收请求、渲染视图、调用服务函数
-- API 层：`api.php` 提供 JSON 接口，统一处理登录态、CSRF 与错误响应
-- 实时层：`p_sse.php` 提供 SSE 长连接，推送未读通知变化
+- 入口层：根目录 `index.php` 是唯一入口，把历史 URL（`/p_loginStu.php`、`/api.php` 等）路由到 `pages/` 与 `api/`
+- 页面层：`pages/p_*.php` 负责接收请求、渲染视图、调用服务函数
+- API 层：`api/api.php` 提供 JSON 接口，统一处理登录态、CSRF 与错误响应
+- 实时层：`pages/p_sse.php` 提供 SSE 长连接，推送未读通知变化
 - 服务层：`lib/*.php` 封装业务逻辑，函数全局可用
 - 数据层：统一通过 `dbConnect()` 使用 MySQLi 预处理语句
-- 配置层：`p_dbInfo.php` 读取环境变量与 `.env`，`config/` 存放业务配置
+- 配置层：`lib/dbInfo.php` 读取环境变量与 `.env`，`config/` 存放业务配置
+- 资源层：`assets/css`、`assets/js`、`assets/img`、`assets/media` 存放静态资源
 
 ## 请求流程
 
 ```text
-浏览器 -> p_*.php
+浏览器 -> /p_welcomeStu.php
+       -> index.php (入口路由，按文件名校验后转发)
+       -> pages/p_welcomeStu.php
        -> lib/bootstrap.php (安全 Session、响应头、致命错误日志)
        -> lib/autoload.php (加载模块)
        -> 业务函数
        -> MySQL
 
-浏览器 -> api.php?action=health
+浏览器 -> /api.php?action=health
+       -> index.php -> api/api.php
        -> JSON 健康状态
 
-浏览器 -> p_sse.php (登录后)
+浏览器 -> /p_sse.php (登录后)
+       -> index.php -> pages/p_sse.php
        -> text/event-stream
        -> unread 事件
 ```
@@ -57,7 +63,7 @@
 
 ## 实时通知
 
-- 登录学生通过 `EventSource` 连接 `p_sse.php`。
+- 登录学生通过 `EventSource` 连接 `p_sse.php`（经 `index.php` 路由）。
 - SSE 每 5 秒检查一次未读通知数，变化时推送 `unread` 事件。
 - 连接建立后立即 `session_write_close()`，避免长连接锁住会话。
 - 前端连接失败或浏览器不支持时自动回退到 60 秒轮询。

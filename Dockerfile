@@ -8,6 +8,7 @@ RUN echo 'upload_max_filesize=20M' > /usr/local/etc/php/conf.d/uploads.ini \
 
 COPY . /var/www/html/
 
-RUN mkdir -p /var/www/html/uploads/dynamics && chown -R www-data:www-data /var/www/html/uploads
+RUN mkdir -p /var/www/html/uploads/dynamics /var/www/html/var/logs \
+    && chown -R www-data:www-data /var/www/html/uploads /var/www/html/var
 
 EXPOSE 80

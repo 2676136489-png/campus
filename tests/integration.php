@@ -5,7 +5,7 @@
  *   DB_HOST=127.0.0.1 DB_NAME=circle_test DB_USER=root DB_PASS=123456 php tests/integration.php
  */
 
-require_once __DIR__ . '/../p_manageDB.php';
+require_once __DIR__ . '/../lib/manageDB.php';
 
 $tests = 0;
 $failures = 0;

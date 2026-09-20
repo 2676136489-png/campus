@@ -3,7 +3,7 @@
  * Health check endpoint: returns JSON with app and database status.
  */
 
-require_once __DIR__ . '/../p_manageDB.php';
+require_once __DIR__ . '/../lib/manageDB.php';
 
 header('Content-Type: application/json; charset=utf-8');
 $payload = [

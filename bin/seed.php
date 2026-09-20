@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../p_manageDB.php';
+require_once __DIR__ . '/../lib/manageDB.php';
 
 if (getUserByUserName('demo01')) {
     echo "Seed data already exists.\n";

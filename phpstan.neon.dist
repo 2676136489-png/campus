@@ -3,7 +3,7 @@ parameters:
     paths:
         - lib
     bootstrapFiles:
-        - p_dbInfo.php
+        - lib/dbInfo.php
     tmpDir: C:/Users/111/AppData/Local/Temp/campus-phpstan
     reportUnmatchedIgnoredErrors: false
     excludePaths:

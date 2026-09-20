@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../p_manageDB.php';
+require_once __DIR__ . '/../lib/manageDB.php';
 
 $conn = dbConnect();
 $row = $conn->query("SELECT COUNT(*) AS total FROM `dynamic` WHERE `status` = 'normal'")->fetch_assoc();

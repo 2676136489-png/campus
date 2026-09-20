@@ -118,6 +118,12 @@ flowchart LR
 3. 可选执行 `php bin/seed.php` 生成演示数据
 4. 将项目放入 Web 根目录，访问 `p_loginStu.php`
 
+内置服务器调试（注意末尾的 `index.php`，它是路由入口）：
+
+```bash
+php -S 127.0.0.1:8099 -t . index.php
+```
+
 管理员初始账号：`admin` / `Admin@123456`，首次登录后强制修改。
 
 ### 方式二：Docker Compose
@@ -145,14 +151,22 @@ php bin/seed_media.php    # 头像、动态配图
 
 ```text
 campus/
-├── bin/
-│   ├── migrate.php             # 版本化迁移
-│   ├── seed.php                # 演示数据
-│   ├── seed_media.php          # 演示图片数据
-│   ├── cleanup.php             # 清理过期记录
-│   ├── health.php              # 健康检查
-│   └── e2e_reset.php           # E2E 测试数据重置
+├── index.php                   # 唯一入口：URL 路由 + 404
+├── api/
+│   ├── api.php                 # 站内 JSON API
+│   ├── ai_api.php              # AI 只读数据接口
+│   └── ai_admin_api.php        # 管理员 AI 接口
+├── pages/                      # 页面入口（51 个 p_*.php）
+│   ├── p_loginStu.php          # 学生登录
+│   ├── p_welcomeStu.php        # 学生中心
+│   ├── p_dynamics.php          # 动态广场
+│   ├── p_admin*.php            # 管理后台
+│   ├── p_export*.php           # CSV 导出
+│   └── ...
 ├── lib/
+│   ├── dbInfo.php              # 环境变量与 .env 加载
+│   ├── manageDB.php            # 数据库引导与自动迁移
+│   ├── layout.php              # 页面布局与 UI 组件
 │   ├── bootstrap.php           # 安全 Session 与响应头
 │   ├── core.php                # 数据库连接、CSRF、环境配置
 │   ├── migrations.php          # SQL 迁移执行器
@@ -180,8 +194,24 @@ campus/
 │   ├── helpers.php             # 通用辅助函数
 │   └── maintenance.php         # 过期数据清理
 ├── assets/
-│   ├── css/                    # Design Token 与页面样式
-│   └── js/                     # 交互脚本、主题切换
+│   ├── css/                    # style.css、design-system.css 与分层样式
+│   ├── js/                     # app.js 与 campus.js
+│   ├── img/                    # favicon.svg
+│   └── media/                  # 演示头像与场景图
+├── database/
+│   ├── schema.sql              # 完整表结构
+│   └── migrations/             # 001-018 版本化迁移
+├── bin/
+│   ├── migrate.php             # 版本化迁移
+│   ├── seed.php                # 演示数据
+│   ├── seed_media.php          # 演示图片数据
+│   ├── cleanup.php             # 清理过期记录
+│   ├── health.php              # 健康检查
+│   └── e2e_reset.php           # E2E 测试数据重置
+├── config/
+│   └── sensitive_words.php     # 敏感词配置
+├── deploy/                     # 生产环境部署配置
+├── scripts/                    # 备份与部署脚本
 ├── docs/
 │   ├── screenshots/            # README 截图
 │   ├── architecture.md         # 架构说明
@@ -191,25 +221,31 @@ campus/
 │   ├── deploy.md               # 部署指南
 │   ├── openapi.yaml            # OpenAPI 规范
 │   └── roadmap.md              # 项目路线图
-├── config/
-│   └── sensitive_words.php     # 敏感词配置
-├── migrations/                 # 001-018 版本化迁移
-├── deploy/                     # 生产环境部署配置
-├── scripts/                    # 备份与部署脚本
-├── api.php                     # 站内 JSON API
-├── ai_api.php                  # AI 只读数据接口
-├── ai_admin_api.php            # 管理员 AI 接口
-├── p_*.php                     # 页面入口
 ├── tests/
 │   ├── Unit/                   # PHPUnit 单元测试
 │   ├── run.php                 # 轻量单元测试
 │   ├── integration.php         # MySQL 集成测试
 │   ├── security.php            # 安全回归测试
 │   └── e2e/                    # Playwright 端到端测试
+├── benchmark/                  # 负载测试脚本
 ├── Dockerfile
 ├── docker-compose.yml
 └── .github/workflows/ci.yml
 ```
+
+### URL 路由
+
+页面与接口物理上位于 `pages/` 和 `api/`，但**对外 URL 保持原样**：
+
+```text
+/p_loginStu.php   ->  index.php  ->  pages/p_loginStu.php
+/api.php          ->  index.php  ->  api/api.php
+/ai_api.php       ->  index.php  ->  api/ai_api.php
+```
+
+`index.php` 只转发文件名白名单内真实存在的入口，并对文件名做严格校验，因此不存在路径穿越或任意文件包含风险。
+
+> **部署注意**：需要让 Web 服务器把根目录下不存在的 `.php` 请求回退到 `index.php`（Nginx 为 `try_files $uri /index.php?$query_string;`，Apache 已由 `.htaccess` 处理）。完整配置见 [docs/deploy.md](docs/deploy.md#4-目录结构与-url-路由重要)。
 
 ---
 

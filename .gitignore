@@ -1,6 +1,7 @@
 # 运行时文件
 uploads/
 照片/
+var/
 db_error.log
 *.log
 *.tmp
@@ -14,6 +15,7 @@ test-results/
 playwright-report/
 composer.phar
 .phpunit.result.cache
+.php-cs-fixer.cache
 
 # 服务器面板生成文件
 .well-known/
@@ -28,7 +30,6 @@ _preview-server.js
 .DS_Store
 Thumbs.db
 
-# ?? skill ??
+# 工具缓存
 .agents/
 skills-lock.json
-var/
