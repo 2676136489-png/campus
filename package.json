@@ -1,0 +1,12 @@
+{
+  "name": "campus-circle-e2e",
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "lenis": "^1.3.26"
+  }
+}

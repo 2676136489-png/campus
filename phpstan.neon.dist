@@ -1,0 +1,10 @@
+parameters:
+    level: 2
+    paths:
+        - lib
+    bootstrapFiles:
+        - p_dbInfo.php
+    tmpDir: C:/Users/111/AppData/Local/Temp/campus-phpstan
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - vendor

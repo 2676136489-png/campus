@@ -1,0 +1,41 @@
+{
+    "name": "campus/circle",
+    "description": "Campus Circle - verified campus social platform",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3",
+        "ext-mysqli": "*",
+        "ext-gd": "*",
+        "ext-fileinfo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^2.19"
+    },
+    "autoload": {
+        "files": [
+            "lib/helpers.php",
+            "lib/bootstrap.php",
+            "lib/autoload.php"
+        ]
+    },
+    "scripts": {
+        "test": "php tests/run.php",
+        "test:security": "php tests/security.php",
+        "test:integration": "php tests/integration.php",
+        "test:unit": "phpunit",
+        "test:coverage": "phpunit --coverage-text",
+        "test:phpstan": "phpstan analyse --no-progress",
+        "test:cs": "php-cs-fixer fix --dry-run --diff",
+        "migrate": "php bin/migrate.php",
+        "seed": "php bin/seed.php",
+        "serve": "php -S 127.0.0.1:8765 -t .",
+        "health": "php bin/health.php",
+        "e2e": "npm run test:e2e"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

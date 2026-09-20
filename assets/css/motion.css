@@ -1,0 +1,175 @@
+/*
+ * Campus Circle Motion — 清澈校园
+ * 一种节奏：页面进场、滚动显影、hover 轻反馈。
+ * 只动 transform 与 opacity，时长 160~240ms，统一 ease-in-out 手感。
+ */
+@keyframes campusSweep {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes campusPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes campusBlink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-main {
+    animation: campusPageEnter var(--dur-4) var(--ease-out) both;
+  }
+
+  .auth-shell {
+    animation: campusPageEnter var(--dur-4) var(--ease-out) both;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity var(--dur-4) var(--ease-out),
+      transform var(--dur-4) var(--ease-out);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .chat-message {
+    animation: campusPageEnter var(--dur-3) var(--ease-out) both;
+  }
+
+  .notification-item,
+  .conversation-item,
+  .people-card,
+  .announcement-item {
+    transition:
+      border-color var(--dur-2) var(--ease-out),
+      transform var(--dur-3) var(--ease-out),
+      box-shadow var(--dur-3) var(--ease-out),
+      opacity var(--dur-3) var(--ease-out);
+  }
+
+  .btn,
+  .action-btn,
+  .action-link,
+  .tag,
+  .icon-btn,
+  .radio-pill span {
+    transition:
+      background var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out),
+      color var(--dur-2) var(--ease-out),
+      box-shadow var(--dur-2) var(--ease-out),
+      transform var(--dur-2) var(--ease-out),
+      opacity var(--dur-2) var(--ease-out);
+  }
+}
+
+/* Mobile touch: springy press, no sticky hover */
+@media (hover: none), (pointer: coarse) {
+  .card:hover,
+  .btn:hover,
+  .action-btn:hover,
+  .action-link:hover,
+  .tag:hover,
+  .icon-btn:hover {
+    transform: none;
+  }
+
+  .card:active,
+  .btn:active,
+  .action-btn:active,
+  .action-link:active {
+    transform: scale(0.985);
+  }
+}
+
+/* Route transition helper used by the JS after AJAX pagination */
+.route-enter {
+  animation: campusPageEnter var(--dur-4) var(--ease-out) both;
+}
+
+/* Loading button */
+.btn.is-loading {
+  pointer-events: none;
+}
+
+.btn.is-loading .icon {
+  animation: campusBlink 0.9s var(--ease-in-out) infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .site-header,
+  .mobile-tabbar,
+  .site-nav,
+  .modal-backdrop,
+  .lightbox-backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@keyframes campusHeart {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.action-btn.is-liked .icon {
+  animation: campusHeart var(--dur-4) var(--ease-out);
+}
+
+.rail-link .icon {
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.rail-link:hover .icon {
+  transform: translateX(2px);
+}
+
+.mobile-tab.active .icon {
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.mobile-tab.active:hover .icon {
+  transform: translateY(-1px) scale(1.08);
+}

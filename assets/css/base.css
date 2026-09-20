@@ -1,0 +1,325 @@
+/*
+ * Campus Circle Base Layer — 清澈校园
+ * 极浅蓝白底、无衬线标题、干净发丝线。
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  scroll-behavior: auto;
+  scroll-padding-top: calc(var(--header-h) + 20px);
+  text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+[role="button"],
+input,
+textarea,
+select,
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+dl,
+dd,
+dt,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+
+/* 标题：现代无衬线，字重收敛 */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-wrap: balance;
+  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 2px solid var(--bg);
+  border-radius: var(--r-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--faint);
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: calc(var(--z-toast) + 1);
+  padding: 10px 16px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--accent);
+  color: #ffffff;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-160%);
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.container {
+  width: min(var(--container), calc(100% - var(--content-pad) * 2));
+  margin-inline: auto;
+}
+
+.container.narrow {
+  width: min(var(--container-narrow), calc(100% - var(--content-pad) * 2));
+}
+
+.page-main {
+  min-height: calc(100dvh - var(--header-h));
+  padding: 32px 0 72px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.gap-sm {
+  gap: var(--sp-2);
+}
+
+.mt-16 {
+  margin-top: var(--sp-4);
+}
+
+.mt-20 {
+  margin-top: var(--sp-5);
+}
+
+.mt-24 {
+  margin-top: var(--sp-6);
+}
+
+.mb-16 {
+  margin-bottom: var(--sp-4);
+}
+
+.mb-24 {
+  margin-bottom: var(--sp-6);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small-text {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.title-mt {
+  margin-top: var(--sp-4);
+}
+
+.pre-line {
+  white-space: pre-line;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+/* 链接：编辑划重点——下划线自左向右画出 */
+.u-link {
+  color: var(--accent-ink);
+  font-weight: 620;
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1.5px;
+  transition: background-size var(--dur-3) var(--ease-out), color var(--dur-2) var(--ease-out);
+  padding-bottom: 1px;
+}
+
+.u-link:hover {
+  color: var(--accent);
+  background-size: 100% 1.5px;
+}
+
+/* The old index redirect card, kept graceful */
+.error-page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--sp-6);
+  background: var(--bg);
+}
+
+.error-page > div {
+  width: min(440px, 100%);
+  padding: var(--sp-8);
+  border: var(--bw) solid var(--line-2);
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.error-copy {
+  margin: var(--sp-4) 0 var(--sp-6);
+  color: var(--muted);
+}
+
+.error-actions {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,4 @@
+-- 管理员 TOTP 二次验证
+ALTER TABLE `user`
+  ADD COLUMN `totp_secret` VARCHAR(64) NULL DEFAULT NULL,
+  ADD COLUMN `totp_enabled` TINYINT(1) NOT NULL DEFAULT 0;

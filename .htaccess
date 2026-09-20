@@ -1,0 +1,16 @@
+# 禁止直接访问敏感文件
+<FilesMatch "^(\.env|composer\.phar|db_error\.log)">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
+# Traffic optimization: gzip and long-lived static asset cache
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?|ttf)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+    </FilesMatch>
+</IfModule>

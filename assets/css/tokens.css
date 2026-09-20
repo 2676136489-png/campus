@@ -1,0 +1,238 @@
+/*
+ * Campus Circle Design Tokens — "清澈校园"
+ * 低饱和浅天蓝、干净通透的商务极简。光是"晴空"，暗色保持原有夜读配色不变。
+ * 间距以 8px 为基准栅格，圆角柔和统一，阴影单层极淡。
+ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces — 极浅蓝白系 */
+  --bg: #f4f7fa;
+  --bg-soft: #edf2f7;
+  --bg-deep: #e3ebf2;
+  --surface: #ffffff;
+  --surface-2: #f5f8fb;
+  --surface-3: #e9f0f6;
+  --surface-raised: #ffffff;
+
+  /* Ink — 冷调 slate */
+  --ink: #1e2a38;
+  --ink-2: #3b4c5e;
+  --muted: #607485;
+  --faint: #8b9aa9;
+  --faint-2: #aeb9c6;
+
+  /* Lines — 发丝线 */
+  --line: #e1e8ef;
+  --line-2: #d2dde6;
+  --line-strong: #b8c7d3;
+  --line-ink: #3b4c5e;
+
+  /* Border widths */
+  --bw: 1px;
+  --bw-strong: 1px;
+
+  /* 浅天蓝 accent — 低饱和 */
+  --accent: #4a86b8;
+  --accent-hover: #3d76a6;
+  --accent-active: #346891;
+  --accent-ink: #2f5e86;
+  --accent-soft: #e9f1f8;
+  --accent-soft-2: #d6e5f1;
+  --accent-glow: rgba(74, 134, 184, 0.16);
+
+  /* Semantic states — 同色系降饱和 */
+  --danger: #b85c55;
+  --danger-ink: #944740;
+  --danger-soft: #f8edec;
+  --success: #5e8f6a;
+  --success-ink: #487052;
+  --success-soft: #ecf3ee;
+  --warning: #a8874a;
+  --warning-ink: #82673a;
+  --warning-soft: #f6f1e4;
+  --info: #4a86b8;
+  --info-ink: #2f5e86;
+  --info-soft: #e9f1f8;
+
+  /* Shadows — 单层极淡软阴影 */
+  --shadow-xs: 0 1px 2px rgba(30, 50, 70, 0.05);
+  --shadow-sm: 0 2px 6px rgba(30, 50, 70, 0.06);
+  --shadow-md: 0 8px 24px rgba(30, 50, 70, 0.08);
+  --shadow-lg: 0 16px 48px rgba(30, 50, 70, 0.12);
+  --shadow-focus: 0 0 0 3px var(--accent-glow);
+  --shadow-inset: inset 0 0 0 999px rgba(255, 255, 255, 0);
+
+  /* Radii — 柔和统一：4 / 8 / 12 / 16 */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+  --r-pill: 999px;
+
+  /* Spacing — 8px 基准栅格（4 为微调半档） */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* Type scale */
+  --text-xs: 12px;
+  --text-sm: 13.5px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 26px;
+  --text-2xl: 34px;
+  --text-hero: 46px;
+  --leading-tight: 1.18;
+  --leading-snug: 1.32;
+  --leading-normal: 1.66;
+  --tracking-tight: -0.01em;
+  --tracking-mono: 0.02em;
+
+  /* Motion — 160~240ms，统一 ease-in-out 手感 */
+  --dur-1: 160ms;
+  --dur-2: 180ms;
+  --dur-3: 200ms;
+  --dur-4: 240ms;
+  --dur-5: 320ms;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-2: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Header / overlays — 干净平面，不再使用玻璃拟态 */
+  --glass-bg: #ffffff;
+  --glass-bg-strong: #ffffff;
+  --glass-border: var(--line);
+  --glass-blur: 0px;
+
+  /* Layout */
+  --header-h: 64px;
+  --rail-w: 236px;
+  --container: 1180px;
+  --container-narrow: 760px;
+  --content-pad: clamp(16px, 3vw, 40px);
+  --z-base: 1;
+  --z-float: 10;
+  --z-header: 40;
+  --z-dropdown: 50;
+  --z-modal: 60;
+  --z-toast: 80;
+
+  /* Fonts — 全站无衬线；--font-serif 保留为兼容别名 */
+  --font-sans: "MiSans", "HarmonyOS Sans SC", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas, "Courier New", monospace;
+
+  /* Legacy aliases for the existing template layer */
+  --paper: var(--bg);
+  --paper-deep: var(--bg-soft);
+  --surface-4: var(--surface-3);
+  --ink-3: var(--muted);
+  --line-3: var(--line-2);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-ink: var(--accent-ink);
+  --primary-soft: var(--accent-soft);
+  --primary-bright: var(--accent);
+  --amber: var(--warning);
+  --amber-soft: var(--warning-soft);
+  --c-paper: var(--bg);
+  --c-paper-deep: var(--bg-soft);
+  --c-surface: var(--surface);
+  --c-surface-2: var(--surface-2);
+  --c-surface-3: var(--surface-3);
+  --c-ink: var(--ink);
+  --c-ink-2: var(--ink-2);
+  --c-muted: var(--muted);
+  --c-faint: var(--faint);
+  --c-line: var(--line);
+  --c-line-strong: var(--line-strong);
+  --c-accent: var(--accent);
+  --c-accent-hover: var(--accent-hover);
+  --c-accent-ink: var(--accent-ink);
+  --c-accent-soft: var(--accent-soft);
+  --c-accent-bright: var(--accent);
+  --c-danger: var(--danger);
+  --c-danger-soft: var(--danger-soft);
+  --c-success: var(--success);
+  --c-success-soft: var(--success-soft);
+  --c-warning: var(--warning);
+  --c-warning-soft: var(--warning-soft);
+  --c-info: var(--info);
+  --c-info-soft: var(--info-soft);
+  --sh-xs: var(--shadow-xs);
+  --sh-sm: var(--shadow-sm);
+  --sh-md: var(--shadow-md);
+  --sh-lg: var(--shadow-lg);
+  --dur-fast: var(--dur-2);
+  --dur-base: var(--dur-3);
+  --dur-slow: var(--dur-4);
+}
+
+/* 深色模式：保留原有"夜读"配色，本次不改 */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces — 夜读：深墨纸 */
+  --bg: #171410;
+  --bg-soft: #1d1914;
+  --bg-deep: #242017;
+  --surface: #201c15;
+  --surface-2: #272217;
+  --surface-3: #2f291c;
+  --surface-raised: #262117;
+
+  --ink: #ece4d0;
+  --ink-2: #cfc4a8;
+  --muted: #9d9276;
+  --faint: #7a7057;
+  --faint-2: #5f563f;
+
+  --line: #342e21;
+  --line-2: #3e3627;
+  --line-strong: #4d442f;
+  --line-ink: #cfc4a8;
+
+  --accent: #e06544;
+  --accent-hover: #e87351;
+  --accent-active: #ef8261;
+  --accent-ink: #f0a58c;
+  --accent-soft: #3a2018;
+  --accent-soft-2: #4a2a1e;
+  --accent-glow: rgba(224, 101, 68, 0.18);
+
+  --danger: #e88a7c;
+  --danger-ink: #f4b8ad;
+  --danger-soft: #3c211c;
+  --success: #a8b878;
+  --success-ink: #c8d4a4;
+  --success-soft: #2a3018;
+  --warning: #d9b268;
+  --warning-ink: #ecd4a0;
+  --warning-soft: #352a15;
+  --info: #b3a488;
+  --info-ink: #d4c8ac;
+  --info-soft: #332d1e;
+
+  --shadow-xs: 1px 2px 0 rgba(0, 0, 0, 0.28);
+  --shadow-sm: 2px 3px 0 rgba(0, 0, 0, 0.34);
+  --shadow-md: 3px 5px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 5px 8px 0 rgba(0, 0, 0, 0.44), 0 24px 56px rgba(0, 0, 0, 0.5);
+
+  --glass-bg: rgba(23, 20, 16, 0.78);
+  --glass-bg-strong: rgba(29, 25, 20, 0.92);
+  --glass-border: rgba(236, 228, 208, 0.08);
+}
