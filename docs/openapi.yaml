@@ -1,0 +1,167 @@
+openapi: 3.0.3
+info:
+  title: Campus Circle API
+  version: 1.0.0
+  description: |
+    校园圈子 JSON API。所有写操作均需要携带 CSRF Token，
+    私信、点赞、评论等接口需要登录 Session。
+servers:
+  - url: /
+paths:
+  /api.php:
+    get:
+      summary: 获取当前用户未读通知数
+      parameters:
+        - name: action
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [unread, health]
+      responses:
+        '200':
+          description: 未读数
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  messages:
+                    type: integer
+    post:
+      summary: 执行需要登录的写操作
+      description: 通过 action 区分点赞、评论、删除评论、发送私信、撤回私信、会话设置、隐私设置、拉黑、通知已读等操作。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - like
+                    - comment
+                    - deleteComment
+                    - sendMessage
+                    - recallMessage
+                    - messagesBefore
+                    - conversationSetting
+                    - privacy
+                    - block
+                    - readNotifications
+                csrf_token:
+                  type: string
+                  description: CSRF Token，所有写操作必填
+                dynamicPk:
+                  type: integer
+                commentPk:
+                  type: integer
+                content:
+                  type: string
+                receiverPk:
+                  type: integer
+                image:
+                  type: string
+                  description: 图片消息 base64 数据或上传标识
+                messagePk:
+                  type: integer
+                beforePk:
+                  type: integer
+                otherPk:
+                  type: integer
+                field:
+                  type: string
+                value:
+                  type: string
+                allowMessages:
+                  type: string
+                showProfile:
+                  type: string
+              required:
+                - action
+      responses:
+        '200':
+          description: 操作结果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+        '400':
+          description: 参数错误或 CSRF 校验失败
+        '401':
+          description: 未登录
+  /p_captcha.php:
+    get:
+      summary: 获取验证码图片
+      parameters:
+        - name: reveal
+          in: query
+          description: 仅测试环境可用的调试参数，返回验证码明文
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 验证码图片
+  /p_doLoginStu.php:
+    post:
+      summary: 学生登录
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                pwd:
+                  type: string
+                captcha:
+                  type: string
+                csrf_token:
+                  type: string
+                agreeTerms:
+                  type: string
+              required: [userName, pwd, captcha, csrf_token, agreeTerms]
+      responses:
+        '302':
+          description: 登录成功跳转学生中心
+        '200':
+          description: 登录失败回到登录页并提示错误
+  /p_doRegisterStu.php:
+    post:
+      summary: 学生注册
+      description: 提交实名资料、头像与学生证照片，管理员审核通过后账号可用。
+      responses:
+        '302':
+          description: 注册成功跳转
+        '200':
+          description: 注册失败回到注册页
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+    UnreadCount:
+      type: object
+      properties:
+        count:
+          type: integer
+        messages:
+          type: integer

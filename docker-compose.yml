@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: circle
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: development
+      DB_HOST: db
+      DB_NAME: circle
+      DB_USER: root
+      DB_PASS: rootpass
+      DB_PORT: 3306
+      ADMIN_INITIAL_PASSWORD: Admin@123456
+    volumes:
+      - ./uploads:/var/www/html/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

@@ -1,0 +1,233 @@
+/*
+ * Campus Circle Design Tokens
+ * Neutral-first digital instrument palette.
+ * Light is the default scene; dark is a matched low-light reading mode.
+ * One accent carries all interaction energy. Everything else is gray scale.
+ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #f2f4f7;
+  --bg-soft: #e9ecf1;
+  --bg-deep: #dfe4eb;
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --surface-3: #eef1f5;
+  --surface-raised: #ffffff;
+
+  /* Ink */
+  --ink: #14181f;
+  --ink-2: #2c333d;
+  --muted: #5f6b7a;
+  --faint: #8b95a3;
+  --faint-2: #aab3bf;
+
+  /* Lines */
+  --line: #e3e7ed;
+  --line-2: #d6dce4;
+  --line-strong: #c6ced8;
+
+  /* Single accent */
+  --accent: #0033a0;
+  --accent-hover: #002a85;
+  --accent-active: #00246f;
+  --accent-ink: #002566;
+  --accent-soft: #e8eef9;
+  --accent-soft-2: #dbe4f5;
+  --accent-glow: rgba(0, 51, 160, 0.14);
+
+  /* Semantic states */
+  --danger: #b3403c;
+  --danger-ink: #8f2f2c;
+  --danger-soft: #fcefee;
+  --success: #25745a;
+  --success-ink: #195a45;
+  --success-soft: #e9f6f1;
+  --warning: #9a6b1f;
+  --warning-ink: #79531a;
+  --warning-soft: #faf3e4;
+  --info: #3f6e8c;
+  --info-ink: #2d566f;
+  --info-soft: #eaf3f7;
+
+  /* Shadows: offset + soft blur only */
+  --shadow-xs: 0 1px 2px rgba(18, 24, 34, 0.04), 0 1px 1px rgba(18, 24, 34, 0.02);
+  --shadow-sm: 0 2px 6px rgba(18, 24, 34, 0.04), 0 1px 2px rgba(18, 24, 34, 0.04);
+  --shadow-md: 0 12px 28px rgba(18, 24, 34, 0.08), 0 2px 8px rgba(18, 24, 34, 0.04);
+  --shadow-lg: 0 28px 72px rgba(18, 24, 34, 0.12), 0 6px 18px rgba(18, 24, 34, 0.06);
+  --shadow-focus: 0 0 0 3px var(--accent-glow);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(18, 24, 34, 0.04);
+
+  /* Radii */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+  --r-pill: 999px;
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* Type scale */
+  --text-xs: 12px;
+  --text-sm: 13.5px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 26px;
+  --text-2xl: 34px;
+  --text-hero: 46px;
+  --leading-tight: 1.18;
+  --leading-snug: 1.32;
+  --leading-normal: 1.62;
+  --tracking-tight: -0.02em;
+  --tracking-mono: 0.02em;
+
+  /* Motion */
+  --dur-1: 90ms;
+  --dur-2: 160ms;
+  --dur-3: 260ms;
+  --dur-4: 420ms;
+  --dur-5: 640ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-2: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.68);
+  --glass-bg-strong: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-blur: 18px;
+
+  /* Layout */
+  --header-h: 64px;
+  --rail-w: 236px;
+  --container: 1180px;
+  --container-narrow: 760px;
+  --content-pad: clamp(16px, 3vw, 40px);
+  --z-base: 1;
+  --z-float: 10;
+  --z-header: 40;
+  --z-dropdown: 50;
+  --z-modal: 60;
+  --z-toast: 80;
+
+  /* Fonts */
+  --font-sans: "MiSans", "HarmonyOS Sans SC", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas, "Courier New", monospace;
+
+  /* Legacy aliases for the existing template layer */
+  --paper: var(--bg);
+  --paper-deep: var(--bg-soft);
+  --surface-4: var(--surface-3);
+  --ink-3: var(--muted);
+  --line-3: var(--line-2);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-ink: var(--accent-ink);
+  --primary-soft: var(--accent-soft);
+  --primary-bright: var(--accent);
+  --amber: var(--warning);
+  --amber-soft: var(--warning-soft);
+  --c-paper: var(--bg);
+  --c-paper-deep: var(--bg-soft);
+  --c-surface: var(--surface);
+  --c-surface-2: var(--surface-2);
+  --c-surface-3: var(--surface-3);
+  --c-ink: var(--ink);
+  --c-ink-2: var(--ink-2);
+  --c-muted: var(--muted);
+  --c-faint: var(--faint);
+  --c-line: var(--line);
+  --c-line-strong: var(--line-strong);
+  --c-accent: var(--accent);
+  --c-accent-hover: var(--accent-hover);
+  --c-accent-ink: var(--accent-ink);
+  --c-accent-soft: var(--accent-soft);
+  --c-accent-bright: var(--accent);
+  --c-danger: var(--danger);
+  --c-danger-soft: var(--danger-soft);
+  --c-success: var(--success);
+  --c-success-soft: var(--success-soft);
+  --c-warning: var(--warning);
+  --c-warning-soft: var(--warning-soft);
+  --c-info: var(--info);
+  --c-info-soft: var(--info-soft);
+  --sh-xs: var(--shadow-xs);
+  --sh-sm: var(--shadow-sm);
+  --sh-md: var(--shadow-md);
+  --sh-lg: var(--shadow-lg);
+  /* 注意：--r-* 的别名绝不能写成 var(--r-*) 自引用——CSS 变量循环引用会在
+     computed 阶段整体失效且不回退，导致全站圆角塌成 0（真实踩坑）。 */
+  --dur-fast: var(--dur-2);
+  --dur-base: var(--dur-3);
+  --dur-slow: var(--dur-4);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0d1015;
+  --bg-soft: #12161d;
+  --bg-deep: #181d26;
+  --surface: #161b24;
+  --surface-2: #1b212c;
+  --surface-3: #222a37;
+  --surface-raised: #1d2430;
+
+  --ink: #eef2f7;
+  --ink-2: #c7d0dd;
+  --muted: #8b97a8;
+  --faint: #66738a;
+  --faint-2: #4e5a6e;
+
+  --line: #252e3d;
+  --line-2: #2d3747;
+  --line-strong: #3a4659;
+
+  --accent: #7ba4ff;
+  --accent-hover: #8fb0ff;
+  --accent-active: #a3bbff;
+  --accent-ink: #c8d6ff;
+  --accent-soft: #16264a;
+  --accent-soft-2: #1d3360;
+  --accent-glow: rgba(127, 155, 255, 0.18);
+
+  --danger: #ef8b87;
+  --danger-ink: #ffc1bd;
+  --danger-soft: #3a2024;
+  --success: #7cc59a;
+  --success-ink: #b3e3c8;
+  --success-soft: #1d3528;
+  --warning: #e0b36a;
+  --warning-ink: #f2d49c;
+  --warning-soft: #3a2e1a;
+  --info: #8bc4d8;
+  --info-ink: #bfe0ec;
+  --info-soft: #1c2f3a;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.24), 0 1px 1px rgba(0, 0, 0, 0.16);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.36), 0 2px 8px rgba(0, 0, 0, 0.22);
+  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.46), 0 6px 18px rgba(0, 0, 0, 0.3);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+
+  --glass-bg: rgba(22, 27, 36, 0.68);
+  --glass-bg-strong: rgba(27, 33, 44, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}

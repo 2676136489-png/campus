@@ -1,0 +1,24 @@
+# 运行时文件
+uploads/
+照片/
+db_error.log
+*.log
+*.tmp
+
+# 配置与依赖
+.env
+vendor/
+node_modules/
+test-results/
+playwright-report/
+composer.phar
+.phpunit.result.cache
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# ?? skill ??
+.agents/
+skills-lock.json
+var/
