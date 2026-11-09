@@ -22,3 +22,11 @@ Thumbs.db
 .agents/
 skills-lock.json
 var/
+
+# 求职/面试材料（永不入库）
+*面试*
+*interview*
+*Interview*
+*简历*
+*resume*
+*resume*.pdf
