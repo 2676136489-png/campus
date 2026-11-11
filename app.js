@@ -1919,3 +1919,76 @@ if (action === 'favorite') {
         }
     });
 })();
+/* 侧栏「猜你喜欢」换一批：只换这三个标签，不整页刷新 */
+(function () {
+    'use strict';
+
+    var root = document.querySelector('[data-rail-picks]');
+    if (!root) {
+        return;
+    }
+    var list = root.querySelector('[data-rail-picks-list]');
+    var btn = root.querySelector('[data-rail-refresh]');
+    if (!list || !btn) {
+        return;
+    }
+
+    var busy = false;
+
+    function currentTags() {
+        return Array.prototype.map.call(list.querySelectorAll('[data-tag]'), function (link) {
+            return link.getAttribute('data-tag') || '';
+        }).filter(function (tag) {
+            return tag !== '';
+        });
+    }
+
+    function restoreLabel(text) {
+        var label = btn.querySelector('span');
+        if (!label) {
+            return;
+        }
+        var original = label.textContent;
+        label.textContent = text;
+        setTimeout(function () {
+            label.textContent = original;
+        }, 1600);
+    }
+
+    btn.addEventListener('click', function () {
+        if (busy) {
+            return;
+        }
+        busy = true;
+        btn.disabled = true;
+        btn.classList.add('is-loading');
+
+        var tab = window.getTabToken ? window.getTabToken() : '';
+        var url = 'p_pickTags.php?exclude=' + encodeURIComponent(currentTags().join(','))
+            + (tab ? '&tab=' + encodeURIComponent(tab) : '');
+
+        fetch(url, {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin'
+        }).then(function (res) {
+            if (!res.ok) {
+                throw new Error('HTTP ' + res.status);
+            }
+            return res.json();
+        }).then(function (data) {
+            if (!data || !data.ok || !data.html) {
+                throw new Error('empty');
+            }
+            list.innerHTML = data.html;
+            list.classList.remove('is-refreshed');
+            void list.offsetWidth; // 重排后再加类，动画才会重新触发
+            list.classList.add('is-refreshed');
+        }).catch(function () {
+            restoreLabel('稍后再试');
+        }).then(function () {
+            busy = false;
+            btn.disabled = false;
+            btn.classList.remove('is-loading');
+        });
+    });
+})();

@@ -6,9 +6,12 @@ require_once __DIR__ . '/lib/autoload.php';
  * Shared layout helpers for the Campus Circle interface.
  */
 
+/**
+ * 站点标志：光圈（六片叶片收拢成一个开口，相机里的光圈本来就叫「圈」）。
+ * 内联而不是走 <img>，避免首屏闪一下空位；id 统一加 bmk 前缀防止和其它 svg 抢。
+ */
 function iconMark() {
-    return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M8.5 24V13.5a7.5 7.5 0 0 1 15 0V24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M11.5 24v-3.2h2.1V24M18.4 24v-3.2h2.1V24" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><circle cx="24.5" cy="7.5" r="2.3" fill="currentColor"/></svg></span>';
-    return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/></svg></span>';
+    return '<span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><radialGradient id="bmkm1" cx="0.28" cy="0.2" r="0.62"><stop offset="0" stop-color="#A6F7D6" stop-opacity="1"/><stop offset="1" stop-color="#A6F7D6" stop-opacity="0"/></radialGradient><radialGradient id="bmkm2" cx="0.78" cy="0.16" r="0.6"><stop offset="0" stop-color="#45D9C4" stop-opacity="1"/><stop offset="1" stop-color="#45D9C4" stop-opacity="0"/></radialGradient><radialGradient id="bmkm3" cx="0.86" cy="0.76" r="0.62"><stop offset="0" stop-color="#3E9BE8" stop-opacity="1"/><stop offset="1" stop-color="#3E9BE8" stop-opacity="0"/></radialGradient><radialGradient id="bmkm4" cx="0.18" cy="0.82" r="0.62"><stop offset="0" stop-color="#6D6DF0" stop-opacity="1"/><stop offset="1" stop-color="#6D6DF0" stop-opacity="0"/></radialGradient><radialGradient id="bmkvDepth" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#06382F" stop-opacity="0.34"/><stop offset="0.34" stop-color="#06382F" stop-opacity="0.12"/><stop offset="0.62" stop-color="#06382F" stop-opacity="0"/></radialGradient><mask id="bmkvMask"><circle cx="256" cy="256" r="206" fill="#fff"/><path d="M 335.67 302.00 L 256.00 348.00 L 176.33 302.00 L 176.33 210.00 L 256.00 164.00 L 335.67 210.00 Z" fill="#000"/><path d="M 257.50 182.00 L 326.70 53.84 L 310.44 48.87 L 254.50 182.00 Z" fill="#000"/><path d="M 320.84 220.30 L 466.43 216.14 L 462.60 199.58 L 319.34 217.70 Z" fill="#000"/><path d="M 319.34 294.30 L 395.73 418.31 L 408.16 406.71 L 320.84 291.70 Z" fill="#000"/><path d="M 254.50 330.00 L 185.30 458.16 L 201.56 463.13 L 257.50 330.00 Z" fill="#000"/><path d="M 191.16 291.70 L 45.57 295.86 L 49.40 312.42 L 192.66 294.30 Z" fill="#000"/><path d="M 192.66 217.70 L 116.27 93.69 L 103.84 105.29 L 191.16 220.30 Z" fill="#000"/></mask></defs><g mask="url(#bmkvMask)"><circle cx="256" cy="256" r="206" fill="#4FD3AE"/><circle cx="256" cy="256" r="206" fill="url(#bmkm1)"/><circle cx="256" cy="256" r="206" fill="url(#bmkm2)"/><circle cx="256" cy="256" r="206" fill="url(#bmkm3)"/><circle cx="256" cy="256" r="206" fill="url(#bmkm4)"/><circle cx="256" cy="256" r="206" fill="url(#bmkvDepth)"/></g></svg></span>';
 }
 
 function icon($name, $size = 18) {
@@ -79,24 +82,35 @@ function icon($name, $size = 18) {
 
 function circleIconFor($tag) {
     static $map = [
-        '摄影' => 'camera', '电影' => 'film', '动漫' => 'film', '二次元' => 'film',
-        '音乐' => 'music', '乐器' => 'music', '舞蹈' => 'music',
-        '篮球' => 'ball', '羽毛球' => 'ball', '乒乓球' => 'ball',
+        '摄影' => 'camera', '拍照' => 'camera', '电影' => 'film', '动漫' => 'film', '二次元' => 'film',
+        '音乐' => 'music', '乐器' => 'music', '舞蹈' => 'music', '吉他' => 'music', '唱歌' => 'music', '乐队' => 'music',
+        '篮球' => 'ball', '羽毛球' => 'ball', '乒乓球' => 'ball', '足球' => 'ball', '操场' => 'ball', '球场' => 'ball',
         '阅读' => 'book', '写作' => 'book', '外语' => 'book', '心理学' => 'book',
-        '编程' => 'gamepad', '游戏' => 'gamepad', '电竞' => 'gamepad', '桌游' => 'gamepad',
-        '跑步' => 'dumbbell', '健身' => 'dumbbell', '骑行' => 'dumbbell', '滑板' => 'dumbbell',
-        '美食' => 'coffee', '咖啡' => 'coffee',
-        '绘画' => 'pen', '汉服' => 'tag', '旅行' => 'pin', '志愿' => 'heart',
-        '辩论' => 'chat', '天文' => 'eye',
+        '学习' => 'book', '作业' => 'book', '复习' => 'book', '考试' => 'book', '简历' => 'book',
+        '编程' => 'gamepad', '代码' => 'gamepad', '游戏' => 'gamepad', '电竞' => 'gamepad', '桌游' => 'gamepad',
+        '网站' => 'feed', '技术' => 'feed',
+        '跑步' => 'dumbbell', '健身' => 'dumbbell', '骑行' => 'dumbbell', '滑板' => 'dumbbell', '减肥' => 'dumbbell',
+        '美食' => 'coffee', '咖啡' => 'coffee', '食堂' => 'coffee', '干饭' => 'coffee', '夜宵' => 'coffee',
+        '绘画' => 'pen', '设计' => 'pen', '手作' => 'pen',
+        '汉服' => 'tag', '旅行' => 'pin', '长春' => 'pin', '出游' => 'pin', '周边游' => 'pin',
+        '志愿' => 'heart', '公益' => 'heart',
+        '辩论' => 'chat', '面试' => 'chat', '聊天' => 'chat',
+        '天文' => 'eye', '展览' => 'eye', '看展' => 'eye', '演出' => 'eye',
+        '社团' => 'users', '聚会' => 'users', '组织' => 'users',
+        '宿舍' => 'home', '寝室' => 'home',
+        '周末' => 'calendar', '放假' => 'calendar', '假期' => 'calendar', '节假日' => 'calendar',
+        '秋招' => 'id', '求职' => 'id', '实习' => 'id',
+        '实验室' => 'school', '科研' => 'school',
     ];
     return $map[$tag] ?? 'hash';
 }
 
 /**
- * 侧栏「兴趣圈子」数据源：聚合学生兴趣标签，取使用人数最多的前 N 个。
- * 查询失败时静默返回空数组（分组整体不渲染，不影响页面主功能）。
+ * 「猜你喜欢」标签池：聚合已有动态（status=normal）用过的标签。
+ * 过滤规则：2-8 个汉字或字母，纯数字开头/带标点/过长的碎片标签一律不要，
+ * 否则会推荐出「91卢先生」这类只能命中一条动态的脏数据。
  */
-function railCircleTags($limit = 6) {
+function dynamicTagPool() {
     static $cached = null;
     if ($cached !== null) {
         return $cached;
@@ -104,13 +118,13 @@ function railCircleTags($limit = 6) {
     $cached = [];
     try {
         $conn = dbConnect();
-        $res = $conn->query("SELECT `tags` FROM `student` WHERE `tags` IS NOT NULL AND `tags` <> '' LIMIT 2000");
+        $res = $conn->query("SELECT `tags` FROM `dynamic` WHERE `status` = 'normal' AND `tags` <> '' LIMIT 5000");
         if ($res) {
             $counter = [];
             while ($row = $res->fetch_assoc()) {
                 foreach (explode(',', (string)$row['tags']) as $piece) {
                     $piece = trim($piece);
-                    if ($piece === '') {
+                    if ($piece === '' || !preg_match('/^[\p{Han}A-Za-z]{2,8}$/u', $piece)) {
                         continue;
                     }
                     $counter[$piece] = ($counter[$piece] ?? 0) + 1;
@@ -118,13 +132,98 @@ function railCircleTags($limit = 6) {
             }
             $res->free();
             arsort($counter);
-            $cached = array_slice(array_keys($counter), 0, $limit);
+            $cached = $counter;
         }
         $conn->close();
     } catch (Throwable $e) {
-        // 侧栏圈子分组属增强内容，数据源异常时降级为不展示。
+        // 侧栏推荐属增强内容，数据源异常时降级为不展示。
     }
     return $cached;
+}
+
+/**
+ * 从动态标签池里随机挑 $limit 个。
+ * 同一 session 内保持稳定（翻页不会跳），只有带 $refresh=true 的「换一批」才重抽。
+ *
+ * @param int   $limit   要几个
+ * @param array $exclude 尽量避开的标签（一般是当前展示中的那几个）
+ * @param bool  $refresh 是否强制重抽
+ */
+function railPickTags($limit = 3, array $exclude = [], $refresh = false) {
+    static $memo = null;
+    if (!$refresh && $memo !== null) {
+        return $memo;
+    }
+    $pool = dynamicTagPool();
+    if (empty($pool)) {
+        return [];
+    }
+    $hasSession = session_status() === PHP_SESSION_ACTIVE;
+    $sessionKey = 'rail_pick_tags';
+
+    if (!$refresh && $hasSession && !empty($_SESSION[$sessionKey])) {
+        $saved = array_values(array_filter((array)$_SESSION[$sessionKey], function ($tag) use ($pool) {
+            return isset($pool[$tag]);
+        }));
+        if (!empty($saved)) {
+            $memo = $saved;
+            return $memo;
+        }
+    }
+
+    $candidates = $pool;
+    $exclude = array_values(array_intersect($exclude, array_keys($candidates)));
+    // 池子太小就别硬排除，否则会一直只能抽到同一批。
+    if (count($candidates) - count($exclude) < $limit) {
+        $exclude = [];
+    }
+    foreach ($exclude as $excludedTag) {
+        unset($candidates[$excludedTag]);
+    }
+
+    // 按标签被用过多少次做加权不放回抽样：用得多的更容易被推荐到，
+    // 但冷门标签仍有机会，不至于来来回回就那几个。
+    $picked = [];
+    while (count($picked) < $limit && !empty($candidates)) {
+        $before = count($picked);
+        $total = (int)array_sum($candidates);
+        $roll = mt_rand(1, max(1, $total));
+        $acc = 0;
+        foreach ($candidates as $tag => $weight) {
+            $acc += (int)$weight;
+            if ($roll <= $acc) {
+                $picked[] = (string)$tag;
+                unset($candidates[$tag]);
+                break;
+            }
+        }
+        if (count($picked) === $before) {
+            break; // 兜底：极端权重下没抽中，避免死循环
+        }
+    }
+
+    if ($hasSession) {
+        $_SESSION[$sessionKey] = $picked;
+    }
+    $memo = $picked;
+    return $picked;
+}
+
+/**
+ * 渲染侧栏推荐链接。首屏和「换一批」接口共用同一份 HTML，样式不漂移。
+ */
+function railPickTagHtml(array $tags) {
+    $currentTag = isset($_GET['tag']) ? trim((string)$_GET['tag']) : '';
+    $html = '';
+    foreach ($tags as $tag) {
+        $tag = (string)$tag;
+        if ($tag === '') {
+            continue;
+        }
+        $active = ($currentTag !== '' && $currentTag === $tag) ? ' active' : '';
+        $html .= '<a class="rail-link rail-circle' . $active . '" data-tag="' . h($tag) . '" title="' . h($tag) . '相关动态" href="p_dynamics.php?tag=' . h(urlencode($tag)) . '">' . icon(circleIconFor($tag), 19) . '<span>' . h($tag) . '</span></a>';
+    }
+    return $html;
 }
 
 function renderHead($title, $description = '') {
@@ -147,9 +246,12 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r5">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r5">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r8" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r8">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r8">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r8">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r8">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r8">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -193,14 +295,15 @@ function renderSiteHeader($opts = []) {
         }
         echo '<a class="rail-link' . $active . '"' . ($active !== '' ? ' aria-current="page"' : '') . ' title="' . h($item['label']) . '" href="' . h($item['href']) . '">' . icon($navIcon, 19) . '<span>' . h($item['label']) . '</span></a>' . "\n";
     }
-    $circleTags = railCircleTags();
-    if (!empty($circleTags)) {
-        $currentTag = isset($_GET['tag']) ? trim((string)$_GET['tag']) : '';
-        echo '<div class="rail-section-label">兴趣圈子</div>' . "\n";
-        foreach ($circleTags as $circleTag) {
-            $circleActive = ($currentTag !== '' && $currentTag === $circleTag) ? ' active' : '';
-            echo '<a class="rail-link rail-circle' . $circleActive . '" title="' . h($circleTag) . '圈子" href="p_dynamics.php?tag=' . h(urlencode($circleTag)) . '">' . icon(circleIconFor($circleTag), 19) . '<span>' . h($circleTag) . '</span></a>' . "\n";
-        }
+    $pickTags = railPickTags(3);
+    if (!empty($pickTags)) {
+        echo '<div class="rail-picks" data-rail-picks>' . "\n";
+        echo '<div class="rail-section-label">猜你喜欢</div>' . "\n";
+        echo '<div class="rail-picks-list" data-rail-picks-list aria-live="polite">' . "\n";
+        echo railPickTagHtml($pickTags);
+        echo '</div>' . "\n";
+        echo '<button type="button" class="rail-refresh" data-rail-refresh aria-label="换一批推荐标签">' . icon('refresh', 15) . '<span>换一批</span></button>' . "\n";
+        echo '</div>' . "\n";
     }
     echo '</nav>' . "\n";
     echo '<div class="rail-foot">' . "\n";
@@ -255,7 +358,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r5"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r8"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -348,9 +451,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r5">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r5">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r8" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r8">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r8">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r8">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r8">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r8">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -375,12 +481,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r5"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r8"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r5';
+    $v = '20261111r8';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

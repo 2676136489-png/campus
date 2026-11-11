@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#5fc4a2"/><path d="M8.5 24V13.5a7.5 7.5 0 0 1 15 0V24" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M11.5 24v-3.2h2.1V24M18.4 24v-3.2h2.1V24" stroke="#fff" stroke-width="2.1" stroke-linecap="round" fill="none"/><circle cx="24.5" cy="7.5" r="2.3" fill="#fff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <mask id="vmMask">
+      <circle cx="256" cy="256" r="206" fill="#fff"/>
+      <path d="M 347.80 309.00 L 256.00 362.00 L 164.20 309.00 L 164.20 203.00 L 256.00 150.00 L 347.80 203.00 Z" fill="#000"/>
+      <path d="M 256.00 160.00 L 329.19 54.91" stroke="#000" stroke-width="38" stroke-linecap="round" fill="none"/><path d="M 339.14 304.00 L 393.56 419.93" stroke="#000" stroke-width="38" stroke-linecap="round" fill="none"/><path d="M 172.86 304.00 L 45.25 293.16" stroke="#000" stroke-width="38" stroke-linecap="round" fill="none"/>
+    </mask>
+    <linearGradient id="vmG" x1="0.05" y1="0" x2="0.95" y2="1">
+      <stop offset="0" stop-color="#7CECC4"/>
+      <stop offset="0.42" stop-color="#2FC9B0"/>
+      <stop offset="0.72" stop-color="#3796E0"/>
+      <stop offset="1" stop-color="#5A5FE0"/>
+    </linearGradient>
+  </defs>
+  <g mask="url(#vmMask)">
+    <circle cx="256" cy="256" r="206" fill="url(#vmG)"/>
+  </g>
+</svg>

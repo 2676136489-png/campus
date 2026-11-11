@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/p_manageDB.php';
 require_once __DIR__ . '/p_layout.php';
 
 // 自定义 404：地址不存在时由站点配置指向本页（Apache ErrorDocument / Nginx error_page）。
