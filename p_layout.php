@@ -246,12 +246,12 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r8" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r8">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r8">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r8">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r8">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r8">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r10" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r10">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r10">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r10">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r10">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r10">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -293,7 +293,10 @@ function renderSiteHeader($opts = []) {
             echo '<div class="rail-section-label">' . h($section) . '</div>' . "\n";
             $lastSection = $section;
         }
-        echo '<a class="rail-link' . $active . '"' . ($active !== '' ? ' aria-current="page"' : '') . ' title="' . h($item['label']) . '" href="' . h($item['href']) . '">' . icon($navIcon, 19) . '<span>' . h($item['label']) . '</span></a>' . "\n";
+        // 四个主入口给彩色插画牌，其余入口退回「淡色底 + 线条」的次级样式
+        $tile = navTile($item['label'], $active !== '');
+        $linkClass = 'rail-link' . $active . ($tile !== '' ? '' : ' rail-link--soft');
+        echo '<a class="' . $linkClass . '"' . ($active !== '' ? ' aria-current="page"' : '') . ' title="' . h($item['label']) . '" href="' . h($item['href']) . '">' . ($tile !== '' ? $tile : icon($navIcon, 19)) . '<span>' . h($item['label']) . '</span></a>' . "\n";
     }
     $pickTags = railPickTags(3);
     if (!empty($pickTags)) {
@@ -358,7 +361,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r8"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r10"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -366,11 +369,11 @@ function renderSiteFooter($opts = []) {
     } elseif (!empty($_SESSION['adminName'])) {
         echo '<script>window.difyChatbotConfig={token:"ysipenxIDyTtnfRT",baseUrl:"https://udify.app",inputs:{},systemVariables:{},userVariables:{}};</script>';
         echo '<script src="https://udify.app/embed.min.js" id="ysipenxIDyTtnfRT" defer></script>';
-        echo '<style>#dify-chatbot-bubble-button{background-color:#5fc4a2!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
+        echo '<style>#dify-chatbot-bubble-button{background-image:linear-gradient(135deg,#0052d9,#00a4ff)!important;background-color:#0052d9!important;box-shadow:0 10px 24px -10px rgba(0,82,217,.6)!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
     } elseif (!empty($_SESSION['userName'])) {
         echo '<script>window.difyChatbotConfig={token:"6evfFJQ2FdKb70eI",baseUrl:"https://udify.app",inputs:{},systemVariables:{},userVariables:{}};</script>';
         echo '<script src="https://udify.app/embed.min.js" id="6evfFJQ2FdKb70eI" defer></script>';
-        echo '<style>#dify-chatbot-bubble-button{background-color:#5fc4a2!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
+        echo '<style>#dify-chatbot-bubble-button{background-image:linear-gradient(135deg,#0052d9,#00a4ff)!important;background-color:#0052d9!important;box-shadow:0 10px 24px -10px rgba(0,82,217,.6)!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
     }
     echo '</body>' . "\n";
     echo '</html>' . "\n";
@@ -451,12 +454,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r8" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r8">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r8">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r8">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r8">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r8">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r10" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r10">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r10">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r10">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r10">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r10">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -481,12 +484,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r8"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r10"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r8';
+    $v = '20261111r10';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";
@@ -517,6 +520,63 @@ function navIconFor($label) {
     ];
     return isset($map[$label]) ? $map[$label] : 'more';
 }
+
+/**
+ * 侧栏主入口的彩色插画牌：48 网格圆角方牌 + 白色剪影。
+ * 为什么不用 CSS 画：方牌是渐变，选中项还要换成「白牌 + 本色图案」，
+ * 两种状态各出一份 SVG 比在 CSS 里反推渐变最省事，也不受旧层样式干扰。
+ * 颜色走 --cue-* 变量（style 属性里带 hex 兜底），深色模式下会自动变亮一档。
+ */
+function navTileGlyph($name) {
+    static $g = [
+        'home' => '<path d="M24 11.5 37 22.4v11.4a3.1 3.1 0 0 1-3.1 3.1H14.1A3.1 3.1 0 0 1 11 33.8V22.4Z" fill="#fff"/>'
+            . '<rect x="20.6" y="27.5" width="6.8" height="9.4" rx="1.8" fill="#000" fill-opacity=".16"/>',
+        'feed' => '<rect x="11" y="12" width="26" height="19" rx="6" fill="#fff"/>'
+            . '<path d="M17.5 31 17.5 37.5 25 31Z" fill="#fff"/>'
+            . '<rect x="16" y="18" width="16" height="2.6" rx="1.3" fill="#000" fill-opacity=".15"/>'
+            . '<rect x="16" y="23" width="10" height="2.6" rx="1.3" fill="#000" fill-opacity=".15"/>',
+        'people' => '<circle cx="19" cy="19" r="5.2" fill="#fff"/>'
+            . '<path d="M9 34.5c0-5.3 4.4-8.6 10-8.6s10 3.3 10 8.6z" fill="#fff"/>'
+            . '<circle cx="31.5" cy="20.5" r="4.2" fill="#fff" fill-opacity=".92"/>'
+            . '<path d="M25 34.5c0-4.6 3.2-7.6 7.6-7.6 3.6 0 6.4 2.2 6.4 7.6z" fill="#fff" fill-opacity=".92"/>',
+        'spark' => '<path d="M24 10.5c1.3 7.2 3.8 9.7 11 11-7.2 1.3-9.7 3.8-11 11-1.3-7.2-3.8-9.7-11-11 7.2-1.3 9.7-3.8 11-11z" fill="#fff"/>'
+            . '<circle cx="33.5" cy="31.5" r="3.2" fill="#fff" fill-opacity=".9"/>',
+    ];
+    return isset($g[$name]) ? $g[$name] : '';
+}
+
+function navTile($label, $active = false, $size = 24) {
+    // 四个主入口各一对颜色，和 tokens.css 里的 --cue-1..4 同源
+    static $map = [
+        '学生中心' => ['home', '--cue-1', '#0052d9'],
+        '动态广场' => ['feed', '--cue-2', '#00a4ff'],
+        '同学' => ['people', '--cue-3', '#7a5cff'],
+        'AI 助手' => ['spark', '--cue-4', '#00c2a8'],
+    ];
+    static $seq = 0;
+    if (!isset($map[$label])) {
+        return '';
+    }
+    list($glyph, $cue, $hex) = $map[$label];
+    $body = navTileGlyph($glyph);
+    $seq++;
+    $head = '<svg class="icon" width="' . (int)$size . '" height="' . (int)$size . '" viewBox="0 0 48 48" aria-hidden="true">';
+    if ($active) {
+        // 选中项：白牌 + 本色图案。本色用 hex 而不是变量——牌底是白的，
+        // 深色模式下也不需要换色。
+        return $head . '<rect x="1" y="1" width="46" height="46" rx="14" fill="#ffffff"/>'
+            . str_replace('fill="#fff"', 'fill="' . $hex . '"', $body) . '</svg>';
+    }
+    $id = 'nt' . $seq . '-' . substr(md5($glyph . $cue), 0, 5);
+    return $head
+        . '<defs><linearGradient id="' . $id . '" x1="0" y1="0" x2="1" y2="1">'
+        . '<stop offset="0" style="stop-color:var(' . $cue . ',#0052d9)"/>'
+        . '<stop offset="1" style="stop-color:var(' . $cue . '-2,#3d84ff)"/>'
+        . '</linearGradient></defs>'
+        . '<rect x="1" y="1" width="46" height="46" rx="14" fill="url(#' . $id . ')"/>'
+        . $body . '</svg>';
+}
+
 
 function renderThemeToggle() {
     return '<button type="button" class="theme-switch" data-theme-toggle role="switch" aria-checked="false" aria-label="切换明暗主题">'

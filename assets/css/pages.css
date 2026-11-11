@@ -2180,8 +2180,12 @@
 
 /* Theme-aware auth scene: no white box, no sweep line, text above radar */
 .auth-visual {
+  /* 左栏是登录页唯一的大色块：三团彩光（蓝 / 紫 / 亮蓝）叠在淡蓝渐变上，
+     和登录后的页面同一套 --wash-*，避免「首页很蓝、登录页发白」的割裂。 */
   background:
-    radial-gradient(120% 90% at 16% 4%, var(--accent-glow), transparent 54%),
+    radial-gradient(88% 68% at 12% 0%, var(--wash-1), transparent 58%),
+    radial-gradient(78% 66% at 98% 8%, var(--wash-3), transparent 60%),
+    radial-gradient(120% 88% at 62% 110%, var(--wash-2), transparent 62%),
     linear-gradient(150deg, var(--surface), var(--accent-soft));
 }
 

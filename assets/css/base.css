@@ -70,6 +70,15 @@ body {
   min-height: 100dvh;
   margin: 0;
   background: var(--bg);
+  /* 四团极淡的彩光铺在纸面上：蓝 / 亮蓝 / 紫 / 青，位置固定不随滚动，
+     卡片是纯白的，所以颜色只在缝隙里透出来，不抢正文。 */
+  background-image:
+    radial-gradient(880px 520px at 0% -12%, var(--wash-1), transparent 64%),
+    radial-gradient(820px 520px at 100% -6%, var(--wash-2), transparent 64%),
+    radial-gradient(900px 560px at 58% 118%, var(--wash-3), transparent 66%),
+    radial-gradient(760px 480px at 26% 56%, var(--wash-4), transparent 68%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);

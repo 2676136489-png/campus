@@ -7,41 +7,70 @@
 :root {
   color-scheme: light;
 
-  /* Surfaces */
-  --bg: #fafdf8;
-  --bg-soft: #f3f9f2;
-  --bg-deep: #ebf4ea;
+  /* Surfaces：腾讯官网那种极淡的蓝白，不是灰白 */
+  --bg: #f6faff;
+  --bg-soft: #eaf2ff;
+  --bg-deep: #dbe8ff;
   --surface: #ffffff;
-  --surface-2: #f7fbf6;
-  --surface-3: #eff6ee;
+  --surface-2: #f8fbff;
+  --surface-3: #edf4ff;
   --surface-raised: #ffffff;
 
   /* Ink */
-  --ink: #333333;
-  --ink-2: #4a4a4a;
-  --muted: #717171;
-  --faint: #9a9a9a;
-  --faint-2: #b8b8b8;
+  --ink: #0f1b33;
+  --ink-2: #2d3f5e;
+  --muted: #5f7292;
+  --faint: #8b9cb8;
+  --faint-2: #b3c1d6;
 
   /* Lines */
-  --line: #e6efe4;
-  --line-2: #dbe8d8;
-  --line-strong: #ccdec9;
+  --line: #dfeafb;
+  --line-2: #cddef7;
+  --line-strong: #b4cbf0;
 
-  /* Mint accent */
-  --accent: #5fc4a2;
-  --accent-hover: #4fb593;
-  --accent-active: #43a685;
-  --accent-ink: #2e7d63;
-  --accent-soft: #e9f7f1;
-  --accent-soft-2: #d9f0e6;
-  --accent-glow: rgba(134, 211, 184, 0.35);
-  --accent-bright: #86d3b8;
+  /* Tencent blue accent（#0052D9 取自腾讯官网主色） */
+  --accent: #0052d9;
+  --accent-hover: #0046bd;
+  --accent-active: #003da6;
+  --accent-ink: #003a9e;
+  --accent-soft: #e8f0ff;
+  --accent-soft-2: #d3e2ff;
+  --accent-glow: rgba(0, 82, 217, 0.26);
+  --accent-bright: #3d84ff;
 
-  /* Warm orange highlight（次强调：活动/标签/徽章） */
-  --accent-warm: #ffb878;
-  --accent-warm-soft: #fff3e6;
-  --accent-warm-ink: #b26a1f;
+  /* 次强调：#00A4FF 亮蓝 */
+  --accent-warm: #00a4ff;
+  --accent-warm-soft: #e4f5ff;
+  --accent-warm-ink: #0069a8;
+
+  /* 渐变三色：主按钮、激活胶囊、标题渐变共用 */
+  --grad-1: #0052d9;
+  --grad-2: #00a4ff;
+  --grad-3: #7a5cff;
+
+  /* 四色提示：侧栏图标牌 / 标签 / 推荐标签共用同一组色 */
+  --cue-1: #0052d9;
+  --cue-1-2: #3d84ff;
+  --cue-2: #00a4ff;
+  --cue-2-2: #00e0ff;
+  --cue-3: #7a5cff;
+  --cue-3-2: #b18cff;
+  --cue-4: #00c2a8;
+  --cue-4-2: #4ff0c8;
+  --tag-1-bg: #e6efff;
+  --tag-1-ink: #0040b0;
+  --tag-2-bg: #e2f6ff;
+  --tag-2-ink: #0069a8;
+  --tag-3-bg: #f0e9ff;
+  --tag-3-ink: #5b3fbf;
+  --tag-4-bg: #dffbf4;
+  --tag-4-ink: #00715c;
+
+  /* 页面底色光晕：三团极淡的彩光，铺在纸面上 */
+  --wash-1: rgba(0, 82, 217, 0.28);
+  --wash-2: rgba(0, 164, 255, 0.30);
+  --wash-3: rgba(122, 92, 255, 0.22);
+  --wash-4: rgba(0, 194, 168, 0.16);
 
   /* Semantic states */
   --danger: #d6604f;
@@ -192,36 +221,62 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #0d1015;
-  --bg-soft: #16201b;
-  --bg-deep: #1b2620;
-  --surface: #1a231e;
-  --surface-2: #202a24;
-  --surface-3: #263129;
-  --surface-raised: #1e2822;
+  --bg: #0b1020;
+  --bg-soft: #111830;
+  --bg-deep: #161f3d;
+  --surface: #131a2e;
+  --surface-2: #171f36;
+  --surface-3: #1e2740;
+  --surface-raised: #1a2239;
 
-  --ink: #eaf2ec;
-  --ink-2: #c9d6cd;
-  --muted: #8fa396;
-  --faint: #6f8377;
-  --faint-2: #55665b;
+  --ink: #e8eefc;
+  --ink-2: #c2cfe8;
+  --muted: #8d9cba;
+  --faint: #6b7a96;
+  --faint-2: #4f5c75;
 
-  --line: #263129;
-  --line-2: #313d35;
-  --line-strong: #3d4a41;
+  --line: #1f2a44;
+  --line-2: #28344f;
+  --line-strong: #34425f;
 
-  --accent: #6fc9a8;
-  --accent-hover: #7fd5b5;
-  --accent-active: #8fe0c1;
-  --accent-ink: #a8e3cb;
-  --accent-soft: #1e3329;
-  --accent-soft-2: #25402f;
-  --accent-glow: rgba(134, 211, 184, 0.22);
-  --accent-bright: #86d3b8;
+  --accent: #4d8dff;
+  --accent-hover: #6aa1ff;
+  --accent-active: #82b0ff;
+  --accent-ink: #a8c6ff;
+  --accent-soft: #16224a;
+  --accent-soft-2: #1d2b5c;
+  --accent-glow: rgba(77, 141, 255, 0.26);
+  --accent-bright: #7fb0ff;
 
-  --accent-warm: #e8a25e;
-  --accent-warm-soft: #2e2618;
-  --accent-warm-ink: #e8b98a;
+  --accent-warm: #5ec8ff;
+  --accent-warm-soft: #0e2c40;
+  --accent-warm-ink: #9ddcff;
+
+  --grad-1: #2f6dff;
+  --grad-2: #00a4ff;
+  --grad-3: #9a7bff;
+
+  --cue-1: #4d8dff;
+  --cue-1-2: #6ea6ff;
+  --cue-2: #3fc9ff;
+  --cue-2-2: #6fe0ff;
+  --cue-3: #a78bff;
+  --cue-3-2: #c4aaff;
+  --cue-4: #2ee0be;
+  --cue-4-2: #5cebcd;
+  --tag-1-bg: #16224a;
+  --tag-1-ink: #9dc0ff;
+  --tag-2-bg: #0e2c40;
+  --tag-2-ink: #8bdcff;
+  --tag-3-bg: #241a4a;
+  --tag-3-ink: #c3b0ff;
+  --tag-4-bg: #0d332c;
+  --tag-4-ink: #7fe6cf;
+
+  --wash-1: rgba(47, 109, 255, 0.22);
+  --wash-2: rgba(0, 164, 255, 0.16);
+  --wash-3: rgba(122, 92, 255, 0.16);
+  --wash-4: rgba(0, 194, 168, 0.10);
 
   --danger: #ef8b87;
   --danger-ink: #ffc1bd;

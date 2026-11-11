@@ -71,18 +71,22 @@
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  min-height: 42px;
+  min-height: 46px;
   padding: 0 var(--sp-3);
   border-radius: var(--r-lg);
-  color: var(--muted);
+  color: var(--ink-2);
   font-size: var(--text-sm);
   font-weight: 600;
   transition: color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
 }
 
+/* 主入口是 48 网格的渐变方牌（p_layout.php 里 navTile() 生成），24px 刚好能看
+   清牌里的剪影。截图验证过：再小一号图案就糊成色块。 */
 .rail-link .icon {
-  width: 19px;
-  height: 19px;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  filter: drop-shadow(0 4px 8px rgba(9, 20, 48, 0.16));
 }
 
 .rail-link:hover {
@@ -91,21 +95,41 @@
   transform: translateX(2px);
 }
 
+/* 激活项：渐变胶囊 + 白字。图标换成白牌本色图案（由 PHP 直接输出），
+   否则彩色牌压在渐变胶囊上会糊成一团。 */
 .rail-link.active {
-  background: var(--accent-soft);
-  color: var(--accent-ink);
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  color: #fff;
+  box-shadow: 0 12px 24px -14px var(--grad-1);
+}
+
+.rail-link.active .icon {
+  filter: drop-shadow(0 3px 6px rgba(9, 14, 40, 0.26));
 }
 
 .rail-link.active::before {
-  content: "";
-  position: absolute;
-  left: -16px;
-  top: 50%;
-  width: 3px;
-  height: 20px;
-  border-radius: 0 var(--r-pill) var(--r-pill) 0;
-  background: var(--accent);
-  transform: translateY(-50%);
+  opacity: 0;
+}
+
+/* 次级入口（后台各页、协议页等）没有专属插画：给淡色圆角底 + 本色线条，
+   和主入口形成两级，而不是一列孤零零的灰线。 */
+.rail-link--soft .icon {
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  filter: none;
+}
+
+.rail-link--soft.active .icon {
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--grad-1);
 }
 
 .rail-section-label {
@@ -899,6 +923,32 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-1);
+}
+
+/* 「猜你喜欢」是随机标签，换成主色牌没有道理：用淡色底 + 本色线条，
+   三色循环，和主入口形成两级。 */
+.rail-picks-list .rail-link .icon {
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  filter: none;
+}
+
+.rail-picks-list .rail-link:nth-child(3n + 1) .icon {
+  background: var(--tag-1-bg);
+  color: var(--tag-1-ink);
+}
+
+.rail-picks-list .rail-link:nth-child(3n + 2) .icon {
+  background: var(--tag-2-bg);
+  color: var(--tag-2-ink);
+}
+
+.rail-picks-list .rail-link:nth-child(3n + 3) .icon {
+  background: var(--tag-3-bg);
+  color: var(--tag-3-ink);
 }
 
 .rail-refresh {

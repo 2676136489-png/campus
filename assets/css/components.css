@@ -9,28 +9,31 @@
   gap: 10px;
   min-height: 42px;
   padding: 9px 18px;
-  border: 1px solid var(--accent);
+  border: 1px solid transparent;
   border-radius: var(--r-lg);
-  background: var(--accent);
+  /* 主按钮走蓝→亮蓝渐变；旧层 style.css 里那份深蓝实色由 tokens 统一，
+     这里只保证渐变不被 transparent 边框切边。 */
+  background-image: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  background-color: var(--accent);
   color: #fff;
   font-size: var(--text-sm);
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
-  box-shadow: 0 4px 14px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 22px -10px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transition: background var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
 }
 
 .btn:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+  background-image: linear-gradient(135deg, var(--accent-hover), var(--grad-2));
+  border-color: transparent;
   color: #fff;
-  box-shadow: 0 12px 26px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 16px 30px -12px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.24);
   transform: translateY(-2px);
 }
 
 .btn:active {
-  background: var(--accent-active);
+  background-image: linear-gradient(135deg, var(--accent-active), var(--accent));
   transform: translateY(0) scale(0.98);
   box-shadow: none;
 }
@@ -39,7 +42,8 @@
 .btn.is-loading,
 button[disabled] {
   cursor: not-allowed;
-  opacity: 0.58;
+  /* 0.58 会把渐变按钮压成一块浅蓝塑料，0.72 还能看出是主按钮「暂时不可点」 */
+  opacity: 0.72;
   transform: none;
   box-shadow: none;
 }
@@ -266,6 +270,37 @@ button[disabled] {
   transform: translateY(-1px);
 }
 
+/* 标签四色循环：蓝 / 亮蓝 / 紫 / 青，按顺序取。所有标签一个颜色是这个页面
+   之前最「单调」的根源之一。 */
+.tag-list .tag:nth-child(4n + 1) {
+  border-color: transparent;
+  background: var(--tag-1-bg);
+  color: var(--tag-1-ink);
+}
+
+.tag-list .tag:nth-child(4n + 2) {
+  border-color: transparent;
+  background: var(--tag-2-bg);
+  color: var(--tag-2-ink);
+}
+
+.tag-list .tag:nth-child(4n + 3) {
+  border-color: transparent;
+  background: var(--tag-3-bg);
+  color: var(--tag-3-ink);
+}
+
+.tag-list .tag:nth-child(4n + 4) {
+  border-color: transparent;
+  background: var(--tag-4-bg);
+  color: var(--tag-4-ink);
+}
+
+/* 旧层 style.css 把圆点写死成 var(--primary)，彩色标签里会出现蓝点配橙字 */
+.tag::before {
+  background: currentColor;
+}
+
 .tag-list {
   display: flex;
   gap: var(--sp-2);
@@ -286,6 +321,13 @@ button[disabled] {
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
+  /* 标题走渐变字（蓝 → 亮蓝 → 紫）。整页唯一被「上色」的正文元素，
+     再往正文里加颜色就会影响阅读。 */
+  background-image: linear-gradient(104deg, var(--grad-1), var(--grad-2) 56%, var(--grad-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
 }
 
 .page-sub {
