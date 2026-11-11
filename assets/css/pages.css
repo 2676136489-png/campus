@@ -2399,6 +2399,11 @@
   font-size: var(--text-sm);
 }
 .comment-reply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  width: auto;
+  white-space: nowrap;
   border: 0;
   background: none;
   color: var(--muted);

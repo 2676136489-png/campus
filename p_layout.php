@@ -148,8 +148,8 @@ function renderHead($title, $description = '') {
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
     echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r4">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r4">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r5">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r5">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -255,7 +255,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r4"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r5"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -349,8 +349,8 @@ function renderAuthShell($opts = []) {
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
     echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r4">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r4">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r5">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r5">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -375,12 +375,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r4"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r5"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r4';
+    $v = '20261111r5';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";
