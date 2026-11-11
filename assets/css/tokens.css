@@ -1,55 +1,61 @@
 /*
  * Campus Circle Design Tokens
- * Neutral-first digital instrument palette.
+ * CampusLink spring palette: warm mint on clean paper.
  * Light is the default scene; dark is a matched low-light reading mode.
- * One accent carries all interaction energy. Everything else is gray scale.
+ * Mint carries interaction, warm orange is the secondary highlight.
  */
 :root {
   color-scheme: light;
 
   /* Surfaces */
-  --bg: #f2f4f7;
-  --bg-soft: #e9ecf1;
-  --bg-deep: #dfe4eb;
+  --bg: #fafdf8;
+  --bg-soft: #f3f9f2;
+  --bg-deep: #ebf4ea;
   --surface: #ffffff;
-  --surface-2: #f7f8fa;
-  --surface-3: #eef1f5;
+  --surface-2: #f7fbf6;
+  --surface-3: #eff6ee;
   --surface-raised: #ffffff;
 
   /* Ink */
-  --ink: #14181f;
-  --ink-2: #2c333d;
-  --muted: #5f6b7a;
-  --faint: #8b95a3;
-  --faint-2: #aab3bf;
+  --ink: #333333;
+  --ink-2: #4a4a4a;
+  --muted: #717171;
+  --faint: #9a9a9a;
+  --faint-2: #b8b8b8;
 
   /* Lines */
-  --line: #e3e7ed;
-  --line-2: #d6dce4;
-  --line-strong: #c6ced8;
+  --line: #e6efe4;
+  --line-2: #dbe8d8;
+  --line-strong: #ccdec9;
 
-  /* Single accent */
-  --accent: #0033a0;
-  --accent-hover: #002a85;
-  --accent-active: #00246f;
-  --accent-ink: #002566;
-  --accent-soft: #e8eef9;
-  --accent-soft-2: #dbe4f5;
-  --accent-glow: rgba(0, 51, 160, 0.14);
+  /* Mint accent */
+  --accent: #5fc4a2;
+  --accent-hover: #4fb593;
+  --accent-active: #43a685;
+  --accent-ink: #2e7d63;
+  --accent-soft: #e9f7f1;
+  --accent-soft-2: #d9f0e6;
+  --accent-glow: rgba(134, 211, 184, 0.35);
+  --accent-bright: #86d3b8;
+
+  /* Warm orange highlight（次强调：活动/标签/徽章） */
+  --accent-warm: #ffb878;
+  --accent-warm-soft: #fff3e6;
+  --accent-warm-ink: #b26a1f;
 
   /* Semantic states */
-  --danger: #b3403c;
-  --danger-ink: #8f2f2c;
-  --danger-soft: #fcefee;
-  --success: #25745a;
-  --success-ink: #195a45;
-  --success-soft: #e9f6f1;
-  --warning: #9a6b1f;
-  --warning-ink: #79531a;
-  --warning-soft: #faf3e4;
-  --info: #3f6e8c;
-  --info-ink: #2d566f;
-  --info-soft: #eaf3f7;
+  --danger: #d6604f;
+  --danger-ink: #a84538;
+  --danger-soft: #fdeeea;
+  --success: #3e9c7c;
+  --success-ink: #2e7d63;
+  --success-soft: #e9f7f1;
+  --warning: #e89a4f;
+  --warning-ink: #b26a1f;
+  --warning-soft: #fff3e6;
+  --info: #5b93ad;
+  --info-ink: #3f7189;
+  --info-soft: #eaf4f7;
 
   /* Shadows: offset + soft blur only */
   --shadow-xs: 0 1px 2px rgba(18, 24, 34, 0.04), 0 1px 1px rgba(18, 24, 34, 0.02);
@@ -62,8 +68,8 @@
   /* Radii */
   --r-xs: 4px;
   --r-sm: 6px;
-  --r-md: 8px;
-  --r-lg: 12px;
+  --r-md: 10px;
+  --r-lg: 14px;
   --r-xl: 16px;
   --r-2xl: 20px;
   --r-pill: 999px;
@@ -183,30 +189,35 @@
   color-scheme: dark;
 
   --bg: #0d1015;
-  --bg-soft: #12161d;
-  --bg-deep: #181d26;
-  --surface: #161b24;
-  --surface-2: #1b212c;
-  --surface-3: #222a37;
-  --surface-raised: #1d2430;
+  --bg-soft: #16201b;
+  --bg-deep: #1b2620;
+  --surface: #1a231e;
+  --surface-2: #202a24;
+  --surface-3: #263129;
+  --surface-raised: #1e2822;
 
-  --ink: #eef2f7;
-  --ink-2: #c7d0dd;
-  --muted: #8b97a8;
-  --faint: #66738a;
-  --faint-2: #4e5a6e;
+  --ink: #eaf2ec;
+  --ink-2: #c9d6cd;
+  --muted: #8fa396;
+  --faint: #6f8377;
+  --faint-2: #55665b;
 
-  --line: #252e3d;
-  --line-2: #2d3747;
-  --line-strong: #3a4659;
+  --line: #263129;
+  --line-2: #313d35;
+  --line-strong: #3d4a41;
 
-  --accent: #7ba4ff;
-  --accent-hover: #8fb0ff;
-  --accent-active: #a3bbff;
-  --accent-ink: #c8d6ff;
-  --accent-soft: #16264a;
-  --accent-soft-2: #1d3360;
-  --accent-glow: rgba(127, 155, 255, 0.18);
+  --accent: #6fc9a8;
+  --accent-hover: #7fd5b5;
+  --accent-active: #8fe0c1;
+  --accent-ink: #a8e3cb;
+  --accent-soft: #1e3329;
+  --accent-soft-2: #25402f;
+  --accent-glow: rgba(134, 211, 184, 0.22);
+  --accent-bright: #86d3b8;
+
+  --accent-warm: #e8a25e;
+  --accent-warm-soft: #2e2618;
+  --accent-warm-ink: #e8b98a;
 
   --danger: #ef8b87;
   --danger-ink: #ffc1bd;
@@ -214,7 +225,7 @@
   --success: #7cc59a;
   --success-ink: #b3e3c8;
   --success-soft: #1d3528;
-  --warning: #e0b36a;
+  --warning: #e8b06a;
   --warning-ink: #f2d49c;
   --warning-soft: #3a2e1a;
   --info: #8bc4d8;
@@ -227,7 +238,7 @@
   --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.46), 0 6px 18px rgba(0, 0, 0, 0.3);
   --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.18);
 
-  --glass-bg: rgba(22, 27, 36, 0.68);
-  --glass-bg-strong: rgba(27, 33, 44, 0.9);
+  --glass-bg: rgba(26, 35, 30, 0.68);
+  --glass-bg-strong: rgba(32, 42, 36, 0.9);
   --glass-border: rgba(255, 255, 255, 0.08);
 }

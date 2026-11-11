@@ -159,6 +159,7 @@ button[disabled] {
     border-color: var(--line-2);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+    background: var(--surface-2);
   }
 }
 
@@ -254,11 +255,14 @@ button[disabled] {
 .tag-link {
   cursor: pointer;
   text-decoration: none;
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
 }
 
 .tag-link:hover {
   border-color: var(--accent);
-  background: var(--accent-soft);
+  background: var(--accent-soft-2);
   color: var(--accent-ink);
   transform: translateY(-1px);
 }

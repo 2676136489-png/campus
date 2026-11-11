@@ -62,11 +62,69 @@ function icon($name, $size = 18) {
         'panel' => '<rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M10 4v16"/>',
         'document' => '<path d="M7 3h7l5 5v13H7V3z"/><path d="M14 3v5h5M10 12h5M10 16h5"/>',
         'bookmark' => '<path d="M7 4h10v17l-5-3.5L7 21V4z"/>',
+        'hash' => '<path d="M9 4 7 20M17 4l-2 16M4.5 9h16M3.5 15h16"/>',
+        'music' => '<path d="M9 18V6l10-2v12"/><circle cx="6.8" cy="18" r="2.4"/><circle cx="16.8" cy="16" r="2.4"/>',
+        'ball' => '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.8 2.3 4.2 5.2 4.2 8.5s-1.4 6.2-4.2 8.5"/><path d="M12 3.5c-2.8 2.3-4.2 5.2-4.2 8.5s1.4 6.2 4.2 8.5"/>',
+        'gamepad' => '<path d="M7.5 7h9a5.5 5.5 0 0 1 5.4 6.5l-.7 4a2.6 2.6 0 0 1-4.5 1.2L14.6 16H9.4l-2.1 2.7a2.6 2.6 0 0 1-4.5-1.2l-.7-4A5.5 5.5 0 0 1 7.5 7z"/><path d="M8.5 10.5v3M7 12h3"/><path d="M16 11h.01M18 13h.01"/>',
+        'book' => '<path d="M12 7c-1.5-1.7-3.8-2.5-7-2.5v13c3.2 0 5.5.8 7 2.5 1.5-1.7 3.8-2.5 7-2.5v-13c-3.2 0-5.5.8-7 2.5z"/><path d="M12 7v13"/>',
+        'dumbbell' => '<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
+        'film' => '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 4v16M16 4v16M4 9h4M4 15h4M16 9h4M16 15h4"/>',
+        'coffee' => '<path d="M5 9h11v6a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9z"/><path d="M16 10h2.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 5.5V4M11.5 5.5V4.5M15 5.5V4"/>',
     ];
     if (!isset($paths[$name])) {
         return '';
     }
     return '<svg class="icon" width="' . (int)$size . '" height="' . (int)$size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $paths[$name] . '</svg>';
+}
+
+function circleIconFor($tag) {
+    static $map = [
+        '摄影' => 'camera', '电影' => 'film', '动漫' => 'film', '二次元' => 'film',
+        '音乐' => 'music', '乐器' => 'music', '舞蹈' => 'music',
+        '篮球' => 'ball', '羽毛球' => 'ball', '乒乓球' => 'ball',
+        '阅读' => 'book', '写作' => 'book', '外语' => 'book', '心理学' => 'book',
+        '编程' => 'gamepad', '游戏' => 'gamepad', '电竞' => 'gamepad', '桌游' => 'gamepad',
+        '跑步' => 'dumbbell', '健身' => 'dumbbell', '骑行' => 'dumbbell', '滑板' => 'dumbbell',
+        '美食' => 'coffee', '咖啡' => 'coffee',
+        '绘画' => 'pen', '汉服' => 'tag', '旅行' => 'pin', '志愿' => 'heart',
+        '辩论' => 'chat', '天文' => 'eye',
+    ];
+    return $map[$tag] ?? 'hash';
+}
+
+/**
+ * 侧栏「兴趣圈子」数据源：聚合学生兴趣标签，取使用人数最多的前 N 个。
+ * 查询失败时静默返回空数组（分组整体不渲染，不影响页面主功能）。
+ */
+function railCircleTags($limit = 6) {
+    static $cached = null;
+    if ($cached !== null) {
+        return $cached;
+    }
+    $cached = [];
+    try {
+        $conn = dbConnect();
+        $res = $conn->query("SELECT `tags` FROM `student` WHERE `tags` IS NOT NULL AND `tags` <> '' LIMIT 2000");
+        if ($res) {
+            $counter = [];
+            while ($row = $res->fetch_assoc()) {
+                foreach (explode(',', (string)$row['tags']) as $piece) {
+                    $piece = trim($piece);
+                    if ($piece === '') {
+                        continue;
+                    }
+                    $counter[$piece] = ($counter[$piece] ?? 0) + 1;
+                }
+            }
+            $res->free();
+            arsort($counter);
+            $cached = array_slice(array_keys($counter), 0, $limit);
+        }
+        $conn->close();
+    } catch (Throwable $e) {
+        // 侧栏圈子分组属增强内容，数据源异常时降级为不展示。
+    }
+    return $cached;
 }
 
 function renderHead($title, $description = '') {
@@ -127,6 +185,15 @@ function renderSiteHeader($opts = []) {
             $lastSection = $section;
         }
         echo '<a class="rail-link' . $active . '"' . ($active !== '' ? ' aria-current="page"' : '') . ' title="' . h($item['label']) . '" href="' . h($item['href']) . '">' . icon($navIcon, 19) . '<span>' . h($item['label']) . '</span></a>' . "\n";
+    }
+    $circleTags = railCircleTags();
+    if (!empty($circleTags)) {
+        $currentTag = isset($_GET['tag']) ? trim((string)$_GET['tag']) : '';
+        echo '<div class="rail-section-label">兴趣圈子</div>' . "\n";
+        foreach ($circleTags as $circleTag) {
+            $circleActive = ($currentTag !== '' && $currentTag === $circleTag) ? ' active' : '';
+            echo '<a class="rail-link rail-circle' . $circleActive . '" title="' . h($circleTag) . '圈子" href="p_dynamics.php?tag=' . h(urlencode($circleTag)) . '">' . icon(circleIconFor($circleTag), 19) . '<span>' . h($circleTag) . '</span></a>' . "\n";
+        }
     }
     echo '</nav>' . "\n";
     echo '<div class="rail-foot">' . "\n";
@@ -298,7 +365,7 @@ function renderAuthShellClose() {
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20260816l';
+    $v = '20261110c1';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

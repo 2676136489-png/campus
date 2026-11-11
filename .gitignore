@@ -30,3 +30,6 @@ var/
 *简历*
 *resume*
 *resume*.pdf
+
+# 本地视觉预览临时目录
+preview-*/
