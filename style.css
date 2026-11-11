@@ -9,10 +9,10 @@
     --faint: #8b98a6;
     --line: #dfe5ec;
     --line-strong: #c7d0da;
-    --primary: #0033a0;
+    --primary: #5fc4a2;
     --primary-hover: #002a85;
     --primary-ink: #002566;
-    --primary-soft: #e8eef9;
+    --primary-soft: #e9f7f1;
     --amber: #8a6116;
     --amber-soft: #f7efdc;
     --danger: #b33a3a;
@@ -47,7 +47,7 @@ body {
         var(--paper);
     color: var(--ink);
     font-family: var(--font-sans);
-    font-size: 16px;
+    font-size: var(--text-base);
     line-height: 1.65;
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
@@ -164,8 +164,8 @@ h3 {
     gap: 10px;
     color: var(--ink);
     font-family: var(--font-sans);
-    font-size: 19px;
-    font-weight: 800;
+    font-size: var(--text-md);
+    font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -212,7 +212,7 @@ h3 {
     padding: 6px 13px;
     border-radius: 8px;
     color: var(--ink-2);
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     font-weight: 600;
     text-decoration: none;
     transition: background 0.18s ease, color 0.18s ease;
@@ -262,7 +262,7 @@ h3 {
     border-radius: 999px;
     background: var(--surface);
     color: var(--ink-2);
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     font-weight: 600;
     text-decoration: none;
 }
@@ -284,7 +284,7 @@ h3 {
     background: var(--surface-2);
     padding: 26px 0;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 
 .footer-inner {
@@ -322,7 +322,7 @@ h3 {
 .page-title {
     font-family: var(--font-sans);
     font-size: clamp(28px, 4vw, 38px);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.2;
     color: var(--ink);
 }
@@ -330,7 +330,7 @@ h3 {
 .page-sub {
     margin-top: 6px;
     color: var(--muted);
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     max-width: 620px;
 }
 
@@ -345,8 +345,8 @@ h3 {
 
 .section-title {
     font-family: var(--font-sans);
-    font-size: 21px;
-    font-weight: 750;
+    font-size: var(--text-xl);
+    font-weight: 700;
     line-height: 1.3;
     color: var(--ink);
 }
@@ -363,7 +363,7 @@ h3 {
     background: var(--primary);
     color: #fff;
     font: inherit;
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     font-weight: 600;
     line-height: 1.2;
     cursor: pointer;
@@ -449,7 +449,7 @@ h3 {
     min-height: 32px;
     padding: 5px 11px;
     border-radius: 7px;
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 
 .btn-block {
@@ -493,13 +493,13 @@ h3 {
     gap: 12px;
     margin-bottom: 8px;
     color: var(--ink-2);
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: 600;
 }
 
 .form-label .label-count {
     color: var(--faint);
-    font-size: 12px;
+    font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
     font-weight: 400;
 }
@@ -515,7 +515,7 @@ select {
     background: var(--surface);
     color: var(--ink);
     font: inherit;
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
@@ -535,7 +535,7 @@ textarea:focus,
 select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.13);
+    box-shadow: 0 0 0 3px rgba(95, 196, 162, 0.13);
 }
 
 textarea {
@@ -562,14 +562,14 @@ input[disabled] {
 .form-hint {
     margin-top: 7px;
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     line-height: 1.55;
 }
 
 .field-error {
     margin-top: 7px;
     color: var(--danger);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
 }
 
 .password-wrap {
@@ -634,7 +634,7 @@ input[disabled] {
     border-radius: 8px;
     background: var(--surface);
     color: var(--ink-2);
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: 600;
     transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
@@ -726,7 +726,7 @@ input[disabled] {
 
 .dropzone-copy strong {
     display: block;
-    font-size: 14px;
+    font-size: var(--text-sm);
     color: var(--ink-2);
 }
 
@@ -734,14 +734,14 @@ input[disabled] {
     display: block;
     margin-top: 2px;
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     line-height: 1.5;
 }
 
 .file-meta {
     margin-top: 7px;
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
 }
 
 .alert {
@@ -752,7 +752,7 @@ input[disabled] {
     padding: 12px 14px;
     border: 1px solid transparent;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.55;
 }
 
@@ -795,7 +795,7 @@ input[disabled] {
     min-height: 26px;
     padding: 3px 11px;
     border-radius: 999px;
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     font-weight: 600;
     white-space: nowrap;
 }
@@ -839,7 +839,7 @@ input[disabled] {
     border-radius: 6px;
     background: #e9eef4;
     color: #3a4a5c;
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     font-weight: 600;
 }
 
@@ -887,19 +887,19 @@ input[disabled] {
 
 .stat-value {
     display: block;
-    font-size: 26px;
+    font-size: var(--text-xl);
     font-weight: 700;
     line-height: 1.15;
     font-variant-numeric: tabular-nums;
 }
 
 .stat-value-md {
-    font-size: 19px;
+    font-size: var(--text-md);
 }
 
 .stat-label {
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 
 .table-wrap {
@@ -922,13 +922,13 @@ td {
     border-bottom: 1px solid var(--line);
     text-align: left;
     vertical-align: top;
-    font-size: 14px;
+    font-size: var(--text-sm);
 }
 
 th {
     background: var(--surface-2);
     color: var(--ink-2);
-    font-size: 13px;
+    font-size: var(--text-sm);
     font-weight: 700;
     white-space: nowrap;
 }
@@ -1019,12 +1019,12 @@ tbody tr:hover {
 
 .profile-item dt {
     color: var(--muted);
-    font-size: 13.5px;
+    font-size: var(--text-sm);
 }
 
 .profile-item dd {
     color: var(--ink);
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     font-weight: 600;
     text-align: right;
     overflow-wrap: anywhere;
@@ -1046,7 +1046,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: var(--surface);
     color: var(--ink-2);
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: 600;
     text-decoration: none;
     transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease;
@@ -1115,7 +1115,7 @@ tbody tr:hover {
 .post-author {
     display: block;
     color: var(--ink);
-    font-size: 15px;
+    font-size: var(--text-base);
     font-weight: 700;
     line-height: 1.35;
 }
@@ -1124,7 +1124,7 @@ tbody tr:hover {
     display: block;
     margin-top: 2px;
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
 }
 
 .post-body {
@@ -1133,7 +1133,7 @@ tbody tr:hover {
 
 .post-content {
     white-space: pre-line;
-    font-size: 15px;
+    font-size: var(--text-base);
     line-height: 1.75;
 }
 
@@ -1181,7 +1181,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: var(--surface);
     color: var(--ink-2);
-    font-size: 13px;
+    font-size: var(--text-sm);
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
@@ -1218,7 +1218,7 @@ tbody tr:hover {
     min-height: 34px;
     padding: 6px 12px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     font-weight: 600;
 }
 
@@ -1250,19 +1250,19 @@ tbody tr:hover {
 
 .comment-author {
     color: var(--ink);
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     font-weight: 700;
 }
 
 .comment-time {
     color: var(--faint);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 
 .comment-body {
     margin-top: 4px;
     white-space: pre-line;
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.65;
 }
 
@@ -1297,7 +1297,7 @@ tbody tr:hover {
 
 .people-name {
     color: var(--ink);
-    font-size: 16px;
+    font-size: var(--text-base);
     font-weight: 700;
     line-height: 1.4;
 }
@@ -1305,14 +1305,14 @@ tbody tr:hover {
 .people-name .gender {
     margin-left: 4px;
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     font-weight: 500;
 }
 
 .people-sub {
     margin-top: 3px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     line-height: 1.55;
 }
 
@@ -1392,14 +1392,14 @@ tbody tr:hover {
     max-width: 440px;
     font-family: var(--font-sans);
     font-size: clamp(24px, 2.6vw, 30px);
-    font-weight: 750;
+    font-weight: 700;
     line-height: 1.45;
     text-wrap: balance;
 }
 
 .auth-credit {
     color: rgba(255, 255, 255, 0.78);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 
 .auth-panel {
@@ -1415,8 +1415,8 @@ tbody tr:hover {
 
 .auth-card .auth-title {
     font-family: var(--font-sans);
-    font-size: 32px;
-    font-weight: 800;
+    font-size: var(--text-2xl);
+    font-weight: 700;
     line-height: 1.25;
     color: var(--ink);
 }
@@ -1424,7 +1424,7 @@ tbody tr:hover {
 .auth-card .auth-sub {
     margin: 8px 0 26px;
     color: var(--muted);
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     line-height: 1.6;
 }
 
@@ -1447,7 +1447,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: var(--surface-2);
     color: var(--muted);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     line-height: 1.55;
 }
 
@@ -1477,7 +1477,7 @@ tbody tr:hover {
 .error-title {
     margin-top: 14px;
     font-family: var(--font-sans);
-    font-size: 23px;
+    font-size: var(--text-xl);
     color: var(--ink);
 }
 
@@ -1489,7 +1489,7 @@ tbody tr:hover {
     max-width: 430px;
     margin: 10px auto 0;
     color: var(--muted);
-    font-size: 14.5px;
+    font-size: var(--text-sm);
     line-height: 1.65;
 }
 
@@ -1514,14 +1514,14 @@ tbody tr:hover {
 .error-details summary {
     cursor: pointer;
     color: var(--ink-2);
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: 600;
 }
 
 .error-details p {
     margin-top: 10px;
     color: var(--muted);
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     line-height: 1.7;
     white-space: pre-line;
 }
@@ -1549,7 +1549,7 @@ tbody tr:hover {
 
 .empty-title {
     color: var(--ink);
-    font-size: 17px;
+    font-size: var(--text-md);
     font-weight: 700;
 }
 
@@ -1557,7 +1557,7 @@ tbody tr:hover {
     max-width: 360px;
     margin: 7px auto 0;
     color: var(--muted);
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.6;
 }
 
@@ -1596,14 +1596,14 @@ tbody tr:hover {
 
 .modal-title {
     font-family: var(--font-sans);
-    font-size: 20px;
+    font-size: var(--text-lg);
     color: var(--ink);
 }
 
 .modal-copy {
     margin: 8px 0 20px;
     color: var(--muted);
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.6;
 }
 
@@ -1717,20 +1717,20 @@ tbody tr:hover {
 }
 
 .small-text {
-    font-size: 12.5px;
+    font-size: var(--text-xs);
 }
 
 .text-sm {
-    font-size: 14px;
+    font-size: var(--text-sm);
 }
 
 .rule-text {
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     line-height: 1.8;
 }
 
 .name-line {
-    font-size: 18px;
+    font-size: var(--text-md);
     font-weight: 700;
 }
 
@@ -1766,7 +1766,7 @@ tbody tr:hover {
     }
 
     .auth-quote {
-        font-size: 22px;
+        font-size: var(--text-xl);
     }
 
     .auth-panel {
@@ -1943,7 +1943,7 @@ tbody tr:hover {
     border-radius: 6px;
     background: var(--surface);
     color: var(--ink);
-    font-size: 14px;
+    font-size: var(--text-sm);
     text-decoration: none;
     transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
@@ -1986,7 +1986,7 @@ tbody tr:hover {
     border-radius: 999px;
     background: var(--danger);
     color: #fff;
-    font-size: 11px;
+    font-size: var(--text-xs);
     line-height: 18px;
     text-align: center;
     box-shadow: 0 0 0 2px var(--surface);
@@ -2036,7 +2036,7 @@ tbody tr:hover {
 .notification-time {
     margin-top: 4px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 
 /* AJAX 轻提示 */
@@ -2051,7 +2051,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: var(--ink);
     color: #fff;
-    font-size: 14px;
+    font-size: var(--text-sm);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -2092,7 +2092,7 @@ tbody tr:hover {
 .input-sm {
     min-height: 34px;
     padding: 7px 10px;
-    font-size: 14px;
+    font-size: var(--text-sm);
 }
 .input-select {
     appearance: auto;
@@ -2261,7 +2261,7 @@ tbody tr:hover {
     padding: 6px 8px;
     border-radius: 6px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     text-decoration: none;
     transition: color 0.18s ease, background 0.18s ease;
 }
@@ -2308,7 +2308,7 @@ tbody tr:hover {
     border-radius: 999px;
     background: var(--surface);
     color: var(--muted);
-    font-size: 14px;
+    font-size: var(--text-sm);
     text-decoration: none;
     transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
@@ -2364,8 +2364,8 @@ tbody tr:hover {
     min-width: 0;
 }
 .profile-name {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: var(--text-lg);
+    font-weight: 700;
     color: var(--ink);
 }
 .profile-hero-actions {
@@ -2391,7 +2391,7 @@ tbody tr:hover {
     gap: 6px;
     margin-right: 8px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     white-space: nowrap;
 }
 /* 可访问性与减少动态 */
@@ -2444,14 +2444,14 @@ tbody tr:hover {
 .activity-label {
     text-align: center;
     color: var(--muted);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 .activity-legend {
     display: flex;
     gap: 16px;
     margin-top: 14px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 .legend-dot {
     display: inline-block;
@@ -2469,11 +2469,11 @@ tbody tr:hover {
     display: flex;
     gap: 14px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
 }
 .follow-stats strong {
     color: var(--ink);
-    font-size: 16px;
+    font-size: var(--text-base);
 }
 
 /* 通知偏好 */
@@ -2572,7 +2572,7 @@ tbody tr:hover {
     margin-left: auto;
 }
 .chat-name {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink);
 }
 .chat-body {
@@ -2611,7 +2611,7 @@ tbody tr:hover {
 .chat-time {
     margin-top: 4px;
     color: var(--muted);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 .chat-form {
     display: flex;
@@ -2659,7 +2659,7 @@ tbody tr:hover {
 }
 .chat-read {
     color: var(--primary);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 .chat-recall {
     padding: 2px 6px;
@@ -2667,7 +2667,7 @@ tbody tr:hover {
     border-radius: 6px;
     background: var(--surface);
     color: var(--muted);
-    font-size: 12px;
+    font-size: var(--text-xs);
     cursor: pointer;
     transition: color 0.18s ease, border-color 0.18s ease;
 }
@@ -2684,7 +2684,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: transparent;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     cursor: pointer;
     transition: color 0.18s ease, border-color 0.18s ease;
 }
@@ -2713,7 +2713,7 @@ tbody tr:hover {
     border: 0;
     border-radius: 6px;
     background: transparent;
-    font-size: 20px;
+    font-size: var(--text-lg);
     cursor: pointer;
     transition: background 0.18s ease;
 }
@@ -2748,7 +2748,7 @@ tbody tr:hover {
     background: var(--surface);
     color: var(--ink);
     font-family: inherit;
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.5;
     resize: vertical;
 }
@@ -2808,7 +2808,7 @@ tbody tr:hover {
     border-radius: 8px;
     background: var(--surface);
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     cursor: pointer;
     transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
@@ -2837,12 +2837,12 @@ tbody tr:hover {
     background: var(--surface);
 }
 .announcement-title {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink);
 }
 .announcement-content {
     margin-top: 4px;
-    font-size: 13px;
+    font-size: var(--text-sm);
     line-height: 1.5;
 }
 /* 运营日报 */
@@ -2856,7 +2856,7 @@ tbody tr:hover {
 .conversation-group-title {
     margin: 14px 2px 6px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     font-weight: 700;
 }
 
@@ -3109,7 +3109,7 @@ tbody tr:hover {
     .input,
     textarea,
     select {
-        font-size: 16px;
+        font-size: var(--text-base);
     }
 }
 /* AJAX pagination loading state */
@@ -3163,7 +3163,7 @@ tbody tr:hover {
 }
 .mention-user {
     color: var(--muted);
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 /* Premium design pass: restrained neutral system, single JLU blue accent */
 ::selection {
@@ -3184,7 +3184,7 @@ body {
 }
 
 .brand-mark {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 2px 6px rgba(0, 51, 160, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 2px 6px rgba(95, 196, 162, 0.18);
 }
 
 .card,
@@ -3207,7 +3207,7 @@ body {
 }
 
 .btn {
-    box-shadow: 0 1px 2px rgba(0, 51, 160, 0.16);
+    box-shadow: 0 1px 2px rgba(95, 196, 162, 0.16);
 }
 .btn-soft,
 .btn-ghost,
@@ -3221,7 +3221,7 @@ body {
     box-shadow: 0 1px 2px rgba(43, 57, 72, 0.18);
 }
 .btn:hover {
-    box-shadow: 0 4px 12px rgba(0, 51, 160, 0.18);
+    box-shadow: 0 4px 12px rgba(95, 196, 162, 0.18);
 }
 .btn-ghost:hover,
 .btn-soft:hover,
@@ -3244,14 +3244,14 @@ select {
 .input:focus,
 textarea:focus,
 select:focus {
-    box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.13), inset 0 1px 2px rgba(21, 33, 46, 0.02);
+    box-shadow: 0 0 0 3px rgba(95, 196, 162, 0.13), inset 0 1px 2px rgba(21, 33, 46, 0.02);
 }
 
 .page-link {
     border-radius: 7px;
 }
 .page-link.is-active {
-    box-shadow: 0 1px 3px rgba(0, 51, 160, 0.24);
+    box-shadow: 0 1px 3px rgba(95, 196, 162, 0.24);
 }
 
 .auth-panel {
@@ -3285,7 +3285,7 @@ select:focus {
     box-shadow: 0 1px 2px rgba(21, 33, 46, 0.06);
 }
 .chat-message.is-mine .chat-bubble {
-    box-shadow: 0 2px 8px rgba(0, 51, 160, 0.18);
+    box-shadow: 0 2px 8px rgba(95, 196, 162, 0.18);
 }
 
 .comment-item {
@@ -3430,7 +3430,7 @@ tbody tr:hover {
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --header-h: 72px;
-    --primary-bright: #0033a0;
+    --primary-bright: #5fc4a2;
 }
 
 html {
@@ -3485,7 +3485,7 @@ body {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s var(--ease-out);
-    background: radial-gradient(360px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(0, 51, 160, 0.055), transparent 62%);
+    background: radial-gradient(360px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(95, 196, 162, 0.055), transparent 62%);
 }
 .card::after {
     content: "";
@@ -3496,7 +3496,7 @@ body {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s var(--ease-out);
-    box-shadow: inset 0 0 0 1px rgba(0, 51, 160, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(95, 196, 162, 0.1);
 }
 .card:hover::before,
 .card:hover::after {
@@ -3513,11 +3513,11 @@ body {
     background: var(--primary);
 }
 .auth-card .auth-title {
-    font-size: 34px;
+    font-size: var(--text-2xl);
 }
 .auth-quote {
     font-size: clamp(26px, 2.8vw, 34px);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.35;
 }
 .auth-credit {
@@ -3776,16 +3776,16 @@ body {
 }
 .page-title {
     font-size: clamp(30px, 4vw, 42px);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.18;
 }
 .page-sub {
-    font-size: 15px;
+    font-size: var(--text-base);
     line-height: 1.7;
 }
 .section-title {
-    font-size: 22px;
-    font-weight: 750;
+    font-size: var(--text-xl);
+    font-weight: 700;
 }
 .stats-grid {
     gap: 16px;
@@ -3796,8 +3796,8 @@ body {
     border: 1px solid var(--line);
 }
 .stat-value {
-    font-size: 30px;
-    font-weight: 800;
+    font-size: var(--text-2xl);
+    font-weight: 700;
     letter-spacing: 0;
 }
 .stat-icon {
@@ -3816,8 +3816,8 @@ body {
     background: var(--surface);
 }
 .people-name {
-    font-size: 18px;
-    font-weight: 800;
+    font-size: var(--text-md);
+    font-weight: 700;
     color: var(--ink);
 }
 .people-name .gender {
@@ -3829,7 +3829,7 @@ body {
     border-radius: 999px;
     background: var(--primary-soft);
     color: var(--primary-ink);
-    font-size: 12px;
+    font-size: var(--text-xs);
     font-weight: 600;
 }
 .people-sub {
@@ -3839,16 +3839,16 @@ body {
     padding: 22px;
 }
 .post-content {
-    font-size: 15.5px;
+    font-size: var(--text-base);
     line-height: 1.8;
     color: var(--ink);
 }
 .post-author {
-    font-size: 15.5px;
-    font-weight: 800;
+    font-size: var(--text-base);
+    font-weight: 700;
 }
 .post-time {
-    font-size: 12.5px;
+    font-size: var(--text-xs);
 }
 .action-btn {
     border-radius: 8px;
@@ -3876,7 +3876,7 @@ body {
     border: 1px solid var(--line);
 }
 th {
-    font-weight: 750;
+    font-weight: 700;
     letter-spacing: 0;
 }
 .empty-state {
@@ -3905,8 +3905,8 @@ th {
     padding: 26px;
 }
 .profile-name {
-    font-size: 21px;
-    font-weight: 800;
+    font-size: var(--text-xl);
+    font-weight: 700;
 }
 .quick-action {
     min-height: 56px;
@@ -3925,7 +3925,7 @@ th {
         margin-bottom: 22px;
     }
     .page-title {
-        font-size: 28px;
+        font-size: var(--text-2xl);
     }
     .people-card {
         padding: 16px;
@@ -3997,7 +3997,7 @@ th {
 .nav-link {
     padding: 9px 16px;
     border-radius: 9px;
-    font-size: 14px;
+    font-size: var(--text-sm);
 }
 .header-actions {
     gap: 10px;
@@ -4217,7 +4217,7 @@ th {
 textarea:focus,
 select:focus {
     box-shadow:
-        0 0 0 4px rgba(0, 51, 160, 0.12),
+        0 0 0 4px rgba(95, 196, 162, 0.12),
         inset 0 1px 2px rgba(21, 33, 46, 0.02);
 }
 
@@ -4451,7 +4451,7 @@ select,
 .draft-status {
   margin: 0 0 12px;
   color: var(--accent);
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 .draft-status.is-error {
   color: var(--danger);
@@ -4466,14 +4466,14 @@ select,
 }
 .comment-reply-to {
   color: var(--accent);
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 .comment-reply-btn {
   border: 0;
   background: none;
   color: var(--muted);
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--text-sm);
   padding: 0;
 }
 .comment-reply-btn:hover {
@@ -4483,7 +4483,7 @@ select,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--accent-ink);
 }
 .reply-chip-cancel {

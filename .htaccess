@@ -32,3 +32,6 @@ Options -Indexes
     Header always set X-Content-Type-Options "nosniff"
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
+
+# 6) 自定义 404（p_404.php 内部仍返回 404 状态码，不影响搜索引擎判定）
+ErrorDocument 404 /p_404.php

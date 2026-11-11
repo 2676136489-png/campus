@@ -65,53 +65,57 @@
   --shadow-focus: 0 0 0 3px var(--accent-glow);
   --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(18, 24, 34, 0.04);
 
-  /* Radii */
+  /* Radii: Tailwind 刻度（4 / 8 / 12 / 16 / 24 / pill）。嵌套圆角按 outer − gap 计算 */
   --r-xs: 4px;
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 14px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 12px;
   --r-xl: 16px;
-  --r-2xl: 20px;
+  --r-2xl: 24px;
   --r-pill: 999px;
 
-  /* Spacing */
+  /* Spacing：仅 13 档（0 / 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96） */
+  --sp-0: 0;
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;
   --sp-4: 16px;
-  --sp-5: 20px;
+  --sp-5: 24px;
   --sp-6: 24px;
-  --sp-7: 28px;
+  --sp-7: 32px;
   --sp-8: 32px;
   --sp-10: 40px;
   --sp-12: 48px;
   --sp-16: 64px;
   --sp-20: 80px;
+  --sp-24: 96px;
 
-  /* Type scale */
+  /* Type scale：全部落在处理刻度（12 / 14 / 16 / 18 / 20 / 24 / 36 / 48） */
   --text-xs: 12px;
-  --text-sm: 13.5px;
-  --text-base: 15px;
-  --text-md: 17px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
   --text-lg: 20px;
-  --text-xl: 26px;
-  --text-2xl: 34px;
-  --text-hero: 46px;
+  --text-xl: 24px;
+  --text-2xl: 36px;
+  --text-hero: 48px;
+  --text-7xl: 72px;
   --leading-tight: 1.18;
   --leading-snug: 1.32;
   --leading-normal: 1.62;
   --tracking-tight: -0.02em;
+  --tracking-wide: 0.08em;
   --tracking-mono: 0.02em;
 
-  /* Motion */
-  --dur-1: 90ms;
-  --dur-2: 160ms;
-  --dur-3: 260ms;
-  --dur-4: 420ms;
+  /* Motion：基曲线 cubic-bezier(0.22,1,0.36,1)；颜色/透明度不低于 200ms */
+  --dur-1: 120ms;
+  --dur-2: 300ms;
+  --dur-3: 300ms;
+  --dur-4: 500ms;
   --dur-5: 640ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-2: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Glass */
@@ -134,7 +138,7 @@
   --z-toast: 80;
 
   /* Fonts */
-  --font-sans: "MiSans", "HarmonyOS Sans SC", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-sans: "Manrope", "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Consolas, "Courier New", monospace;
 
   /* Legacy aliases for the existing template layer */

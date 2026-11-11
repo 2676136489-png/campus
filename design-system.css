@@ -17,11 +17,11 @@
     --c-faint: #8b98a6;
     --c-line: #dfe5ec;
     --c-line-strong: #c7d0da;
-    --c-accent: #0033a0;
+    --c-accent: #5fc4a2;
     --c-accent-hover: #002a85;
     --c-accent-ink: #002566;
-    --c-accent-soft: #e8eef9;
-    --c-accent-bright: #0033a0;
+    --c-accent-soft: #e9f7f1;
+    --c-accent-bright: #5fc4a2;
     --c-danger: #b33a3a;
     --c-danger-soft: #fae7e6;
     --c-success: #2f7a50;
@@ -135,7 +135,7 @@ select,
 }
 
 :focus-visible {
-    outline: 3px solid rgba(0, 51, 160, 0.28);
+    outline: 3px solid rgba(95, 196, 162, 0.28);
     outline-offset: 2px;
 }
 
@@ -432,7 +432,7 @@ select,
 .conversation-group-title {
     margin: 18px 0 8px;
     color: var(--c-muted);
-    font-size: 13px;
+    font-size: var(--text-sm);
     font-weight: 700;
 }
 .conversation-group-title:first-child {

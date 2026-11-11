@@ -138,11 +138,18 @@ function renderHead($title, $description = '') {
     echo '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n";
     echo '<meta name="description" content="' . h($desc) . '">' . "\n";
     echo '<meta name="theme-color" content="#f2f4f7">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:site_name" content="校园圈子">' . "\n";
+    echo '<meta property="og:title" content="' . h($title) . ' - 校园圈子">' . "\n";
+    echo '<meta property="og:description" content="' . h($desc) . '">' . "\n";
+    echo '<meta property="og:image" content="https://www.lucky-campus.top/uploads/og-cover.jpg">' . "\n";
+    echo '<meta property="og:url" content="https://www.lucky-campus.top/">' . "\n";
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20260816">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20260816l">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20260816l">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r4">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r4">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -231,6 +238,8 @@ function renderSiteFooter($opts = []) {
     echo '<span>校园圈子 · 让每一份校园生活被看见</span>' . "\n";
     echo '<nav class="footer-links">' . "\n";
     $links = isset($opts['links']) ? $opts['links'] : [
+        ['label' => '隐私政策', 'href' => 'p_privacy.php'],
+        ['label' => '用户协议', 'href' => 'p_terms.php'],
         ['label' => '学生登录', 'href' => 'p_loginStu.php'],
         ['label' => '学生注册', 'href' => 'p_registerStu.php'],
         ['label' => '管理员后台', 'href' => 'p_adminAuth.php?logout=1'],
@@ -246,7 +255,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20260816r10"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r4"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -254,11 +263,11 @@ function renderSiteFooter($opts = []) {
     } elseif (!empty($_SESSION['adminName'])) {
         echo '<script>window.difyChatbotConfig={token:"ysipenxIDyTtnfRT",baseUrl:"https://udify.app",inputs:{},systemVariables:{},userVariables:{}};</script>';
         echo '<script src="https://udify.app/embed.min.js" id="ysipenxIDyTtnfRT" defer></script>';
-        echo '<style>#dify-chatbot-bubble-button{background-color:#1C64F2!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
+        echo '<style>#dify-chatbot-bubble-button{background-color:#5fc4a2!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
     } elseif (!empty($_SESSION['userName'])) {
         echo '<script>window.difyChatbotConfig={token:"6evfFJQ2FdKb70eI",baseUrl:"https://udify.app",inputs:{},systemVariables:{},userVariables:{}};</script>';
         echo '<script src="https://udify.app/embed.min.js" id="6evfFJQ2FdKb70eI" defer></script>';
-        echo '<style>#dify-chatbot-bubble-button{background-color:#1C64F2!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
+        echo '<style>#dify-chatbot-bubble-button{background-color:#5fc4a2!important;bottom:88px!important;width:48px!important;height:48px!important}#dify-chatbot-bubble-window{width:24rem!important;height:40rem!important}</style>';
     }
     echo '</body>' . "\n";
     echo '</html>' . "\n";
@@ -331,11 +340,17 @@ function renderAuthShell($opts = []) {
     echo '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n";
     echo '<meta name="description" content="' . h(isset($opts['description']) ? $opts['description'] : '校园圈子：学生实名认证、校园动态分享与同学交流平台。') . '">' . "\n";
     echo '<meta name="theme-color" content="#f2f4f7">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:site_name" content="校园圈子">' . "\n";
+    echo '<meta property="og:title" content="' . h($opts['title']) . ' - 校园圈子">' . "\n";
+    echo '<meta property="og:description" content="校园圈子：学生实名认证、校园动态分享与同学交流平台。">' . "\n";
+    echo '<meta property="og:image" content="https://www.lucky-campus.top/uploads/og-cover.jpg">' . "\n";
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20260816">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20260816l">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20260816l">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r4">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r4">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -360,12 +375,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20260816r10"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r4"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261110c1';
+    $v = '20261111r4';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

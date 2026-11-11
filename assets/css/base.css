@@ -2,6 +2,40 @@
  * Campus Circle Base Layer
  * Quiet, precise, keyboard-safe defaults.
  */
+
+/* Manrope：拉丁字母与数字，自托管（中文回退至系统中文黑体） */
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/manrope-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/manrope-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/manrope-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/manrope-700.woff2") format("woff2");
+}
+
 *,
 *::before,
 *::after {
@@ -117,7 +151,24 @@ h3,
 h4,
 h5 {
   text-wrap: balance;
-  letter-spacing: 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+/* 数据型数字等宽，避免计数跳动 */
+.tabular,
+.stat-value,
+.metric,
+.badge,
+.tag,
+.pagination,
+.post-stats {
+  font-variant-numeric: tabular-nums;
 }
 
 ul,
@@ -189,7 +240,7 @@ select {
   background: var(--ink);
   color: var(--surface);
   font-size: var(--text-sm);
-  font-weight: 650;
+  font-weight: 600;
   transform: translateY(-160%);
   transition: transform var(--dur-3) var(--ease-out);
 }
