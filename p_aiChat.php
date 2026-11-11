@@ -30,7 +30,7 @@ renderSiteHeader([
 
     <div class="chat-card card ai-chat-card">
         <div class="chat-head">
-            <img class="avatar" src="uploads/ai-avatar.jpg" alt="AI 助手头像">
+            <span class="avatar ai-avatar"><?=aiAvatarMark(40)?></span>
             <div>
                 <div class="chat-name">校园圈子 AI 助手</div>
                 <div class="muted small-text">回答附带同学 / 动态卡片，点击直达</div>
@@ -72,7 +72,7 @@ renderSiteHeader([
     var csrf = root.getAttribute('data-csrf');
     var userName = root.getAttribute('data-user-name');
     var userAvatar = root.getAttribute('data-user-avatar') || '';
-    var AI_AVATAR = 'uploads/ai-avatar.jpg';
+    var AI_AVATAR = '<?=aiAvatarDataUri()?>';
     var lsKey = 'campus_ai_conversation_' + userName;
     var sending = false;
 

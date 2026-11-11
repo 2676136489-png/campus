@@ -246,12 +246,12 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r10" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r10">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r10">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r10">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r10">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r10">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r11" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r11">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r11">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r11">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r11">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r11">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -361,7 +361,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r10"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r11"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -454,12 +454,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r10" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r10">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r10">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r10">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r10">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r10">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r11" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r11">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r11">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r11">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r11">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r11">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -484,12 +484,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r10"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r11"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r10';
+    $v = '20261111r11';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";
@@ -541,6 +541,15 @@ function navTileGlyph($name) {
             . '<path d="M25 34.5c0-4.6 3.2-7.6 7.6-7.6 3.6 0 6.4 2.2 6.4 7.6z" fill="#fff" fill-opacity=".92"/>',
         'spark' => '<path d="M24 10.5c1.3 7.2 3.8 9.7 11 11-7.2 1.3-9.7 3.8-11 11-1.3-7.2-3.8-9.7-11-11 7.2-1.3 9.7-3.8 11-11z" fill="#fff"/>'
             . '<circle cx="33.5" cy="31.5" r="3.2" fill="#fff" fill-opacity=".9"/>',
+        'bot' => '<circle cx="24" cy="10.6" r="2.5" fill="#fff"/>'
+            . '<rect x="23.1" y="12.6" width="1.8" height="4.8" rx=".9" fill="#fff"/>'
+            . '<rect x="13.2" y="16.8" width="21.6" height="15.4" rx="6.8" fill="#fff"/>'
+            . '<rect x="10" y="21.6" width="3" height="5.8" rx="1.5" fill="#fff" fill-opacity=".92"/>'
+            . '<rect x="35" y="21.6" width="3" height="5.8" rx="1.5" fill="#fff" fill-opacity=".92"/>'
+            . '<circle cx="19.6" cy="23.6" r="2.2" fill="#000" fill-opacity=".32"/>'
+            . '<circle cx="28.4" cy="23.6" r="2.2" fill="#000" fill-opacity=".32"/>'
+            . '<path d="M20.6 27.8c1.1 1.6 2.4 2.4 3.4 2.4s2.3-.8 3.4-2.4" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="1.7" stroke-linecap="round"/>'
+            . '<circle cx="38.6" cy="8.8" r="1.8" fill="#fff" fill-opacity=".6"/>',
     ];
     return isset($g[$name]) ? $g[$name] : '';
 }
@@ -551,7 +560,7 @@ function navTile($label, $active = false, $size = 24) {
         '学生中心' => ['home', '--cue-1', '#0052d9'],
         '动态广场' => ['feed', '--cue-2', '#00a4ff'],
         '同学' => ['people', '--cue-3', '#7a5cff'],
-        'AI 助手' => ['spark', '--cue-4', '#00c2a8'],
+        'AI 助手' => ['bot', '--cue-4', '#00c2a8'],
     ];
     static $seq = 0;
     if (!isset($map[$label])) {
@@ -575,6 +584,41 @@ function navTile($label, $active = false, $size = 24) {
         . '</linearGradient></defs>'
         . '<rect x="1" y="1" width="46" height="46" rx="14" fill="url(#' . $id . ')"/>'
         . $body . '</svg>';
+}
+
+/**
+ * AI 助手头像：和侧栏 AI 入口同一个机器人方牌，替换掉原来那张糊的 jpg。
+ * 渐变用 var(--cue-4)，深色模式自动提亮，和 tokens 同源。
+ */
+function aiAvatarMark($size = 40) {
+    static $n = 0;
+    $n++;
+    $id = 'ai-mark-' . $n;
+    return '<svg width="' . (int)$size . '" height="' . (int)$size . '" viewBox="0 0 48 48" role="img" aria-label="AI 助手">'
+        . '<defs><linearGradient id="' . $id . '" x1="0" y1="0" x2="1" y2="1">'
+        . '<stop offset="0" style="stop-color:var(--cue-4,#00c2a8)"/>'
+        . '<stop offset="1" style="stop-color:var(--cue-4-2,#4ff0c8)"/>'
+        . '</linearGradient></defs>'
+        . '<rect x="1" y="1" width="46" height="46" rx="14" fill="url(#' . $id . ')"/>'
+        . navTileGlyph('bot') . '</svg>';
+}
+
+/**
+ * 聊天消息里的 AI 头像走 <img>，只能用 data URI（独立文档取不到页面 CSS 变量），
+ * 所以这里硬编码 hex，和 tokens.css 里的 --cue-4 / --cue-4-2 保持同源，改色要两边一起改。
+ */
+function aiAvatarDataUri() {
+    static $uri = null;
+    if ($uri === null) {
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+            . '<defs><linearGradient id="am" x1="0" y1="0" x2="1" y2="1">'
+            . '<stop offset="0" stop-color="#00c2a8"/><stop offset="1" stop-color="#4ff0c8"/>'
+            . '</linearGradient></defs>'
+            . '<rect x="1" y="1" width="46" height="46" rx="14" fill="url(#am)"/>'
+            . navTileGlyph('bot') . '</svg>';
+        $uri = 'data:image/svg+xml;base64,' . base64_encode($svg);
+    }
+    return $uri;
 }
 
 

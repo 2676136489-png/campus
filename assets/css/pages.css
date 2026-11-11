@@ -856,6 +856,18 @@
   background: var(--surface-2);
 }
 
+/* AI 头像现在是内联的机器人方牌（p_layout.php aiAvatarMark()），
+   底色由方牌自己提供，.avatar 的 surface-3 底和 object-fit 都不需要了。 */
+.ai-avatar {
+  background: none;
+}
+
+.ai-avatar svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .chat-head > div:nth-child(2) {
   min-width: 0;
   flex: 1;
