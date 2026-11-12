@@ -246,17 +246,46 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r11" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r11">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r11">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r11">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r11">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r11">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r12" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r12">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r12">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r12">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r12">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r12">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
     echo '<!-- THESIS: Campus life as a quiet instrument panel, not a decorated bulletin board. OWN-WORLD: gray paper, hairline rules, one blue accent, matte cards, liquid glass only on overlays. STORY: students read, publish and connect without noise. FORM: app-shell with desktop rail and mobile tab bar. -->' . "\n";
 }
+/**
+ * 全站背景动效（浪涌气泡）：五层浪 + 两团极光 + 八颗上浮光泡。
+ * 只输出一次、fixed 垫底（z-index:-1），卡片白底自然盖住，不挡点击。
+ * 样式在 base.css 的 .page-fx 区块；手机端 CSS 会自动减到 4 颗气泡。
+ */
+function renderPageFx() {
+    $orbs = [
+        ['6%', '170px', '--c:rgba(0,82,217,.5);--d:28s;--dl:-4s;--o:.48'],
+        ['19%', '100px', '--c:rgba(122,92,255,.45);--d:34s;--dl:-15s;--o:.4'],
+        ['31%', '210px', '--c:rgba(0,164,255,.45);--d:40s;--dl:-9s;--o:.42'],
+        ['45%', '110px', '--c:rgba(0,194,168,.5);--d:30s;--dl:-22s;--o:.42'],
+        ['56%', '150px', '--c:rgba(0,82,217,.42);--d:33s;--dl:-6s;--o:.4'],
+        ['67%', '92px', '--c:rgba(255,77,141,.4);--d:37s;--dl:-28s;--o:.34'],
+        ['77%', '190px', '--c:rgba(122,92,255,.42);--d:42s;--dl:-14s;--o:.38'],
+        ['89%', '120px', '--c:rgba(0,164,255,.46);--d:26s;--dl:-19s;--o:.44'],
+    ];
+    $html = '<div class="page-fx" aria-hidden="true">' . "\n";
+    $html .= '<i class="pf-b1"></i>' . "\n" . '<i class="pf-b2"></i>' . "\n";
+    // 气泡夹在中层浪之间，看起来是从水里冒出来的
+    $html .= '<i class="pf-w pf-w5"></i>' . "\n" . '<i class="pf-w pf-w4"></i>' . "\n";
+    foreach ($orbs as $n => $orb) {
+        list($left, $size, $vars) = $orb;
+        $html .= '<i class="pf-orb pf-o' . ($n + 1) . '" style="left:' . $left . ';width:' . $size . ';height:' . $size . ';' . $vars . '"></i>\n';
+    }
+    $html .= '<i class="pf-w pf-w3"></i>' . "\n" . '<i class="pf-w pf-w2"></i>' . "\n" . '<i class="pf-w pf-w1"></i>' . "\n";
+    $html .= '</div>' . "\n";
+    echo $html;
+}
+
 function renderSiteHeader($opts = []) {
     $nav = isset($opts['nav']) ? $opts['nav'] : [];
     $siteNav = isset($opts['siteNav']) ? $opts['siteNav'] : $nav;
@@ -279,6 +308,7 @@ function renderSiteHeader($opts = []) {
     $home = isset($opts['home']) ? $opts['home'] : 'p_welcomeStu.php';
     $GLOBALS['__campus_nav'] = $mobileNav;
     $GLOBALS['__campus_composer'] = !empty($opts['composer']);
+    renderPageFx();
     echo '<div class="app-shell">' . "\n";
     echo '<a class="skip-link" href="#main">跳到主要内容</a>' . "\n";
     echo '<aside class="side-rail" aria-label="主导航">' . "\n";
@@ -361,7 +391,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r11"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r12"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -454,12 +484,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r11" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r11">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r11">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r11">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r11">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r11">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r12" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r12">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r12">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r12">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r12">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r12">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -484,12 +514,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r11"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r12"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r11';
+    $v = '20261111r12';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

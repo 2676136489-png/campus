@@ -372,3 +372,167 @@ select {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+/* ---------- 页面背景动效：极光 + 五层浪 + 上浮气泡 ----------
+   结构由 p_layout.php 的 renderPageFx() 输出一次（fixed、aria-hidden、pointer-events:none）。
+   只动 transform / opacity（GPU 合成），blur 是静态的不参与逐帧重绘。
+   浪画在 body 的四团静态光晕之上、卡片之下；卡片纯白不透光，正文不受影响。 */
+.page-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-fx i {
+  display: block;
+  position: absolute;
+}
+
+/* 两团极光：紫 / 青，28s / 34s 缓慢漂移 */
+.page-fx .pf-b1,
+.page-fx .pf-b2 {
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.26;
+  will-change: transform;
+}
+
+.page-fx .pf-b1 {
+  width: 50vw;
+  height: 54vh;
+  left: -6vw;
+  top: -16vh;
+  background: radial-gradient(closest-side, #7a5cff, transparent 72%);
+  animation: pfAur1 28s ease-in-out infinite alternate;
+}
+
+.page-fx .pf-b2 {
+  width: 46vw;
+  height: 52vh;
+  right: -8vw;
+  top: -4vh;
+  background: radial-gradient(closest-side, #00c2a8, transparent 72%);
+  animation: pfAur2 34s ease-in-out infinite alternate;
+}
+
+/* 五层浪：data URI 里的渐变是浅色调的，深色模式靠整层 opacity 压暗。
+   200% 宽 + 平移 -50% 保证无缝循环；width 用 vw 会受滚动条影响，直接用百分比。 */
+.page-fx .pf-w {
+  left: 0;
+  bottom: -2px;
+  width: 200%;
+  height: 62%;
+  will-change: transform;
+}
+
+.page-fx .pf-w5 {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%230052d9'/><stop offset='.45' stop-color='%237a5cff'/><stop offset='1' stop-color='%2300c2a8'/></linearGradient></defs><path fill='url(%23g)' fill-opacity='.10' d='M0 170 C120 100 240 100 360 170 C480 240 600 240 720 170 C840 100 960 100 1080 170 C1200 240 1320 240 1440 170 L1440 320 L0 320 Z'/></svg>") center bottom / 50% 100% repeat-x;
+  animation: pfSurgeA 30s linear infinite;
+}
+
+.page-fx .pf-w4 {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%2300c2a8'/><stop offset='.5' stop-color='%2300a4ff'/><stop offset='1' stop-color='%230052d9'/></linearGradient></defs><path fill='url(%23g)' fill-opacity='.11' d='M0 190 C120 130 240 130 360 190 C480 250 600 250 720 190 C840 130 960 130 1080 190 C1200 250 1320 250 1440 190 L1440 320 L0 320 Z'/></svg>") center bottom / 50% 100% repeat-x;
+  animation: pfSurgeB 24s linear infinite;
+}
+
+.page-fx .pf-w3 {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%2300a4ff'/><stop offset='.5' stop-color='%237a5cff'/><stop offset='1' stop-color='%2300a4ff'/></linearGradient></defs><path fill='url(%23g)' fill-opacity='.13' d='M0 210 C120 155 240 155 360 210 C480 265 600 265 720 210 C840 155 960 155 1080 210 C1200 265 1320 265 1440 210 L1440 320 L0 320 Z'/></svg>") center bottom / 50% 100% repeat-x;
+  animation: pfSurgeC 26s linear infinite;
+}
+
+.page-fx .pf-w2 {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%237a5cff'/><stop offset='.5' stop-color='%23ff4d8d'/><stop offset='1' stop-color='%237a5cff'/></linearGradient></defs><path fill='url(%23g)' fill-opacity='.12' d='M0 235 C120 185 240 185 360 235 C480 285 600 285 720 235 C840 185 960 185 1080 235 C1200 285 1320 285 1440 235 L1440 320 L0 320 Z'/></svg>") center bottom / 50% 100% repeat-x;
+  animation: pfSurgeB 17s linear infinite;
+}
+
+.page-fx .pf-w1 {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%230052d9'/><stop offset='.5' stop-color='%2300a4ff'/><stop offset='1' stop-color='%2300c2a8'/></linearGradient></defs><path fill='url(%23g)' fill-opacity='.17' d='M0 258 C120 216 240 216 360 258 C480 300 600 300 720 258 C840 216 960 216 1080 258 C1200 300 1320 300 1440 258 L1440 320 L0 320 Z'/><path fill='none' stroke='rgba(255,255,255,.5)' stroke-width='2.5' d='M0 258 C120 216 240 216 360 258 C480 300 600 300 720 258 C840 216 960 216 1080 258 C1200 300 1320 300 1440 258'/></svg>") center bottom / 50% 100% repeat-x;
+  animation: pfSurgeA 12s linear infinite;
+}
+
+/* 八颗气泡：颜色 / 尺寸 / 节奏由 renderPageFx() 的内联变量给出 */
+.page-fx .pf-orb {
+  bottom: -14%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, var(--c), transparent 72%);
+  animation: pfRise var(--d, 30s) linear infinite;
+  animation-delay: var(--dl, 0s);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* 涌动 = 横流 + 上下起伏，各层相位错开；100% 回到起点保证无缝 */
+@keyframes pfSurgeA {
+  0% { transform: translate(0, 0); }
+  25% { transform: translateX(-12.5%) translateY(-16px); }
+  50% { transform: translateX(-25%) translateY(5px); }
+  75% { transform: translateX(-37.5%) translateY(-9px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes pfSurgeB {
+  0% { transform: translate(-50%, 0); }
+  25% { transform: translate(-37.5%, 12px); }
+  50% { transform: translate(-25%, -7px); }
+  75% { transform: translate(-12.5%, 9px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes pfSurgeC {
+  0% { transform: translate(0, 0); }
+  25% { transform: translateX(-12.5%) translateY(10px); }
+  50% { transform: translateX(-25%) translateY(-12px); }
+  75% { transform: translateX(-37.5%) translateY(6px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes pfAur1 {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(16%, 10%) scale(1.22); }
+}
+
+@keyframes pfAur2 {
+  from { transform: translate(0, 0) scale(1.1); }
+  to { transform: translate(-14%, 8%) scale(0.92); }
+}
+
+@keyframes pfRise {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: var(--o, 0.45); }
+  82% { opacity: var(--o, 0.45); }
+  100% { transform: translateY(-130vh); opacity: 0; }
+}
+
+/* 深色模式：浪整层压暗，光斑稍提亮（data URI 里的渐变改不了，只能动层透明度） */
+[data-theme="dark"] .page-fx .pf-w {
+  opacity: 0.5;
+}
+
+[data-theme="dark"] .page-fx .pf-b1,
+[data-theme="dark"] .page-fx .pf-b2 {
+  opacity: 0.32;
+}
+
+/* 手机：浪压矮、气泡减到 4 颗、光斑模糊半径收小 */
+@media (max-width: 640px) {
+  .page-fx .pf-w { height: 44%; }
+  .page-fx .pf-o5,
+  .page-fx .pf-o6,
+  .page-fx .pf-o7,
+  .page-fx .pf-o8 { display: none; }
+  .page-fx .pf-b1,
+  .page-fx .pf-b2 { filter: blur(56px); }
+}
+
+/* 「减少动态效果」用户：气泡藏掉，光斑和浪停在静态一帧 */
+@media (prefers-reduced-motion: reduce) {
+  .page-fx .pf-b1,
+  .page-fx .pf-b2,
+  .page-fx .pf-w,
+  .page-fx .pf-orb { animation: none; }
+  .page-fx .pf-orb { opacity: 0; visibility: hidden; }
+  .page-fx .pf-b1 { opacity: 0.2; }
+  .page-fx .pf-b2 { opacity: 0.2; }
+}
