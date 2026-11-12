@@ -328,7 +328,9 @@ function renderSiteHeader($opts = []) {
         $linkClass = 'rail-link' . $active . ($tile !== '' ? '' : ' rail-link--soft');
         echo '<a class="' . $linkClass . '"' . ($active !== '' ? ' aria-current="page"' : '') . ' title="' . h($item['label']) . '" href="' . h($item['href']) . '">' . ($tile !== '' ? $tile : icon($navIcon, 19)) . '<span>' . h($item['label']) . '</span></a>' . "\n";
     }
-    $pickTags = railPickTags(3);
+    // 「猜你喜欢」只属于学生端；管理员后台侧栏不放标签推荐
+    $isAdminRail = session_status() === PHP_SESSION_ACTIVE && !empty($_SESSION['adminName']);
+    $pickTags = $isAdminRail ? [] : railPickTags(3);
     if (!empty($pickTags)) {
         echo '<div class="rail-picks" data-rail-picks>' . "\n";
         echo '<div class="rail-section-label">猜你喜欢</div>' . "\n";

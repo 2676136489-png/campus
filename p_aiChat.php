@@ -2,28 +2,68 @@
 require_once __DIR__ . '/p_manageDB.php';
 require_once __DIR__ . '/p_layout.php';
 
-$student = requireStudentLogin();
+// 必须先显式启动会话，才能在分流前读到会话类型（页面头部没有统一的 session 启动）
+secureSessionStart();
+
+// 学生与管理员共用同一个聊天界面：管理员会话走后台导航与管理员版 AI 应用，
+// 学生会话走学生导航与学生版应用。后端 ai_chat_api.php 按会话类型自动分流。
+$isAdminChat = session_status() === PHP_SESSION_ACTIVE && !empty($_SESSION['adminName']);
+if ($isAdminChat) {
+    $adminName = requireAdminLogin();
+    // 与后台其他页一致：首次登录尚未改密时先引导到改密页
+    if ($_SESSION['adminMustChangePassword'] ?? isInitialAdminPassword($adminName)) {
+        header('Location: ' . tabUrl('p_adminAuth.php'));
+        exit;
+    }
+    $actorName = $adminName;
+    $actorAvatar = '';
+} else {
+    $student = requireStudentLogin();
+    $actorName = $student['userName'];
+    $actorAvatar = !empty($student['avatar']) && uploadFileExists($student['avatar']) ? thumbnailUrl($student['avatar'], 'avatar') : '';
+}
 // 本页是自建 AI 界面，隐藏右下角官方 Dify 气泡，避免双入口
 $GLOBALS['__campus_hide_dify_bubble'] = true;
 
 renderHead('AI 助手');
-renderSiteHeader([
-    'nav' => [
-        ['label' => '学生中心', 'href' => 'p_welcomeStu.php'],
-        ['label' => '动态广场', 'href' => 'p_dynamics.php'],
-        ['label' => '同学', 'href' => 'p_allStudents.php'],
-        ['label' => 'AI 助手', 'href' => 'p_aiChat.php', 'active' => true],
-    ],
-    'actions' => renderMessageBell($student['pk']) . renderNotificationBell($student['pk']) . '<a class="btn btn-ghost btn-sm" href="p_logoutStu.php">' . icon('logout') . '退出登录</a>',
-    'composer' => ($student['status'] === 'V'),
-]);
+if ($isAdminChat) {
+    // 管理员版头部：后台导航 + AI 助手高亮（与 renderAdminHeader 同一套角色过滤）
+    $isSuperAdmin = getAdminRole($adminName) === 'super';
+    $nav = array_values(array_filter(adminNavItems(), function ($item) use ($isSuperAdmin) {
+        return $isSuperAdmin || !in_array($item['label'], ['学生管理', '审计日志', '管理员账号'], true);
+    }));
+    $nav[] = ['label' => 'AI 助手', 'href' => 'p_aiChat.php', 'active' => true];
+    renderSiteHeader([
+        'home' => 'p_adminAuth.php',
+        'nav' => $nav,
+        'siteNav' => $nav,
+        'mobileNav' => $nav,
+        'hideSiteNavDesktop' => true,
+        'actions' => '<a class="btn btn-ghost btn-sm" href="p_adminAuth.php?logout=1">' . icon('logout') . '退出登录</a>',
+    ]);
+} else {
+    renderSiteHeader([
+        'nav' => [
+            ['label' => '学生中心', 'href' => 'p_welcomeStu.php'],
+            ['label' => '动态广场', 'href' => 'p_dynamics.php'],
+            ['label' => '同学', 'href' => 'p_allStudents.php'],
+            ['label' => 'AI 助手', 'href' => 'p_aiChat.php', 'active' => true],
+        ],
+        'actions' => renderMessageBell($student['pk']) . renderNotificationBell($student['pk']) . '<a class="btn btn-ghost btn-sm" href="p_logoutStu.php">' . icon('logout') . '退出登录</a>',
+        'composer' => ($student['status'] === 'V'),
+    ]);
+}
 ?>
 <div class="container narrow">
     <div class="page-head">
         <div>
             <div class="hero-kicker">Campus AI</div>
             <h1>AI 助手</h1>
+            <?php if ($isAdminChat): ?>
+            <p class="muted">管理后台的智能助手：查站内数据、找内容，回答里可以直接点进对应页面。</p>
+            <?php else: ?>
             <p class="muted">校园圈的智能向导：帮你找人、找动态、找公告，回答里可以直接点进对应页面。</p>
+            <?php endif; ?>
         </div>
         <button type="button" class="btn btn-soft btn-sm" data-ai-new-chat><?=icon('refresh')?>新会话</button>
     </div>
@@ -39,8 +79,8 @@ renderSiteHeader([
 
         <div class="chat-body ai-chat-body" data-ai-chat
              data-csrf="<?=h(csrfToken())?>"
-             data-user-name="<?=h($student['userName'])?>"
-             data-user-avatar="<?=!empty($student['avatar']) && uploadFileExists($student['avatar']) ? h(thumbnailUrl($student['avatar'], 'avatar')) : ''?>">
+             data-user-name="<?=h($actorName)?>"
+             data-user-avatar="<?=h($actorAvatar)?>">
             <div class="ai-chat-empty" data-ai-empty>
                 <span class="empty-icon"><?=icon('smile', 26)?></span>
                 <div class="empty-title">问问看：「最近有什么校园活动？」</div>

@@ -1,17 +1,29 @@
 <?php
 /**
- * AI 助手后端：代理 Dify chat-messages API，为学生端聊天页服务。
+ * AI 助手后端：代理 Dify chat-messages API，为学生端与管理员端的聊天页服务。
  *
- * 鉴权：仅登录学生可用（管理员用官方气泡，不经过这里）。
+ * 鉴权：登录学生与管理员均可用，按会话类型分流应用——
+ *   学生会话 → DIFY_API_KEY（学生版应用，user 前缀 stu-）；
+ *   管理员会话 → DIFY_ADMIN_API_KEY（管理员版应用，user 前缀 admin-）。
  * 会话记忆：conversation_id 由前端保存并随请求带回，Dify 侧天然续聊。
- * 配置（.env）：DIFY_API_KEY（Dify 控制台 → API 访问 → 生成，学生版应用）、
+ * 配置（.env）：DIFY_API_KEY / DIFY_ADMIN_API_KEY（Dify 控制台 → API 访问 → 生成）、
  *             DIFY_BASE_URL（默认 https://api.dify.ai/v1，以 Dify 控制台「访问 API」页显示的 Endpoint 为准）。
  */
 require_once __DIR__ . '/lib/bootstrap.php';
 secureSessionStart();
 require_once __DIR__ . '/p_manageDB.php';
 
-$student = requireStudentLogin();
+$isAdminChat = session_status() === PHP_SESSION_ACTIVE && !empty($_SESSION['adminName']);
+if ($isAdminChat) {
+    $adminName = requireAdminLogin();
+    if ($_SESSION['adminMustChangePassword'] ?? isInitialAdminPassword($adminName)) {
+        aiChatJson(['ok' => false, 'error' => 'forbidden'], 403);
+    }
+    $actorUser = 'admin-' . $adminName;
+} else {
+    $student = requireStudentLogin();
+    $actorUser = 'stu-' . $student['userName'];
+}
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -20,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'send') {
     if (!verifyCsrf()) {
         aiChatJson(['ok' => false, 'error' => 'bad_csrf'], 403);
     }
-    aiChatSend($student);
+    aiChatSend($actorUser, $isAdminChat);
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'history') {
-    aiChatHistory($student);
+    aiChatHistory($actorUser, $isAdminChat);
 }
 aiChatJson(['ok' => false, 'error' => 'unknown_action'], 400);
 
@@ -34,9 +46,9 @@ function aiChatJson($payload, $code = 200)
     exit;
 }
 
-function aiChatConfig()
+function aiChatConfig($isAdminChat = false)
 {
-    $key = trim(envValue('DIFY_API_KEY', ''));
+    $key = trim(envValue($isAdminChat ? 'DIFY_ADMIN_API_KEY' : 'DIFY_API_KEY', ''));
     $base = rtrim(trim(envValue('DIFY_BASE_URL', 'https://api.dify.ai/v1')), '/');
     if ($key === '' || $base === '') {
         return null;
@@ -195,12 +207,12 @@ function aiChatLinkEntities($text)
     return $text;
 }
 
-function aiChatSend(array $student)
+function aiChatSend($actorUser, $isAdminChat = false)
 {
-    if (!aiChatConfig()) {
+    if (!aiChatConfig($isAdminChat)) {
         aiChatJson(['ok' => false, 'error' => 'ai_not_configured'], 503);
     }
-    [$key, $base] = aiChatConfig();
+    [$key, $base] = aiChatConfig($isAdminChat);
 
     $question = trim((string)($_POST['question'] ?? ''));
     if ($question === '' || mb_strlen($question) > 500) {
@@ -214,7 +226,7 @@ function aiChatSend(array $student)
         'query' => $question,
         'response_mode' => 'streaming',
         'conversation_id' => $conversationId,
-        'user' => 'stu-' . $student['userName'],
+        'user' => $actorUser,
     ]);
     if ($status !== 200 || empty($data['answer'])) {
         aiChatJson(['ok' => false, 'error' => 'ai_upstream_error'], 502);
@@ -226,12 +238,12 @@ function aiChatSend(array $student)
     ]);
 }
 
-function aiChatHistory(array $student)
+function aiChatHistory($actorUser, $isAdminChat = false)
 {
-    if (!aiChatConfig()) {
+    if (!aiChatConfig($isAdminChat)) {
         aiChatJson(['ok' => false, 'error' => 'ai_not_configured'], 503);
     }
-    [$key, $base] = aiChatConfig();
+    [$key, $base] = aiChatConfig($isAdminChat);
 
     $conversationId = preg_match('/^[A-Za-z0-9-]{8,64}$/', (string)($_GET['conversationId'] ?? ''))
         ? (string)$_GET['conversationId'] : '';
@@ -240,7 +252,7 @@ function aiChatHistory(array $student)
     }
     $url = $base . '/messages?' . http_build_query([
         'conversation_id' => $conversationId,
-        'user' => 'stu-' . $student['userName'],
+        'user' => $actorUser,
         'limit' => 30,
     ]);
     [$status, $data] = aiChatJsonCall('GET', $url, $key);
