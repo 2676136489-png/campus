@@ -246,12 +246,12 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r12" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r12">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r12">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r12">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r12">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r12">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r13" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r13">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r13">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r13">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r13">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r13">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -264,14 +264,14 @@ echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(windo
  */
 function renderPageFx() {
     $orbs = [
-        ['6%', '170px', '--c:rgba(0,82,217,.5);--d:28s;--dl:-4s;--o:.48'],
-        ['19%', '100px', '--c:rgba(122,92,255,.45);--d:34s;--dl:-15s;--o:.4'],
-        ['31%', '210px', '--c:rgba(0,164,255,.45);--d:40s;--dl:-9s;--o:.42'],
-        ['45%', '110px', '--c:rgba(0,194,168,.5);--d:30s;--dl:-22s;--o:.42'],
-        ['56%', '150px', '--c:rgba(0,82,217,.42);--d:33s;--dl:-6s;--o:.4'],
-        ['67%', '92px', '--c:rgba(255,77,141,.4);--d:37s;--dl:-28s;--o:.34'],
-        ['77%', '190px', '--c:rgba(122,92,255,.42);--d:42s;--dl:-14s;--o:.38'],
-        ['89%', '120px', '--c:rgba(0,164,255,.46);--d:26s;--dl:-19s;--o:.44'],
+        ['6%', '170px', '--c:rgba(0,82,217,.5);--d:62s;--dl:-8s;--o:.48'],
+        ['19%', '100px', '--c:rgba(122,92,255,.45);--d:76s;--dl:-34s;--o:.4'],
+        ['31%', '210px', '--c:rgba(0,164,255,.45);--d:88s;--dl:-20s;--o:.42'],
+        ['45%', '110px', '--c:rgba(0,194,168,.5);--d:66s;--dl:-48s;--o:.42'],
+        ['56%', '150px', '--c:rgba(0,82,217,.42);--d:72s;--dl:-14s;--o:.4'],
+        ['67%', '92px', '--c:rgba(255,77,141,.4);--d:82s;--dl:-62s;--o:.34'],
+        ['77%', '190px', '--c:rgba(122,92,255,.42);--d:94s;--dl:-30s;--o:.38'],
+        ['89%', '120px', '--c:rgba(0,164,255,.46);--d:58s;--dl:-42s;--o:.44'],
     ];
     $html = '<div class="page-fx" aria-hidden="true">' . "\n";
     $html .= '<i class="pf-b1"></i>' . "\n" . '<i class="pf-b2"></i>' . "\n";
@@ -391,7 +391,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r12"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r13"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -484,12 +484,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r12" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r12">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r12">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r12">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r12">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r12">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261111r13" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r13">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r13">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261111r13">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261111r13">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261111r13">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -514,12 +514,12 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r12"></script>' . "\n";
+    echo '<script src="app.js?v=20261111r13"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r12';
+    $v = '20261111r13';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";
