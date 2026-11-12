@@ -70,15 +70,15 @@ body {
   min-height: 100dvh;
   margin: 0;
   background: var(--bg);
-  /* 四团极淡的彩光铺在纸面上：蓝 / 亮蓝 / 紫 / 青，位置固定不随滚动，
-     卡片是纯白的，所以颜色只在缝隙里透出来，不抢正文。 */
+  /* 四团极淡的彩光铺在纸面上：蓝 / 亮蓝 / 紫 / 青。
+     不用 background-attachment: fixed——它会强制每次滚动整幅重绘，
+     是滚动卡顿的经典元凶；光随内容滚，视觉几乎无差。 */
   background-image:
     radial-gradient(880px 520px at 0% -12%, var(--wash-1), transparent 64%),
     radial-gradient(820px 520px at 100% -6%, var(--wash-2), transparent 64%),
     radial-gradient(900px 560px at 58% 118%, var(--wash-3), transparent 66%),
     radial-gradient(760px 480px at 26% 56%, var(--wash-4), transparent 68%);
   background-repeat: no-repeat;
-  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -390,11 +390,13 @@ select {
   position: absolute;
 }
 
-/* 两团极光：紫 / 青，28s / 34s 缓慢漂移 */
+/* 两团极光：紫 / 青，缓慢漂移。
+   性能要点：不用 filter: blur（大范围 blur 是最贵的 CSS 效果，合成层重光栅化会拖垮帧率），
+   用四段透明度递减的 radial-gradient 直接画出软边；keyframes 只动 translate 不动 scale
+   （缩放同样会触发重光栅化）。 */
 .page-fx .pf-b1,
 .page-fx .pf-b2 {
   border-radius: 50%;
-  filter: blur(80px);
   opacity: 0.26;
   will-change: transform;
 }
@@ -404,7 +406,7 @@ select {
   height: 54vh;
   left: -6vw;
   top: -16vh;
-  background: radial-gradient(closest-side, #7a5cff, transparent 72%);
+  background: radial-gradient(closest-side, rgba(122, 92, 255, 0.95), rgba(122, 92, 255, 0.5) 42%, rgba(122, 92, 255, 0.18) 64%, transparent 80%);
   animation: pfAur1 46s ease-in-out infinite alternate;
 }
 
@@ -413,7 +415,7 @@ select {
   height: 52vh;
   right: -8vw;
   top: -4vh;
-  background: radial-gradient(closest-side, #00c2a8, transparent 72%);
+  background: radial-gradient(closest-side, rgba(0, 194, 168, 0.95), rgba(0, 194, 168, 0.5) 42%, rgba(0, 194, 168, 0.18) 64%, transparent 80%);
   animation: pfAur2 56s ease-in-out infinite alternate;
 }
 
@@ -489,13 +491,13 @@ select {
 }
 
 @keyframes pfAur1 {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(16%, 10%) scale(1.22); }
+  from { transform: translate(0, 0); }
+  to { transform: translate(16%, 10%); }
 }
 
 @keyframes pfAur2 {
-  from { transform: translate(0, 0) scale(1.1); }
-  to { transform: translate(-14%, 8%) scale(0.92); }
+  from { transform: translate(0, 0); }
+  to { transform: translate(-14%, 8%); }
 }
 
 @keyframes pfRise {
@@ -515,15 +517,13 @@ select {
   opacity: 0.32;
 }
 
-/* 手机：浪压矮、气泡减到 4 颗、光斑模糊半径收小 */
+/* 手机：浪压矮、气泡减到 4 颗 */
 @media (max-width: 640px) {
   .page-fx .pf-w { height: 44%; }
   .page-fx .pf-o5,
   .page-fx .pf-o6,
   .page-fx .pf-o7,
   .page-fx .pf-o8 { display: none; }
-  .page-fx .pf-b1,
-  .page-fx .pf-b2 { filter: blur(56px); }
 }
 
 /* 「减少动态效果」用户：气泡藏掉，光斑和浪停在静态一帧 */
