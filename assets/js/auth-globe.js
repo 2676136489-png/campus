@@ -110,7 +110,8 @@
   })();
 
   var s = new Surface(cv);
-  var spin = 2.1, vel = 0.16, hover = false, drag = null, tilt = -0.36, vtilt = 0;
+  /* 初始相位：让东亚朝向观众，登录第一眼就能看到吉大站点标记 */
+  var spin = -0.6, vel = 0.16, hover = false, drag = null, tilt = -0.36, vtilt = 0;
   var land8 = [];
   var zoom = 1, zoomT = 1, pins = [], look = null;
   var sea = [], soil = [];
@@ -173,7 +174,7 @@
     spin += vel * dt / 1000;
 
     var cx = s.w / 2, cy = s.h / 2 + s.u * 0.035;
-    var R  = s.u * 0.318 * zoom;
+    var R  = s.u * 0.42 * zoom;
     var fs = s.u * 0.0275 * Math.pow(zoom, 0.72);
     var cs = Math.cos(spin), sn = Math.sin(spin);
     var ct = Math.cos(tilt), st = Math.sin(tilt);
@@ -237,6 +238,40 @@
         ctx.restore();
       }
       arr.length = 0;
+    }
+
+    /* 站点标记：旧雷达 blip 的化身——钉在球面、随球一起转、背面隐藏、循环涟漪。
+       长春（吉大）为主点。原版点击落 pin 的交互保留，两组并存。 */
+    var STATION_PINS = [
+      { lat: 43.88, lon: 125.32, major: 1 },  // 长春·吉大
+      { lat: 45.80, lon: 126.53 },            // 哈尔滨
+      { lat: 39.90, lon: 116.40 },            // 北京
+      { lat: 31.23, lon: 121.47 },            // 上海
+      { lat: 23.13, lon: 113.26 },            // 广州
+      { lat: 30.57, lon: 104.06 }             // 成都
+    ];
+    for (var spi = 0; spi < STATION_PINS.length; spi++) {
+      var spn = STATION_PINS[spi];
+      var scl = Math.cos(spn.lat * Math.PI / 180);
+      var sax = scl * Math.cos(spn.lon * Math.PI / 180);
+      var say = Math.sin(spn.lat * Math.PI / 180);
+      var saz = scl * Math.sin(spn.lon * Math.PI / 180);
+      var sbx1 = sax * cs - saz * sn, sbz1 = sax * sn + saz * cs;
+      var sby2 = say * ct - sbz1 * st, sbz2 = say * st + sbz1 * ct;
+      if (sbz2 <= 0.02) continue;
+      var spx = cx + sbx1 * R, spy = cy - sby2 * R;
+      var srr = s.u * (spn.major ? 0.016 : 0.011) * (0.55 + 0.45 * sbz2);
+      /* 3.6s 循环涟漪，按索引错峰；减弱动效时静止在中间态 */
+      var cyc = REDUCED ? 0.35 : ((now / 3600 + spi * 0.61) % 1);
+      ctx.beginPath();
+      ctx.arc(spx, spy, srr * (0.9 + 2.1 * cyc), 0, Math.PI * 2);
+      ctx.strokeStyle = ink(0.5 * (1 - cyc) * (0.35 + 0.65 * sbz2));
+      ctx.lineWidth = Math.max(0.6, s.u * 0.0018);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(spx, spy, Math.max(1, srr * 0.42), 0, Math.PI * 2);
+      ctx.fillStyle = ink(0.45 + 0.55 * sbz2);
+      ctx.fill();
     }
 
     for (var pi = 0; pi < pins.length; pi++) {
