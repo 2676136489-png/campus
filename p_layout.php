@@ -246,12 +246,12 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261113r16" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r16">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r16">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261113r16">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261113r16">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261113r16">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261113r18" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r18">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r18">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261113r18">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261113r18">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261113r18">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
@@ -277,16 +277,15 @@ function renderPageFx() {
     // 雾罩压在视频上，把画面压成氛围底
     $html .= '<i class="pf-veil"></i>' . "\n";
     $html .= '</div>' . "\n";
+    // 注意：下面这段 JS 会被拼成一行输出，行内绝对不能用 // 注释，否则会把后面的代码整段吃掉。
     $html .= '<script>(function(){'
         . 'var v=document.getElementById("pfVideo");if(!v)return;'
         . 'try{'
         . 'if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;'
-        . '// 手机端不拉这 10MB 的背景视频，交给极光层'
         . 'if(window.matchMedia&&window.matchMedia("(max-width: 640px)").matches)return;'
         . 'if(navigator.connection&&navigator.connection.saveData)return;'
         . '}catch(e){}'
         . 'v.muted=true;'
-        . '// 0.6 倍慢放：运镜更缓更像慢镜头，同时每秒解码帧数减半，合成压力小一半'
         . 'v.playbackRate=0.6;'
         . 'v.addEventListener("playing",function(){v.classList.add("is-ready");});'
         . 'function start(){var p=v.play();if(p&&p.catch)p.catch(function(){});}'
@@ -403,7 +402,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261113r16"></script>' . "\n";
+    echo '<script src="app.js?v=20261113r18"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -496,12 +495,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261113r16" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r16">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r16">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261113r16">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261113r16">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261113r16">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261113r18" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r18">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r18">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261113r18">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261113r18">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261113r18">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -526,13 +525,13 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="assets/js/auth-globe.js?v=20261113r16"></script>' . "\n";
-    echo '<script src="app.js?v=20261113r16"></script>' . "\n";
+    echo '<script src="assets/js/auth-globe.js?v=20261113r18"></script>' . "\n";
+    echo '<script src="app.js?v=20261113r18"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261113r16';
+    $v = '20261113r18';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

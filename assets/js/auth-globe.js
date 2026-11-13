@@ -112,6 +112,7 @@
   var s = new Surface(cv);
   /* 初始相位：让东亚朝向观众，登录第一眼就能看到吉大站点标记 */
   var spin = -0.6, vel = 0.16, hover = false, drag = null, tilt = -0.36, vtilt = 0;
+  var lastMoveT = 0;
   var land8 = [];
   var zoom = 1, zoomT = 1, pins = [], look = null;
   var sea = [], soil = [];
@@ -126,9 +127,15 @@
     var p = local(cv, e);
     look = p;
     if (!drag) return;
-    vel  = (p.x - drag.x) / s.u * 9;
-    vtilt = -(p.y - drag.y) / s.u * 6;
-    tilt  = Math.max(-1.15, Math.min(1.15, tilt + vtilt * 0.016));
+    var dx = p.x - drag.x, dy = p.y - drag.y;
+    /* 直接跟随：spin 增大=内容左移，tilt 增大=内容下移，往哪拖内容跟哪边。
+       原版是「拖动给速度」模式，方向与直觉相反，这里改为抓取式拖拽。 */
+    spin += -dx / s.u * 3.2;
+    tilt = Math.max(-1.15, Math.min(1.15, tilt + dy / s.u * 2.4));
+    /* 松手惯性方向与拖动一致 */
+    vel = -dx / s.u * 9;
+    vtilt = 0;
+    lastMoveT = performance.now();
     drag = p; drag.moved = true;
   });
   function release(e) {
@@ -164,13 +171,14 @@
 
     zoom += (zoomT - zoom) * Math.min(1, dt / 180);
     if (!drag) {
-      var idle = hover ? 0.045 : 0.16;
+      var idle = hover ? 0.06 : 0.22;   // 自转提档（原 0.16/0.045，用户要求加快一点点）
       if (REDUCED) idle = 0;
       vel += (idle - vel) * Math.min(1, dt / 900);
       vtilt *= Math.pow(0.90, dt / 16);
       tilt += vtilt * dt / 1000;
       tilt += (-0.36 - tilt) * Math.min(1, dt / 4000);
     }
+    if (drag && now - lastMoveT > 100) vel = 0;   // 拖住不动时球停转（跟手）
     spin += vel * dt / 1000;
 
     var cx = s.w / 2, cy = s.h / 2 + s.u * 0.035;
