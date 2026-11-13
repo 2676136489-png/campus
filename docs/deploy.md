@@ -37,7 +37,29 @@ DB_NAME=circle
 DB_USER=circle_user
 DB_PASS=强密码
 ADMIN_INITIAL_PASSWORD=强管理员密码
+LOGIN_RATE_IP_FAILURES=20
+LOGIN_RATE_NAME_FAILURES=10
+
+# 登录邮箱验证码二步验证：MAIL_TRANSPORT 取 smtp / log / none。
+# 三通道都不通时总开关 LOGIN_EMAIL_OTP_ENABLED 强制为 0，登录降级为直登而不是锁人。
+MAIL_TRANSPORT=smtp
+SMTP_HOST=smtp.qq.com
+SMTP_PORT=465
+SMTP_USERNAME=发信邮箱
+SMTP_PASSWORD=邮箱授权码
+SMTP_SENDER=发信邮箱
+LOGIN_EMAIL_OTP_ENABLED=1
+
+# AI 助手（Dify 控制台 → API 访问 → 生成密钥；Endpoint 以该页显示为准）
+DIFY_BASE_URL=https://api.dify.ai/v1
+DIFY_API_KEY=学生端应用密钥
+DIFY_ADMIN_API_KEY=管理员端应用密钥
+# 供 Dify 工具调用的站内数据接口密钥（工具弹窗用请求头 X-API-Key 传）
+AI_API_KEY=站内数据接口密钥
+AI_ADMIN_API_KEY=管理员数据接口密钥
 ```
+
+改完 `.env` 后需要 reload PHP-FPM，常驻 worker 不会自动读新值。
 
 ## 4. 备份
 

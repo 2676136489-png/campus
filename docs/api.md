@@ -263,3 +263,62 @@ csrf_token=...
 - `provisionAdminTotp=1`：生成并暂存 TOTP 密钥，页面展示身份验证器配置信息。
 - `enableAdminTotp=1` + `totpCode`：校验动态码后启用二次验证。
 - `disableAdminTotp=1` + `totpCode`：校验动态码后关闭二次验证。
+## AI 助手
+
+独立于 `api.php` 的对话接口，由 `ai_chat_api.php` 代理 Dify Agent 应用。
+学生会话与管理员会话自动分流到两套 Dify 应用与密钥，密钥只存在服务端。
+
+### 发送提问
+
+```http
+POST /ai_chat_api.php?action=send
+Content-Type: application/x-www-form-urlencoded
+
+question=最近有什么校园活动&conversationId=conv-8f3a1c92&csrf_token=...
+```
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `question` | 是 | 提问内容，长度 1-500 |
+| `conversationId` | 否 | 会话标识，`[A-Za-z0-9-]{8,64}`；首次留空，服务端返回新的标识供后续续聊 |
+| `csrf_token` | 是 | 写操作 CSRF 令牌 |
+
+```json
+{
+  "ok": true,
+  "answer": "……",
+  "conversationId": "conv-8f3a1c92",
+  "entities": [{ "type": "student", "pk": 58, "name": "张启铭" }]
+}
+```
+
+`entities` 是服务端做的实体链接化结果：回答里的站内同学会被标记出来，前端渲染成可点击卡片，不依赖模型输出格式。
+
+### 拉取历史
+
+```http
+GET /ai_chat_api.php?action=history&conversationId=conv-8f3a1c92
+```
+
+```json
+{ "ok": true, "messages": [{ "question": "……", "answer": "……" }] }
+```
+
+`conversationId` 为空或非法时返回空数组。
+
+### 错误码
+
+| 状态码 | error | 原因 |
+|--------|-------|------|
+| 400 | `bad_question` | 提问为空或超过 500 字 |
+| 400 | `unknown_action` | action 不匹配 |
+| 403 | `bad_csrf` | CSRF 校验失败 |
+| 502 | `ai_upstream_error` | 上游返回异常或流式数据不完整 |
+| 503 | `ai_not_configured` | 服务端未配置对应应用的密钥 |
+
+## 站点数据工具接口
+
+供 Dify Agent 调用的站内数据接口，鉴权走请求头 `X-API-Key`：
+
+- `POST /ai_api.php`（学生版，密钥 `AI_API_KEY`）
+- `POST /ai_admin_api.php`（管理员版，密钥 `AI_ADMIN_API_KEY`）

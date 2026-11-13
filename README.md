@@ -8,6 +8,12 @@
 
 ![学生登录](docs/screenshots/login.png)
 
+![学生中心](docs/screenshots/welcome.png)
+
+![动态广场](docs/screenshots/dynamics.png)
+
+![AI 助手](docs/screenshots/ai-chat.png)
+
 ![学生注册](docs/screenshots/register.png)
 
 ![管理员登录](docs/screenshots/admin.png)
@@ -51,7 +57,13 @@
 - 意见反馈闭环：学生提交反馈（支持图片附件），管理员按状态处理并通知学生
 - 30 天运营趋势：注册、动态、评论、私信、活跃学生走势与 CSV 导出
 - 移动端适配：手机视口无横向溢出，聊天、管理表格、趋势图均可横向滑动
-- CampusLink 视觉体系：薄荷绿浅色主题与配套深色主题、16px 大圆角卡片、悬停上浮微交互、侧栏「兴趣圈子」分组直达标签筛选，全站 lucide 风格线性图标
+- CampusLink 视觉体系：腾讯蓝 `#0052D9` 主色 + 配套深色主题、16px 大圆角卡片、悬停上浮微交互、侧栏「兴趣圈子」分组直达标签筛选，全站 lucide 风格线性图标
+- 页面背景层：极光兜底 + 视频层 + 玻璃雾罩，卡片浮在雾罩之上；视频走本地资产（1920×1080 / 740KB），弱设备、移动端与省流量模式自动降级为静态背景
+- 玻璃拟态组件：hero 卡、主区侧栏、统计卡与公告切角块分层使用不同模糊半径，控制合成开销
+- 登录页文字地球：ThreeUI「Text Path Studies」的 2D canvas 移植，字符铺在陆地上随球自转，墨色取吉大校徽蓝 PANTONE 7455C
+- 站点标志「光圈」：六片叶片收拢成开口，SVG 矢量一套源导出 favicon / apple-touch-icon / PWA 图标
+- AI 助手：自建对话页对接 Dify Agent（流式），学生会话与管理员会话走不同密钥与应用，回答里的同学/动态自动转成可点击卡片
+- 登录邮箱验证码二步验证：验证通过的设备签发 30 天信任凭证，同设备后续登录免验证码
 - 私信列表按未读分组
 - 管理员二次验证（TOTP）、SSE 实时通知、多尺寸缩略图、健康检查接口
 - 登录/注册/找回密码限流、CSRF、bcrypt、图片真实性校验与重编码、安全响应头
@@ -64,9 +76,10 @@
 | 类别 | 技术 |
 |------|------|
 | 后端 | PHP 7.3+ / 8.x, MySQLi 预处理语句 |
-| 数据库 | MySQL 5.7+ / 8.0 |
-| 前端 | HTML + CSS + 原生 JavaScript (Fetch API) |
-| 测试 | PHPUnit 9 + 自研单元/集成测试 |
+| 数据库 | MySQL 5.7+ / 8.0（20 个版本化迁移，28 张表） |
+| 前端 | HTML + CSS + 原生 JavaScript (Fetch API)，CSS 变量驱动的双主题设计系统 |
+| AI 编排 | Dify Agent（streaming），站内自建对话页与代理层 |
+| 测试 | PHPUnit 9 + 自研单元/集成测试 + Playwright E2E |
 | 工程化 | Composer, Docker Compose, GitHub Actions, PHPStan, PHP CS Fixer |
 
 ## 架构
@@ -143,12 +156,19 @@ campus/
 │   ├── security.md           # 安全设计说明
 │   ├── deploy.md             # 部署指南
 │   ├── openapi.yaml          # OpenAPI 规范
-│   └── roadmap.md            # 项目路线图
+│   ├── roadmap.md            # 项目路线图
+│   └── screenshots/          # README 配图
 ├── config/
 │   └── sensitive_words.php    # 敏感词配置
 ├── migrations/
-│   └── 001_initial.sql         # 初始表结构
+│   └── 001_initial.sql ...    # 20 个版本化迁移（020_trusted_device.sql）
+├── assets/
+│   ├── css/                   # tokens/base/layout/components/pages/motion
+│   ├── js/                    # app.js（主逻辑）+ auth-globe.js（文字地球）
+│   ├── media/hero-flow.mp4    # 背景视频资产
+│   └── fonts/                 # Manrope 自托管字体
 ├── api.php                     # JSON API
+├── ai_chat_api.php             # AI 助手代理（Dify Agent 流式）
 ├── p_*.php                     # 页面入口
 ├── tests/
 │   ├── Unit/                   # PHPUnit 单元测试
@@ -168,16 +188,29 @@ campus/
 | `user` | 用户账号，包含角色与审核状态 |
 | `student` | 学生实名资料、学生证照片、兴趣标签 |
 | `dynamic` | 校园动态 |
+| `dynamic_photo` | 动态图集（最多 3 张） |
+| `dynamic_draft` | 动态草稿自动保存 |
+| `dynamic_favorite` | 动态收藏 |
 | `comment` | 动态评论 |
 | `like` | 动态点赞 |
 | `notification` | 站内通知 |
-| `audit_log` | 管理员操作审计 |
-| `login_attempt` | 登录与注册限流 |
-| `password_reset` | 密码重置验证码 |
-| `report` | 举报审核队列 |
-| `follow` | 关注关系 |
 | `notification_pref` | 通知偏好 |
-| `dynamic_favorite` | 动态收藏 |
+| `message` | 站内私信 |
+| `conversation_setting` | 会话置顶与免打扰 |
+| `privacy` | 隐私设置 |
+| `follow` | 关注关系 |
+| `block` | 拉黑关系 |
+| `audit_log` | 管理员操作审计 |
+| `admin_rollback` | 删除操作的回滚快照 |
+| `action_log` | 关键动作日志 |
+| `login_attempt` | 登录与注册限流 |
+| `login_otp` | 登录邮箱验证码 |
+| `trusted_device` | 受信任设备（30 天免验证码） |
+| `password_reset` | 密码重置验证码 |
+| `sensitive_word` | 敏感词库 |
+| `report` | 举报审核队列 |
+| `announcement` | 校园公告 |
+| `feedback` | 意见反馈 |
 | `schema_migrations` | 已执行迁移版本 |
 
 ```mermaid
@@ -283,6 +316,7 @@ GitHub Actions 会自动执行：
 - [架构说明](docs/architecture.md)
 - [API 文档](docs/api.md)
 - [OpenAPI 规范](docs/openapi.yaml)
+- [前端设计系统](docs/design-system.md)
 - [生产部署指南](docs/deploy.md)
 - [安全设计说明](docs/security.md)
 - [项目路线图](docs/roadmap.md)

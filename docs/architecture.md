@@ -4,6 +4,7 @@
 
 - 页面层：`p_*.php` 负责接收请求、渲染视图、调用服务函数
 - API 层：`api.php` 提供 JSON 接口，统一处理登录态、CSRF 与错误响应
+- 代理层：`ai_chat_api.php` 对接外部大模型服务，隔离密钥与流式协议
 - 实时层：`p_sse.php` 提供 SSE 长连接，推送未读通知变化
 - 服务层：`lib/*.php` 封装业务逻辑，函数全局可用
 - 数据层：统一通过 `dbConnect()` 使用 MySQLi 预处理语句
@@ -24,17 +25,23 @@
 浏览器 -> p_sse.php (登录后)
        -> text/event-stream
        -> unread 事件
+
+浏览器 -> p_aiChat.php
+       -> ai_chat_api.php (学生会话用 DIFY_API_KEY / 管理员会话用 DIFY_ADMIN_API_KEY)
+       -> Dify Agent (streaming)
+       -> SSE 分片回传，实体卡片标记在服务端补齐
 ```
 
 ## 核心模块
 
 | 模块 | 职责 |
 |------|------|
-| bootstrap.php | Session 安全、安全响应头、统一致命错误日志注册 |
+| bootstrap.php | Session 安全、安全响应头、统一致命错误日志注册、多标签页会话隔离 |
 | logger.php | 结构化应用日志，写入 var/logs/app.log |
 | core.php | 数据库连接、CSRF、迁移入口 |
 | migrations.php | 版本化 SQL 迁移与性能索引 |
-| auth.php | 登录、可配置限流、密码找回、会话令牌 |
+| auth.php | 登录、可配置限流、密码找回、活动会话令牌 |
+| captcha.php | 算术验证码生成与校验 |
 | student.php | 注册、资料、标签、推荐 |
 | dynamic.php | 动态、点赞、评论、编辑、分页搜索 |
 | notification.php | 站内通知与未读统计 |
@@ -54,6 +61,21 @@
 | feedback.php | 意见反馈闭环 |
 | announcement.php | 校园公告 |
 | maintenance.php | 过期数据清理 |
+
+## 登录态与会话隔离
+
+- Session 启用 strict mode、HttpOnly、SameSite，HTTPS 下启用 Secure。
+- 多标签页会话隔离：`lib/bootstrap.php` 的 `tabToken()` / `tabSessionId()` 一旦拿到 8-64 位 token（`?tab=` 参数、`TAB_SESSION` cookie 或 `X-Tab-Session` 头），就把 `session_id` 改写成 `HMAC(tab, CAMPUS_TAB_SECRET)`。同一浏览器开多个标签页登录不同账号不会互相顶掉。
+- 活动会话令牌：`user.active_token` 与 `$_SESSION['auth_token']` 双向校验，后登录的设备会顶掉先登录的设备，改密与登出同时让旧令牌失效。
+- 学生端与管理员端使用独立会话状态，切换身份时旋转 Session 并生成新的活动会话令牌。
+
+## AI 助手链路
+
+- `p_aiChat.php` 自建对话页替代官方 iframe 气泡，AI 页隐藏气泡入口。
+- `ai_chat_api.php` 作为服务端代理：密钥只存在服务端，按会话类型分发到学生应用（`DIFY_API_KEY`）或管理员应用（`DIFY_ADMIN_API_KEY`）。
+- 上游是 Dify Agent 应用，只支持流式协议；代理逐片转发并拼接增量文本，同时剥离推理模型回答里的 `<think>` 段。
+- 后端对回答做实体链接化：命中站内同学姓名的片段转成【同学|pk|姓名】标记，前端渲染成可点击跳转卡片。
+- 工具授权走请求头 X-API-Key，学生版与管理员版分别调用 `/ai_api.php` 与 `/ai_admin_api.php`，数据权限由后端会话决定。
 
 ## 实时通知
 
