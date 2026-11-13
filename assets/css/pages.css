@@ -312,8 +312,8 @@
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: var(--r-2xl);
   background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(28px) saturate(1.35);
-  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  backdrop-filter: blur(18px) saturate(1.35);
   box-shadow: var(--shadow-inset), var(--shadow-md);
 }
 
@@ -406,16 +406,16 @@
   gap: var(--sp-4);
   padding: var(--sp-5);
   /* 半透明白 + 亮边做玻璃感：四张卡一起开 backdrop-filter 太贵，不划算 */
-  border: 1px solid rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.66);
   border-radius: var(--r-xl);
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.74);
   box-shadow: var(--shadow-xs);
   transition: transform var(--dur-3) var(--ease-out), box-shadow var(--dur-3) var(--ease-out), background var(--dur-3) var(--ease-out);
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.76);
+  background: rgba(255, 255, 255, 0.84);
   box-shadow: var(--shadow-md);
 }
 

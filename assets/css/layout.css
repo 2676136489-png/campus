@@ -16,8 +16,16 @@
   flex-direction: column;
   gap: var(--sp-2);
   padding: var(--sp-5) var(--sp-4) var(--sp-4);
-  border-right: 1px solid var(--line);
-  background: var(--surface-2);
+  /* 玻璃侧栏：和视频背景连成一片，不再是割裂的实色竖条 */
+  border-right: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.52);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+
+[data-theme="dark"] .side-rail {
+  border-right-color: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 21, 38, 0.52);
 }
 
 .rail-brand {
