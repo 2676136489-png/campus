@@ -390,6 +390,11 @@ select {
   --fx-veil-c: rgba(246, 250, 255, 0.36);
   --fx-veil-d: rgba(246, 250, 255, 0.5);
   --fx-video-opacity: 0.95;
+  /* 中央柔光斑的颜色（洗掉原片正中的金色圆桌）。
+     必须跟随主题：浅色用白雾提亮，深色必须换成暗雾压暗 ——
+     否则切深色后这里会留一团突兀的白光。 */
+  --fx-bloom: rgba(246, 250, 255, 0.66);
+  --fx-bloom-end: rgba(246, 250, 255, 0);
 }
 
 .page-fx i {
@@ -456,7 +461,7 @@ select {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(26% 24% at 42% 32%, rgba(246, 250, 255, 0.66), rgba(246, 250, 255, 0) 74%),
+    radial-gradient(26% 24% at 42% 32%, var(--fx-bloom), var(--fx-bloom-end) 74%),
     linear-gradient(180deg, var(--fx-veil-a) 0%, var(--fx-veil-b) 26%, var(--fx-veil-c) 64%, var(--fx-veil-d) 100%);
 }
 
@@ -470,13 +475,17 @@ select {
   to { transform: translate(-14%, 8%); }
 }
 
-/* 深色模式：视频压暗、雾罩换成深色雾，卡片靠自身的玻璃层保持可读 */
+/* 深色模式：视频压暗、雾罩换成深色雾，卡片靠自身的玻璃层保持可读。
+   柔光斑同步换成暗雾：位置不变（继续洗视频正中的圆桌），只是颜色由白转暗，
+   不再在深色页面里发光。 */
 [data-theme="dark"] .page-fx {
   --fx-veil-a: rgba(11, 16, 32, 0.94);
   --fx-veil-b: rgba(11, 16, 32, 0.58);
   --fx-veil-c: rgba(11, 16, 32, 0.66);
   --fx-veil-d: rgba(11, 16, 32, 0.96);
   --fx-video-opacity: 0.42;
+  --fx-bloom: rgba(11, 16, 32, 0.55);
+  --fx-bloom-end: rgba(11, 16, 32, 0);
 }
 
 [data-theme="dark"] .page-fx .pf-video {
