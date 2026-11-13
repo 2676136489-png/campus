@@ -10,6 +10,11 @@
  * 2. prefers-reduced-motion 时球面静止。
  * 3. 标签页不可见时暂停渲染。
  * 4. 通过 MutationObserver 跟随 campus.js 的 data-theme 切换重建墨色池。
+ * 5. 字形朝向改为「字顶指向球面北向」：原版用 Three.js 在三维里摆字，天然朝向正确；
+ *    移植到 2D canvas 后只能按纬线切线的屏幕投影定基线，而正交投影下切线的屏幕法向
+ *    会落到球面内侧，导致正面所有字母上下颠倒（b→q、p→d、a→ɐ、e→ǝ）。
+ *    这里用切线屏幕法向与「北向屏幕投影」的点积决定是否整体转 180°。
+ * 6. 纬线环内按经度递减取点，让 PHRASE 沿屏幕从左往右连读。
  */
 (function () {
   "use strict";
@@ -96,7 +101,10 @@
       var rl = Math.cos(lat * Math.PI / 180);
       var n  = Math.max(1, Math.round(98 * rl));
       for (var i = 0; i < n; i++) {
-        var lon = -180 + 360 * i / n;
+        /* 环内按经度递减取点。可见面上「经度越大越靠左」（切线的屏幕 x 分量为负），
+           所以递减取点才能让 PHRASE 沿屏幕从左往右连读
+           （everypointonthisballisapathbacktoanotherone）。 */
+        var lon = 180 - 360 * i / n;
         var l = isLand(lon, lat);
         if (!l && (sea3++ % 2)) continue;
         var letter = 0;
@@ -208,9 +216,19 @@
       if (!nd.land) { sea.push(px, py, Math.min(0.999, z2 + glow * 0.55)); continue; }
       if (!nd.c) { soil.push(px, py, Math.min(0.999, z2 + glow * 0.55)); continue; }
 
+      /* 字符沿纬线排布：基线 = 纬线切线投影到屏幕后的方向。
+         但「字顶朝哪」不能只靠切线——正交投影下切线的屏幕法向会落到球面内侧，
+         结果整个正面（北半球 + 赤道）的字全是上下颠倒（b→q、p→d、a→ɐ、e→ǝ）。
+         正确做法：让字顶指向球面北向（沿子午线指向北极），即用切线的屏幕法向
+         与「北向的屏幕投影」做点积，必要时整体转 180°。
+         北向单位向量 = (Ŷ - sl·n)/cl，Ŷ = (0, ct, st) 是相机系下的世界 Y 轴。 */
       var tx0 = -Math.sin(nd.lon), tz0 = Math.cos(nd.lon);
       var tx1 = tx0 * cs - tz0 * sn, tz1 = tx0 * sn + tz0 * cs;
       var ang = qang(Math.atan2(tz1 * st, tx1));
+      var sl = Math.sin(nd.lat);
+      var nsx = -(sl / cl) * x1, nsy = (sl * y2 - ct) / cl;
+      /* rotate(ang) 之后字形的「上」= (sin ang, -cos ang) */
+      if ((tz1 * st) * nsx + (-tx1) * nsy < 0) ang = qang(ang + Math.PI);
       var b = Math.min(7, Math.max(0, ((Math.min(0.999, z2 + glow * 0.6)) * 7.99) | 0));
       (land8[b] || (land8[b] = [])).push(px, py, ang, nd.c, 0);
     }
