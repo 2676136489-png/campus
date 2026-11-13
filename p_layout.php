@@ -246,43 +246,46 @@ function renderHead($title, $description = '') {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($title) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r14" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r14">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r14">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r14">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r14">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r14">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261113r15" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r15">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r15">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261113r15">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261113r15">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261113r15">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body>' . "\n";
     echo '<!-- THESIS: Campus life as a quiet instrument panel, not a decorated bulletin board. OWN-WORLD: gray paper, hairline rules, one blue accent, matte cards, liquid glass only on overlays. STORY: students read, publish and connect without noise. FORM: app-shell with desktop rail and mobile tab bar. -->' . "\n";
 }
 /**
- * 全站背景动效（浪涌气泡）：五层浪 + 两团极光 + 八颗上浮光泡。
- * 只输出一次、fixed 垫底（z-index:-1），卡片白底自然盖住，不挡点击。
- * 样式在 base.css 的 .page-fx 区块；手机端 CSS 会自动减到 4 颗气泡。
+ * 全站背景：视频层 + 玻璃雾罩 + 两团极光兜底。
+ * 视频等 window load 之后再 play()，不跟首屏抢带宽；
+ * 加载失败 / 省流量模式 / 减少动态效果 时只剩极光层，页面照样好看。
+ * 本地资源优先，缺失时自动回落到 CDN 同源。
+ * 样式在 base.css 的 .page-fx 区块。
  */
 function renderPageFx() {
-    $orbs = [
-        ['6%', '170px', '--c:rgba(0,82,217,.5);--d:62s;--dl:-8s;--o:.48'],
-        ['19%', '100px', '--c:rgba(122,92,255,.45);--d:76s;--dl:-34s;--o:.4'],
-        ['31%', '210px', '--c:rgba(0,164,255,.45);--d:88s;--dl:-20s;--o:.42'],
-        ['45%', '110px', '--c:rgba(0,194,168,.5);--d:66s;--dl:-48s;--o:.42'],
-        ['56%', '150px', '--c:rgba(0,82,217,.42);--d:72s;--dl:-14s;--o:.4'],
-        ['67%', '92px', '--c:rgba(255,77,141,.4);--d:82s;--dl:-62s;--o:.34'],
-        ['77%', '190px', '--c:rgba(122,92,255,.42);--d:94s;--dl:-30s;--o:.38'],
-        ['89%', '120px', '--c:rgba(0,164,255,.46);--d:58s;--dl:-42s;--o:.44'],
-    ];
+    $localVideo = 'assets/media/hero-flow.mp4';
+    $remoteVideo = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260428_193507_4286c423-2fd9-4efd-92bd-91a939453fc1.mp4';
     $html = '<div class="page-fx" aria-hidden="true">' . "\n";
+    // 极光垫底：视频没出来时它就是页面底色
     $html .= '<i class="pf-b1"></i>' . "\n" . '<i class="pf-b2"></i>' . "\n";
-    // 气泡夹在中层浪之间，看起来是从水里冒出来的
-    $html .= '<i class="pf-w pf-w5"></i>' . "\n" . '<i class="pf-w pf-w4"></i>' . "\n";
-    foreach ($orbs as $n => $orb) {
-        list($left, $size, $vars) = $orb;
-        $html .= '<i class="pf-orb pf-o' . ($n + 1) . '" style="left:' . $left . ';width:' . $size . ';height:' . $size . ';' . $vars . '"></i>\n';
-    }
-    $html .= '<i class="pf-w pf-w3"></i>' . "\n" . '<i class="pf-w pf-w2"></i>' . "\n" . '<i class="pf-w pf-w1"></i>' . "\n";
+    $html .= '<video class="pf-video" id="pfVideo" muted loop playsinline preload="none">'
+        . '<source src="' . h($localVideo) . '" type="video/mp4">'
+        . '<source src="' . h($remoteVideo) . '" type="video/mp4">'
+        . '</video>' . "\n";
+    // 雾罩压在视频上，把画面压成氛围底
+    $html .= '<i class="pf-veil"></i>' . "\n";
     $html .= '</div>' . "\n";
+    $html .= '<script>(function(){'
+        . 'var v=document.getElementById("pfVideo");if(!v)return;'
+        . 'try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(e){}'
+        . 'v.muted=true;'
+        . 'v.addEventListener("playing",function(){v.classList.add("is-ready");});'
+        . 'function start(){var p=v.play();if(p&&p.catch)p.catch(function(){});}'
+        . 'if(document.readyState==="complete"){setTimeout(start,200);}'
+        . 'else{window.addEventListener("load",function(){setTimeout(start,200);});}'
+        . '})();</script>' . "\n";
     echo $html;
 }
 
@@ -393,7 +396,7 @@ function renderSiteFooter($opts = []) {
     }
     renderMobileTabbar();
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r14"></script>' . "\n";
+    echo '<script src="app.js?v=20261113r15"></script>' . "\n";
     echo '</div>' . "\n";
     echo '</div>' . "\n";
     if (!empty($GLOBALS['__campus_hide_dify_bubble'])) {
@@ -486,12 +489,12 @@ function renderAuthShell($opts = []) {
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>" . "\n";
     echo '<title>' . h($opts['title']) . ' - 校园圈子</title>' . "\n";
-    echo '<link rel="icon" href="favicon.ico?v=20261111r14" sizes="any">' . "\n";
-    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261111r14">' . "\n";
-    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261111r14">' . "\n";
-    echo '<link rel="manifest" href="site.webmanifest?v=20261111r14">' . "\n";
-    echo '<link rel="stylesheet" href="style.css?v=20261111r14">' . "\n";
-    echo '<link rel="stylesheet" href="design-system.css?v=20261111r14">' . "\n";
+    echo '<link rel="icon" href="favicon.ico?v=20261113r15" sizes="any">' . "\n";
+    echo '<link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261113r15">' . "\n";
+    echo '<link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261113r15">' . "\n";
+    echo '<link rel="manifest" href="site.webmanifest?v=20261113r15">' . "\n";
+    echo '<link rel="stylesheet" href="style.css?v=20261113r15">' . "\n";
+    echo '<link rel="stylesheet" href="design-system.css?v=20261113r15">' . "\n";
     renderCampusStyles();
     echo '</head>' . "\n";
     echo '<body class="auth-body">' . "\n";
@@ -505,7 +508,7 @@ echo "<script>(function(){try{var t=localStorage.getItem('campus-theme')||(windo
     echo '</div>' . "\n";
     echo '<p class="auth-quote">' . h($quote) . '</p>' . "\n";
 echo '<div class="auth-index"><span>实名认证</span><span>动态广场</span><span>站内私信</span></div>' . "\n";
-    echo '<div class="auth-radar" aria-hidden="true"><span class="auth-radar-ring"></span><span class="auth-radar-ring is-outer"></span></div>' . "\n";
+    echo '<div class="auth-globe" aria-hidden="true"><canvas id="authGlobe"></canvas></div>' . "\n";
     echo '<p class="auth-credit">Campus Circle · 实名校园社交</p>' . "\n";
     echo '</section>' . "\n";
     echo '<section class="auth-panel">' . "\n";
@@ -516,12 +519,13 @@ function renderAuthShellClose() {
     echo '</section>' . "\n";
     echo '</main>' . "\n";
     renderCampusScripts();
-    echo '<script src="app.js?v=20261111r14"></script>' . "\n";
+    echo '<script src="assets/js/auth-globe.js?v=20261113r15"></script>' . "\n";
+    echo '<script src="app.js?v=20261113r15"></script>' . "\n";
     echo '</body>' . "\n";
     echo '</html>' . "\n";
 }
 function renderCampusStyles() {
-    $v = '20261111r14';
+    $v = '20261113r15';
     echo '<link rel="stylesheet" href="assets/css/tokens.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/base.css?v=' . $v . '">' . "\n";
     echo '<link rel="stylesheet" href="assets/css/layout.css?v=' . $v . '">' . "\n";

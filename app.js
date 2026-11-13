@@ -153,6 +153,10 @@ if (window.NodeList && !NodeList.prototype.forEach) {
         if (!radar || prefersReduced) {
             return;
         }
+        if (document.querySelector('.auth-globe')) {
+            // 登录页已换成 canvas 文字地球（auth-globe.js），旧雷达 blip 停用
+            return;
+        }
         var activeBlips = 0;
         var centerX = 50;
         var centerY = 58;

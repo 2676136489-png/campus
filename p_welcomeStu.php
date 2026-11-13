@@ -27,6 +27,7 @@ renderSiteHeader([
             <p class="hero-copy">@<?=h($student['userName'])?> · <?=h($student['college'])?> · <?=h($student['major'])?></p>
             <?php if ($isVerified): ?>
                 <span class="badge badge-success"><?=icon('check', 14)?>已实名认证</span>
+                <a class="btn hero-cta" href="p_publishDynamic.php"><span class="hero-cta-icon"><?=icon('plus', 14)?></span>发布新动态</a>
             <?php else: ?>
                 <span class="badge badge-warning"><?=icon('clock', 14)?>待审核</span>
             <?php endif; ?>
@@ -131,26 +132,35 @@ renderSiteHeader([
             <?php endif; ?>
         </div>
 
-        <div class="card card-pad">
-            <div class="section-head">
-                <h2 class="section-title">快捷操作</h2>
+        <div class="dashboard-side">
+            <div class="hero-brief">
+                <span class="hero-brief-icon"><?=icon('megaphone', 18)?></span>
+                <div class="hero-brief-body">
+                    <div class="hero-brief-title">校园公告</div>
+                    <a class="hero-brief-link" href="p_announcements.php">查看全部<?=icon('arrow-right', 13)?></a>
+                </div>
             </div>
-            <div class="quick-actions">
-                <a class="quick-action" href="p_editStuInfo.php"><?=icon('edit')?>修改个人资料</a>
-                <?php if ($isVerified): ?>
-                    <a class="quick-action" href="p_editStuTags.php"><?=icon('tag')?>设置兴趣标签</a>
-                <?php endif; ?>
-                <a class="quick-action" href="p_dynamics.php"><?=icon('feed')?>校园动态广场</a>
-                <?php if ($isVerified): ?>
-                    <a class="quick-action" href="p_publishDynamic.php"><?=icon('plus')?>发布新动态</a>
-                <?php endif; ?>
-                <a class="quick-action" href="p_allStudents.php"><?=icon('users')?>查看同学</a>
-<a class="quick-action" href="p_myFavorites.php"><?=icon('bookmark')?>我的收藏</a>
-                <a class="quick-action" href="p_notifications.php"><?=icon('bell')?>通知中心</a>
-                <a class="quick-action" href="p_settings.php"><?=icon('settings')?>通知设置</a>
-                <a class="quick-action" href="p_feedback.php"><?=icon('mail')?>意见反馈</a>
-                <a class="quick-action" href="p_changePwdStu.php"><?=icon('lock')?>修改密码</a>
-                <a class="quick-action danger" href="p_delUser.php"><?=icon('trash')?>注销账号</a>
+            <div class="card card-pad">
+                <div class="section-head">
+                    <h2 class="section-title">快捷操作</h2>
+                </div>
+                <div class="quick-actions">
+                    <a class="quick-action" href="p_editStuInfo.php"><?=icon('edit')?>修改个人资料</a>
+                    <?php if ($isVerified): ?>
+                        <a class="quick-action" href="p_editStuTags.php"><?=icon('tag')?>设置兴趣标签</a>
+                    <?php endif; ?>
+                    <a class="quick-action" href="p_dynamics.php"><?=icon('feed')?>校园动态广场</a>
+                    <?php if ($isVerified): ?>
+                        <a class="quick-action" href="p_publishDynamic.php"><?=icon('plus')?>发布新动态</a>
+                    <?php endif; ?>
+                    <a class="quick-action" href="p_allStudents.php"><?=icon('users')?>查看同学</a>
+                    <a class="quick-action" href="p_myFavorites.php"><?=icon('bookmark')?>我的收藏</a>
+                    <a class="quick-action" href="p_notifications.php"><?=icon('bell')?>通知中心</a>
+                    <a class="quick-action" href="p_settings.php"><?=icon('settings')?>通知设置</a>
+                    <a class="quick-action" href="p_feedback.php"><?=icon('mail')?>意见反馈</a>
+                    <a class="quick-action" href="p_changePwdStu.php"><?=icon('lock')?>修改密码</a>
+                    <a class="quick-action danger" href="p_delUser.php"><?=icon('trash')?>注销账号</a>
+                </div>
             </div>
         </div>
     </div>
