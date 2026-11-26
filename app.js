@@ -455,6 +455,27 @@ if (window.NodeList && !NodeList.prototype.forEach) {
         });
     });
 
+    // 页面隐藏超过 2 分钟自动清空密码框：把「密码留在框里」的暴露窗口
+    // 从最长 15 分钟（会话空闲超时）压到 2 分钟。
+    // type="password" 只是显示层开关，明文本就躺在浏览器内存里，防不住会开
+    // DevTools 的人——所以策略不是对抗，而是缩短暴露窗口：页面不可见时
+    // 没人在操作，清空零副作用；2 分钟阈值不误伤「切出去复制密码」的正常流程。
+    (function () {
+        var pwdClearTimer = null;
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                pwdClearTimer = window.setTimeout(function () {
+                    document.querySelectorAll('input[type="password"]').forEach(function (input) {
+                        input.value = '';
+                    });
+                }, 120000);
+            } else if (pwdClearTimer) {
+                window.clearTimeout(pwdClearTimer);
+                pwdClearTimer = null;
+            }
+        });
+    })();
+
     function validateImageFile(file, maxSize) {
         if (!file) {
             return '';
