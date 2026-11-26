@@ -253,6 +253,7 @@ function requireStudentLogin()
     if (session_status() === PHP_SESSION_NONE) {
         secureSessionStart();
     }
+    enforceSessionIdle('p_loginStu.php');
     if (!isset($_SESSION['userName'])) {
         header('Location: ' . tabUrl('p_loginStu.php'));
         exit;
@@ -306,6 +307,7 @@ function requireAdminLogin()
     if (session_status() === PHP_SESSION_NONE) {
         secureSessionStart();
     }
+    enforceSessionIdle('p_adminAuth.php');
     if (!isset($_SESSION['adminName'])) {
         header('Location: ' . tabUrl('p_adminAuth.php'));
         exit;

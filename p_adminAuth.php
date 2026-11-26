@@ -106,6 +106,8 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+enforceSessionIdle('p_adminAuth.php');
+
 $isAdminLogin = isset($_SESSION['adminName']);
 if ($isAdminLogin) {
     $adminRow = getUserByUserName($_SESSION['adminName']);
@@ -191,6 +193,10 @@ if (!$isAdminLogin) {
     <h1 class="auth-title">管理员后台</h1>
     <p class="auth-sub">审核学生实名信息、管理账号状态与校园动态内容。</p>
 
+    <?php if (!$loginError && !empty($_SESSION['admin_login_error'])):
+        $loginError = $_SESSION['admin_login_error'];
+        unset($_SESSION['admin_login_error']);
+    endif; ?>
     <?php if ($loginError): ?>
         <div class="alert alert-error"><?=icon('alert')?><div><?=h($loginError)?></div></div>
     <?php endif; ?>

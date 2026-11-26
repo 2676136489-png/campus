@@ -445,6 +445,16 @@ if (window.NodeList && !NodeList.prototype.forEach) {
         });
     });
 
+    // 密码框防提取：禁止复制 / 剪切 / 右键菜单（粘贴不受影响，禁粘贴才是反可用性坏实践）。
+    // 挡的是「人离开座位，路过的人全选 Ctrl+C」这条路径；
+    // 挡不住 JS 直接读 DOM——那等于 XSS 已经得手，属于另一个威胁模型。
+    // 空闲超时（服务端 enforceSessionIdle）是这条防线另一半：框里留着密码也撑不过 15 分钟。
+    document.querySelectorAll('input[type="password"]').forEach(function (input) {
+        ['copy', 'cut', 'contextmenu'].forEach(function (type) {
+            input.addEventListener(type, function (event) { event.preventDefault(); });
+        });
+    });
+
     function validateImageFile(file, maxSize) {
         if (!file) {
             return '';

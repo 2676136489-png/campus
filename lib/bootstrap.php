@@ -131,6 +131,35 @@ function sessionRegenerate()
 }
 
 /**
+ * 登录会话空闲超时：已登录用户连续 $timeout 秒没有任何请求，销毁会话并回登录页。
+ * 「离开座位」场景的根本对策——密码框防复制挡得住剪贴板，挡不住走过来的活人；
+ * 真正的防线是：空闲登出 + 用户锁屏习惯。
+ * 只对已登录会话生效（游客会话没有 last_activity，直接放行，不影响 OTP 等登录前流程）。
+ */
+function enforceSessionIdle($redirect, $timeout = 900)
+{
+    if (empty($_SESSION['userName']) && empty($_SESSION['adminName'])) {
+        return;
+    }
+    $now = time();
+    $last = (int)($_SESSION['last_activity'] ?? 0);
+    if ($last > 0 && ($now - $last) > $timeout) {
+        $isAdmin = !empty($_SESSION['adminName']);
+        session_unset();
+        session_destroy();
+        secureSessionStart();
+        if ($isAdmin) {
+            $_SESSION['admin_login_error'] = '长时间未操作，已自动退出登录，请重新验证。';
+        } else {
+            $_SESSION['login_error'] = '长时间未操作，已自动退出登录，请重新登录。';
+        }
+        header('Location: ' . tabUrl($redirect));
+        exit;
+    }
+    $_SESSION['last_activity'] = $now;
+}
+
+/**
  * Send baseline security headers before any output.
  */
 function sendSecurityHeaders()
