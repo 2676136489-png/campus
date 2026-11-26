@@ -15,6 +15,10 @@
  *    会落到球面内侧，导致正面所有字母上下颠倒（b→q、p→d、a→ɐ、e→ǝ）。
  *    这里用切线屏幕法向与「北向屏幕投影」的点积决定是否整体转 180°。
  * 6. 纬线环内按经度递减取点，让 PHRASE 沿屏幕从左往右连读。
+ * 7. 手性修正：z0 取 -sin(lon)。原移植用 z0=+sin(lon)，渲染出的是东西镜像的地球
+ *    （面向中国时印度/非洲在右、太平洋在左，与真实地球相反）。位图与图钉用的
+ *    是同一套坐标，图钉照样落在中国的位置上，所以镜像此前没被发现。
+ *    修正时切线/图钉/unproject 的 z 分量同步翻转，初始相位改为 PI+0.6 保持中国居中。
  */
 (function () {
   "use strict";
@@ -118,8 +122,9 @@
   })();
 
   var s = new Surface(cv);
-  /* 初始相位：让东亚朝向观众，登录第一眼就能看到吉大站点标记 */
-  var spin = -0.6, vel = 0.16, hover = false, drag = null, tilt = -0.36, vtilt = 0;
+  /* 初始相位：让东亚朝向观众，登录第一眼就能看到吉大站点标记。
+     z0 取 -sin 后，视野中心经度 = spin - PI/2，要面向 124.4°E 则 spin = PI + 0.6。 */
+  var spin = Math.PI + 0.6, vel = 0.16, hover = false, drag = null, tilt = -0.36, vtilt = 0;
   var lastMoveT = 0;
   var land8 = [];
   var zoom = 1, zoomT = 1, pins = [], look = null;
@@ -170,7 +175,7 @@
     var z1 = -y2 * view.st + z2 * view.ct;
     var x0 =  x1 * view.cs + z1 * view.sn;
     var z0 = -x1 * view.sn + z1 * view.cs;
-    return { lat: Math.asin(Math.max(-1, Math.min(1, y0))), lon: Math.atan2(z0, x0) };
+    return { lat: Math.asin(Math.max(-1, Math.min(1, y0))), lon: Math.atan2(-z0, x0) };
   }
 
   function draw(now, dt) {
@@ -205,7 +210,7 @@
     for (var i = 0; i < nodes.length; i++) {
       var nd = nodes[i];
       var cl = Math.cos(nd.lat);
-      var x0 = cl * Math.cos(nd.lon), y0 = Math.sin(nd.lat), z0 = cl * Math.sin(nd.lon);
+      var x0 = cl * Math.cos(nd.lon), y0 = Math.sin(nd.lat), z0 = -cl * Math.sin(nd.lon);
       var x1 =  x0 * cs - z0 * sn,  z1 = x0 * sn + z0 * cs;
       var y2 =  y0 * ct - z1 * st,  z2 = y0 * st + z1 * ct;
       if (z2 <= 0.02) continue;
@@ -222,7 +227,7 @@
          正确做法：让字顶指向球面北向（沿子午线指向北极），即用切线的屏幕法向
          与「北向的屏幕投影」做点积，必要时整体转 180°。
          北向单位向量 = (Ŷ - sl·n)/cl，Ŷ = (0, ct, st) 是相机系下的世界 Y 轴。 */
-      var tx0 = -Math.sin(nd.lon), tz0 = Math.cos(nd.lon);
+      var tx0 = -Math.sin(nd.lon), tz0 = -Math.cos(nd.lon);
       var tx1 = tx0 * cs - tz0 * sn, tz1 = tx0 * sn + tz0 * cs;
       var ang = qang(Math.atan2(tz1 * st, tx1));
       var sl = Math.sin(nd.lat);
@@ -281,7 +286,7 @@
       var scl = Math.cos(spn.lat * Math.PI / 180);
       var sax = scl * Math.cos(spn.lon * Math.PI / 180);
       var say = Math.sin(spn.lat * Math.PI / 180);
-      var saz = scl * Math.sin(spn.lon * Math.PI / 180);
+      var saz = -scl * Math.sin(spn.lon * Math.PI / 180);
       var sbx1 = sax * cs - saz * sn, sbz1 = sax * sn + saz * cs;
       var sby2 = say * ct - sbz1 * st, sbz2 = say * st + sbz1 * ct;
       if (sbz2 <= 0.02) continue;
@@ -303,7 +308,7 @@
     for (var pi = 0; pi < pins.length; pi++) {
       var pn = pins[pi];
       var pcl = Math.cos(pn.lat);
-      var ax = pcl * Math.cos(pn.lon), ay = Math.sin(pn.lat), az = pcl * Math.sin(pn.lon);
+      var ax = pcl * Math.cos(pn.lon), ay = Math.sin(pn.lat), az = -pcl * Math.sin(pn.lon);
       var bx1 = ax * cs - az * sn, bz1 = ax * sn + az * cs;
       var by2 = ay * ct - bz1 * st, bz2 = ay * st + bz1 * ct;
       if (bz2 <= 0.02) continue;
